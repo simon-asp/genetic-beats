@@ -1,7 +1,7 @@
 import { ADD_NEW_POPULATION } from '../constants';
 import getInitialPopulation from './initialPopulation';
 
-const initialPopulation = getInitialPopulation();
+const initialPopulation = getInitialPopulation(8);
 
 export default function beats(state = initialPopulation, action) {
 	switch (action.type) {

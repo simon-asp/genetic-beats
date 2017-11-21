@@ -23,4 +23,8 @@
 	& .box:hover {
 		background:blue;
 	}
+
+	& .newPopulation {
+		margin:40px 0 0 20px;
+	}
 }

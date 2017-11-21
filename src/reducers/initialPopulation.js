@@ -1,5 +1,3 @@
-let beats = [];
-
 // Get a random integer between min and max, inclusive max.
 const calculateProbability = (n) => {
 	if (Math.random() <= n) return 1;
@@ -17,10 +15,14 @@ const getRandomBeatArray = (size, n) => {
 	return arr;
 };
 
-export default function getInitialPopulation() {
-	beats = [];
-	// Generate 10 beats
-	for (let i = 0; i < 10; i++) {
+/* Generates an initial population with a beats array containing
+ * noBeats-amount of beats. One beat is an object that contains different
+ * instruments.
+ */
+export default function getInitialPopulation(noBeats) {
+	const beats = [];
+
+	for (let i = 0; i < noBeats; i++) {
 		const beat = {};
 
 		beat.kick = getRandomBeatArray(16, 0.3);

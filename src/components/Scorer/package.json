@@ -1,0 +1,6 @@
+{
+  "name": "Scorer",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./Scorer.js"
+}
