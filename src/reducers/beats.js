@@ -1,7 +1,9 @@
 import { ADD_NEW_POPULATION } from '../constants';
 import getInitialPopulation from './initialPopulation';
 
-export default function beats(state = getInitialPopulation(), action) {
+const initialPopulation = getInitialPopulation();
+
+export default function beats(state = initialPopulation, action) {
 	switch (action.type) {
 	case ADD_NEW_POPULATION:
 		return {

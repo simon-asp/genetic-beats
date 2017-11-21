@@ -1,5 +1,26 @@
 @import '../variables.css';
 
 .root {
-	
+
+	& .box {
+		padding:12px 16px;
+		margin:20px 0 0 20px;
+		background: lightblue;
+		float:left;
+		color:white;
+		cursor:pointer;
+		user-select: none;
+
+		& p {
+			margin:0;
+		}
+
+		& h3 {
+			margin:0 0 8px 0;
+		}
+	}
+
+	& .box:hover {
+		background:blue;
+	}
 }

@@ -1,4 +1,4 @@
-const beats = [];
+let beats = [];
 
 // Get a random integer between min and max, inclusive max.
 const calculateProbability = (n) => {
@@ -18,6 +18,7 @@ const getRandomBeatArray = (size, n) => {
 };
 
 export default function getInitialPopulation() {
+	beats = [];
 	// Generate 10 beats
 	for (let i = 0; i < 10; i++) {
 		const beat = {};
