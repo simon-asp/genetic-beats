@@ -1,7 +1,13 @@
 @import '../variables.css';
 
 .root {
+	display:flex;
+	justify-content: space-between;
+	padding:0 12px;
+
 	& .score {
-		background:url('')
+		background:url('./unfilledstar.svg');
+		width:16px;
+		height:16px;
 	}
 }

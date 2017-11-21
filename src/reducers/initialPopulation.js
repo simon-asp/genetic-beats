@@ -29,6 +29,8 @@ export default function getInitialPopulation(noBeats) {
 		beat.closedhat = getRandomBeatArray(16, 0.5);
 		beat.openhat = getRandomBeatArray(16, 0.4);
 		beat.clap = getRandomBeatArray(16, 0.3);
+		beat.score = 0;
+		beat.id = 'beat' + i;
 
 		beats.push(beat);
 	}

@@ -3,21 +3,13 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getBeats } from '../../actions/beats';
+import { getBeats, scoreBeat } from '../../actions/beats';
 import Scorer from '../Scorer';
 import s from './BeatList.css';
 
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 const beatList = [];
-
-/* Fitness part of the genetic algorithm. The user votes on a beat.
- *
- */
-const fitnessScoring = (i, score) => {
-	beatList[i].props.beat.score = 1
-	console.log(beatList[i].props.beat);
-};
 
 /* Selection part of the algorithm. Works with Rank Selection
  */
@@ -51,25 +43,28 @@ const playBeat = (i) => {
 
 /* Box component, rendering a single box of a beat
 */
-const Box = ({ beat, i }) => {
+const Box = (props) => {
+	const { beat, index, scoreBeat } = props;
 	return (
 		<div className={s.box}>
-			<h3>Beat {i + 1}</h3>
-			<button onClick={() => playBeat(i)} role="button" tabIndex={i}>Play</button>
+			<h3>Beat {index + 1}</h3>
+			<button onClick={() => playBeat(index)} role="button" tabIndex={index}>Play</button>
 			<p>K: {beat.kick}</p>
 			<p>C: {beat.closedhat}</p>
 			<p>O: {beat.openhat}</p>
 			<p>S: {beat.clap}</p><br />
-			<Scorer i={i} />
+			<Scorer {...props} />
 		</div>
 	);
 };
 
 /* Bealist component. Displays a list of beats that can be votable.
 */
-function BeatList({ beats }) {
-	beats.forEach((beat, i) => {
-		beatList.push(<Box beat={beat} i={i} key={i} />);
+function BeatList(props) {
+	const { beats, scoreBeat } = props;
+
+	beats.forEach((beat, index) => {
+		beatList.push(<Box beat={beat} index={index} scoreBeat={scoreBeat} key={beat.id} />);
 	});
 
   return (
@@ -88,6 +83,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   getBeats: () => dispatch(getBeats()),
+	scoreBeat: (index, score) => dispatch(scoreBeat(index, score)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatList));
