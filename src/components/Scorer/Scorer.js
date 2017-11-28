@@ -2,25 +2,33 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
-// import cx from 'classnames/bind';
 import s from './Scorer.css';
 
-// let cx = classNames.bind(s);
+let cx = classNames.bind(s);
 
+/* Scorer function, renders stars that can be clickable */
 function Scorer(props) {
 	const { index, beat, scoreBeat } = props;
-	const starClass = classNames({
-		star: true,
+	const starClass = cx({
+		score: true,
 		filled: beat.score !== 0,
 	});
 
+	const stars = [];
+	for (let i = 0; i < 5; i++) {
+		stars.push(
+			<div
+				className={starClass}
+				onClick={() => scoreBeat(index, i+1)}
+				role="button"
+				tabIndex={0}
+				key={i}
+			/>);
+	}
+
   return (
     <div className={s.root}>
-			<div className={s.score} onClick={() => scoreBeat(index, 1)} role="button" tabIndex={0} />
-			<div className={s.score} onClick={() => scoreBeat(index, 2)} role="button" tabIndex={0} />
-			<div className={s.score} onClick={() => scoreBeat(index, 3)} role="button" tabIndex={0} />
-			<div className={s.score} onClick={() => scoreBeat(index, 4)} role="button" tabIndex={0} />
-			<div className={s.score} onClick={() => scoreBeat(index, 5)} role="button" tabIndex={0} />
+			{ stars }
     </div>
   );
 }

@@ -21,6 +21,7 @@ const getRandomBeatArray = (size, n) => {
  */
 export default function getInitialPopulation(noBeats) {
 	const beats = [];
+	let id = 1;
 
 	for (let i = 0; i < noBeats; i++) {
 		const beat = {};

@@ -9,12 +9,11 @@ import s from './BeatList.css';
 
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
-const beatList = [];
 
 /* Selection part of the algorithm. Works with Rank Selection
  */
-const selection = () => {
-	console.log("mating");
+const selection = (beats) => {
+	
 }
 
 /* crossover part of the algorithm.
@@ -31,8 +30,11 @@ const mutation = () => {
 
 /* Generates a new population based on what is voted on.
 */
-const newPopulation = () => {
-	console.log("GA");
+const newPopulation = (props) => {
+	const { beats } = props;
+
+	// Select the chromosomes that should be passed forward
+	selection(beats);
 }
 
 /* Plays a beat with index i
@@ -60,8 +62,9 @@ const Box = (props) => {
 
 /* Bealist component. Displays a list of beats that can be votable.
 */
-function BeatList(props) {
+const BeatList = (props) => {
 	const { beats, scoreBeat } = props;
+	const beatList = [];
 
 	beats.forEach((beat, index) => {
 		beatList.push(<Box beat={beat} index={index} scoreBeat={scoreBeat} key={beat.id} />);
@@ -70,7 +73,10 @@ function BeatList(props) {
   return (
     <div className={s.root}>
 			{ beatList }
-			<button className={s.newPopulation} onClick={() => newPopulation()}>Run Algorithm</button>
+			<button
+				className={s.newPopulation}
+				onClick={() => newPopulation(props)}>
+				Run Algorithm</button>
     </div>
   );
 }
