@@ -6,42 +6,34 @@ import { connect } from 'react-redux';
 import { getBeats, scoreBeat } from '../../actions/beats';
 import Scorer from '../Scorer';
 import s from './BeatList.css';
+import { selection, crossover, mutation } from './GeneticAlgorithm';
 
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 
-/* Selection part of the algorithm. Works with Rank Selection
- */
-const selection = (beats) => {
-	
-}
-
-/* crossover part of the algorithm.
- */
-const crossover = () => {
-	console.log("crossover");
-}
-
-/* Mutation part of the algorithm.
- */
-const mutation = () => {
-	console.log("mutation");
-}
-
 /* Generates a new population based on what is voted on.
 */
 const newPopulation = (props) => {
+	// TODO: check if beats are scored yet
 	const { beats } = props;
 
-	// Select the chromosomes that should be passed forward
-	selection(beats);
-}
+	// Create new offspring 8 times. 
+	for (let i = 0; i < 8; i++) {
+		const parent1Index = selection(beats);
+		const parent2Index = selection(beats, parent1Index);
+
+		const offspring = crossover(beats, parent1Index, parent2Index);
+		console.log("candidates", parent1Index, parent2Index);
+		console.log(offspring);
+	}
+
+};
 
 /* Plays a beat with index i
  */
 const playBeat = (i) => {
 	console.log("playbeat", i);
-}
+};
 
 /* Box component, rendering a single box of a beat
 */

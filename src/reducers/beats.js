@@ -9,6 +9,7 @@ export default function beats(state = initialPopulation, action) {
 		return {
 			payload: 'New State',
 		};
+	// Map over the state, creating a new array with the score.
 	case SCORE_BEAT:
 		return state.map((beat, index) => {
 				if (index !== action.index) {
