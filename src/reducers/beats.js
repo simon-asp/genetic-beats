@@ -6,9 +6,7 @@ const initialPopulation = getInitialPopulation(8);
 export default function beats(state = initialPopulation, action) {
 	switch (action.type) {
 	case ADD_NEW_POPULATION:
-		return {
-			payload: 'New State',
-		};
+		return action.newBeats;
 	// Map over the state, creating a new array with the score.
 	case SCORE_BEAT:
 		return state.map((beat, index) => {

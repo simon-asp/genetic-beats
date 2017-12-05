@@ -50,15 +50,14 @@ export const crossover = (beats, parent1Index, parent2Index) => {
 		const copiedIndices = [];
 
 		// Get a random number of how many bits should be copied from parent 1.
-		const noTicksToCopy = getRandomIntInclusive(0, noTicks);
+		const noTicksToCopy = getRandomIntInclusive(0, noTicks - 1);
 
 		/* Copy bits from parent 1 to the new instrument array. Can get the same
 		 * bit twice, but had no time implementing it better. */
 		for (let j = 0; j < noTicksToCopy; j++) {
-			const randomIndex = getRandomIntInclusive(0, parent1Copy.length);
+			const randomIndex = getRandomIntInclusive(0, parent1Copy.length - 1);
 			copiedIndices.push(randomIndex);
-			if (parent1Copy[randomIndex] !== undefined)
-				instrNew[randomIndex] = parent1Copy[randomIndex];
+			instrNew[randomIndex] = parent1Copy[randomIndex];
 		}
 		// Copy bits from parent 2 that are not in the copied indices array.
 		for (let j = 0; j < instrNew.length; j++) {
@@ -69,13 +68,29 @@ export const crossover = (beats, parent1Index, parent2Index) => {
 
 		// Put together a child object
 		offspring[`${instrumentNames[i]}`] = instrNew;
+		offspring.score = 0;
 	}
 
 	return offspring;
 };
 
-/* Mutation part of the algorithm.
+/* Mutation part of the algorithm. Uses a bit flip mutation of 1% mutation rate.
+ * Flips one random bit in the incoming beat array.
  */
-export const mutation = () => {
-	console.log("mutation");
+export const mutation = (beat) => {
+	const noTicks = Object.values(beat)[0].length;
+	const copiedBeat = Object.assign({}, beat);
+
+	// if (Math.random() <= 0.01) {
+		// Object.values(beat).forEach((instrument) => {
+		// 	const rand = getRandomIntInclusive(0, noTicks - 1);
+		// 	console.log('rand', rand);
+		// 	console.log(instrument[rand]);
+		// 	instrument[rand] = 1 - instrument[rand];
+		// 	console.log(instrument[rand]);
+    //
+		// });
+    //
+		// console.log('beatcopy', beat);
+	// }
 };

@@ -2,17 +2,18 @@
 
 import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT } from '../constants';
 
-export function getBeats() {
+export function addNewPopulation(newBeats) {
   return {
     type: ADD_NEW_POPULATION,
+		newBeats,
   };
 }
 
 export function scoreBeat(index, score) {
   return {
     type: SCORE_BEAT,
-		score,
 		index,
+		score,
   };
 }
 
