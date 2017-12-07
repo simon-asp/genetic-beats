@@ -45,6 +45,7 @@ module.exports = {
 		'react/jsx-indent': 0,
 		'no-plusplus': 0,
 		'no-console': 0,
+		'linebreak-style': 0,
     // Not supporting nested package.json yet
     // https://github.com/benmosher/eslint-plugin-import/issues/458
     'import/no-extraneous-dependencies': 'off',

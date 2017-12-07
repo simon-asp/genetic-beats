@@ -7,6 +7,7 @@ import { addNewPopulation, scoreBeat } from '../../actions/beats';
 import Scorer from '../Scorer';
 import s from './BeatList.css';
 import { selection, crossover, mutation } from './GeneticAlgorithm';
+import playBeat from './playBeat';
 
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
@@ -33,20 +34,13 @@ const newPopulation = (props) => {
 	addNewPopulation(newBeatArray);
 };
 
-/* Plays a beat with index i
- */
-const playBeat = (i) => {
-	console.log("playbeat", i);
-};
-
 /* Box component, rendering a single box of a beat
 */
 const Box = (props) => {
 	const { beat, index, scoreBeat } = props;
 	return (
 		<div className={s.box}>
-			<h3>Beat {index + 1}</h3>
-			<button onClick={() => playBeat(index)} role="button" tabIndex={index}>Play</button>
+			<div className={s.playButton} onClick={() => console.log('hej')} role="button" tabIndex={index} />
 			<p>K: {beat.kick}</p>
 			<p>C: {beat.closedhat}</p>
 			<p>O: {beat.openhat}</p>
@@ -58,23 +52,44 @@ const Box = (props) => {
 
 /* Bealist component. Displays a list of beats that can be votable.
 */
-const BeatList = (props) => {
-	const { beats, scoreBeat, addNewPopulation } = props;
-	const beatList = [];
+class BeatList extends React.Component {
+	componentWillMount() {
+		this.populateArray(this.props);
+	}
 
-	beats.forEach((beat, index) => {
-		beatList.push(<Box beat={beat} index={index} scoreBeat={scoreBeat} key={beat.id} />);
-	});
+	componentDidMount() {
+		const { beats, index } = this.props;
+		const Tone = require('tone');
 
-  return (
-    <div className={s.root}>
-			{ beatList }
-			<button
-				className={s.newPopulation}
-				onClick={() => newPopulation(props)}>
-				Run Algorithm</button>
-    </div>
-  );
+		playBeat(Tone, beats, 0);
+	}
+	componentWillUpdate(nextProps) {
+		this.populateArray(nextProps);
+	}
+
+	// Populate the beatlist with Box components. Used when updating from redux.
+	populateArray(props) {
+		const { beats, scoreBeat, addNewPopulation } = props;
+		this.beatList = [];
+		beats.forEach((beat, index) => {
+			this.beatList.push(<Box beat={beat} index={index} scoreBeat={scoreBeat} key={beat.id} />);
+		});
+	}
+
+	render() {
+		return (
+			<div className={s.root}>
+				{ this.beatList }
+				<div
+					className={s.runButton}
+					onClick={() => newPopulation(this.props)}
+					role="button"
+					tabIndex="-1">
+					Run
+				</div>
+			</div>
+		);
+	}
 }
 
 BeatList.propTypes = {};
@@ -85,7 +100,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
 	scoreBeat: (index, score) => dispatch(scoreBeat(index, score)),
-	addNewPopulation: (newBeats) => dispatch(addNewPopulation(newBeats)),
+	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatList));
