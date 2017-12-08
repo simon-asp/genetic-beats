@@ -1,8 +1,8 @@
-import getRandomIntInclusive from '../../utils/utils';
+import * as utils from '../../utils/utils';
 
 /* Selection part of the algorithm. Works with Roulette Wheel Selection
  */
-export const selection = (beats, indexToSkip) => {
+const selection = (beats) => {
 	let totalSum = 0;
 	let partialSum = 0;
 
@@ -11,12 +11,12 @@ export const selection = (beats, indexToSkip) => {
 		totalSum += beat.score;
 	});
 
-	const rand = getRandomIntInclusive(0, totalSum);
+	const rand = utils.getRandomIntInclusive(0, totalSum);
 
 	// Compute the sum again, but stop if it's larger than the random number
 	for (let i = 0; i < beats.length; i++) {
 		partialSum += beats[i].score;
-		if (partialSum >= rand && i !== indexToSkip) return i;
+		if (partialSum >= rand) return i;
 	}
 };
 
@@ -24,23 +24,11 @@ export const selection = (beats, indexToSkip) => {
  * Returns a new beat which is the offspring from parent1, parent2.
  * Parent1, Parent2 = indices from the beat array.
  */
-export const crossover = (beats, parent1Index, parent2Index) => {
-	let noInstruments = 0;
-	let noTicks = 0;
+const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
+	const noInstruments = utils.getNoOfInstruments(beats);
+	const noTicks = beatInfo.noOfTicks;
+	const instrumentNames = utils.getInstrumentKeys(beats);
 	const offspring = {};
-  const instrumentNames = [];
-
-	/* Go through all values of a some beat object. Count instruments and the
-	 * number of ticks each beat has.
-	 * Puts the instrument keys in the instumentNames array. */
-	Object.entries(beats[0]).forEach((item) => {
-		// Filter out the pieces that are not beats.
-		if (Array.isArray(item[1])) {
-			noInstruments++;
-			noTicks = item[1].length;
-			instrumentNames.push(item[0]);
-		}
-	});
 
 	// Go through every instrument and crossover bits from the parents
 	for (let i = 0; i < noInstruments; i++) {
@@ -50,12 +38,12 @@ export const crossover = (beats, parent1Index, parent2Index) => {
 		const copiedIndices = [];
 
 		// Get a random number of how many bits should be copied from parent 1.
-		const noTicksToCopy = getRandomIntInclusive(0, noTicks - 1);
+		const noTicksToCopy = utils.getRandomIntInclusive(0, noTicks - 1);
 
 		/* Copy bits from parent 1 to the new instrument array. Can get the same
 		 * bit twice, but had no time implementing it better. */
 		for (let j = 0; j < noTicksToCopy; j++) {
-			const randomIndex = getRandomIntInclusive(0, parent1Copy.length - 1);
+			const randomIndex = utils.getRandomIntInclusive(0, parent1Copy.length - 1);
 			copiedIndices.push(randomIndex);
 			instrNew[randomIndex] = parent1Copy[randomIndex];
 		}
@@ -77,13 +65,13 @@ export const crossover = (beats, parent1Index, parent2Index) => {
 /* Mutation part of the algorithm. Uses a bit flip mutation of 1% mutation rate.
  * Flips one random bit in the incoming beat array.
  */
-export const mutation = (beat) => {
+const mutation = (beat) => {
 	const noTicks = Object.values(beat)[0].length;
 	const copiedBeat = Object.assign({}, beat);
 
 	// if (Math.random() <= 0.01) {
 		// Object.values(beat).forEach((instrument) => {
-		// 	const rand = getRandomIntInclusive(0, noTicks - 1);
+		// 	const rand = utils.getRandomIntInclusive(0, noTicks - 1);
 		// 	console.log('rand', rand);
 		// 	console.log(instrument[rand]);
 		// 	instrument[rand] = 1 - instrument[rand];
@@ -93,4 +81,28 @@ export const mutation = (beat) => {
     //
 		// console.log('beatcopy', beat);
 	// }
+};
+
+/* Generates a new population based on what is voted on.
+*/
+export const newPopulation = (props) => {
+	// TODO: check if beats are scored yet
+	const { beats, beatInfo, addNewPopulation } = props;
+	const newBeatArray = [];
+
+	// TODO: Flush all clicked buttons
+	// TODO: Stop all beats on new population, remove the beat array
+
+	// Create new offspring 8 times.
+	for (let i = 0; i < 8; i++) {
+		const parent1Index = selection(beats);
+		const parent2Index = selection(beats);
+
+		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
+		// mutation(offspring);
+
+		offspring.id = 'beat' + i;
+		newBeatArray.push(offspring);
+	}
+	addNewPopulation(newBeatArray);
 };

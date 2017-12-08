@@ -1,33 +1,56 @@
+import { getInstrumentKeys } from '../../utils/utils';
+
+/* Creates an array with ticks */
+const createTickArray = (noTicks) => {
+	const tickArray = [];
+	for (let i = 0; i < noTicks; i++) tickArray.push(i);
+	return tickArray;
+};
+
 /* Function to play beats */
-export default function playBeat(Tone, beats, index) {
+export function initializeBeat(Tone, beats, beatInfo, index) {
+	const instrumentKeys = getInstrumentKeys(beats);
+	const noTicks = beatInfo.noOfTicks;
+	const tickArray = createTickArray(noTicks);
+
+	// console.log(Tone.Transport);
+	Tone.Transport.cancel();
+
 	const instruments = new Tone.Players({
 		kick: require('./sounds/kick.wav'),
 		clap: require('./sounds/clap.wav'),
 		closedhat: require('./sounds/closedhat.wav'),
 		openhat: require('./sounds/openhat.wav'),
 	}, {
-		volume: -10,
+		volume: 20,
 	}).toMaster();
 
-	Tone.Transport.bpm.value = 128;
-	Tone.Transport.cancel();
+	Tone.Transport.bpm.value = 110;
 
-	console.log(beats);
-	const loop = new Tone.Sequence((time, tick) => {
-		if (beats[index][0][tick] === 1) instruments.get('kick').start();
-	// 	else if (beats[index][1][tick] === 1) instruments.get('closedhat').start();
-	// 	else if (beats[index][2][tick] === 1) instruments.get('openhat').start();
-	// 	else if (beats[index][3][tick] === 1) instruments.get('clap').start();
-	}, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], '16n');
-
-	loop.start();
+	const sequence = new Tone.Sequence((time, tick) => {
+		instrumentKeys.forEach((key) => {
+			if (beats[index][key][tick] === 1) instruments.get(key).start();
+		});
+	}, tickArray, '16n');
+	sequence.loop = 4;
+	// sequence.start();
 	Tone.Transport.start('+0.1');
+	return sequence;
+}
+
+// Stop the beat
+export function stopBeat(Tone, loop) {
+	// Tone.Transport.cancel();
+	loop.stop();
+	// Tone.Transport.stop();
+}
+
+// Start the beat
+export function startBeat(Tone, loop) {
+	loop.start();
+	// Tone.Transport.start('+0.1');
 }
 
 // document.getElementById('playToggle').addEventListener("click", function(){
 // 	Tone.Transport.start('+0.1');
-// });
-//
-// document.getElementById('stop').addEventListener("click", function() {
-// 	Tone.Transport.stop();
 // });

@@ -1,3 +1,5 @@
+import { beatInfoObj } from './beatInfo';
+
 // Get a random integer between min and max, inclusive max.
 const calculateProbability = (n) => {
 	if (Math.random() <= n) return 1;
@@ -19,22 +21,21 @@ const getRandomBeatArray = (size, n) => {
  * noBeats-amount of beats. One beat is an object that contains different
  * instruments.
  */
-export default function getInitialPopulation(noBeats) {
-	const beats = [];
-	let id = 1;
+export default function getInitialPopulation() {
+	const beatList = [];
 
-	for (let i = 0; i < noBeats; i++) {
+	for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
 		const beat = {};
-
-		beat.kick = getRandomBeatArray(16, 0.3);
-		beat.closedhat = getRandomBeatArray(16, 0.5);
-		beat.openhat = getRandomBeatArray(16, 0.4);
-		beat.clap = getRandomBeatArray(16, 0.3);
+		beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.3);
+		beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.5);
+		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
+		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
 		beat.score = 0;
 		beat.id = 'beat' + i;
+		beat.clicked = false;
 
-		beats.push(beat);
+		beatList.push(beat);
 	}
 
-	return beats;
+	return beatList;
 }

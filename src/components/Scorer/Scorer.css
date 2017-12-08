@@ -1,18 +1,20 @@
 @import '../variables.css';
 
 .root {
-	display:flex;
-	justify-content: space-between;
-	padding:0 12px;
-	width:50%;
+  display:flex;
+  justify-content: space-between;
+  padding:0 12px;
+  width:50%;
+  margin-top:24px;
 
-	& .score, & .filled {
-		background:url('./unfilledstar.svg');
-		width:20px;
-		height:20px;
-	}
+  & .score, & .filled {
+    background:url('./unfilledstar.svg');
+    width:20px;
+    height:20px;
+    outline:0;
+  }
 
-	& .filled {
-		background:url('./filledstar.svg');
-	}
+  & .filled {
+    background:url('./filledstar.svg');
+  }
 }
