@@ -10,12 +10,8 @@ class Lines extends React.Component {
   static propTypes = {
   };
 
-	// componentWillMount() {
-	// 	this.renderLines = this.renderLines.bind(this);
-	// }
-
-	componentDidMount() {
-		this.props.onRef(this);
+	componentDidReceiveProps() {
+		console.log(this.props.domNodes);
 	}
 
 	/* Get the center coordinates for a DOM element */
@@ -41,6 +37,7 @@ class Lines extends React.Component {
 	}
 
   render() {
+		console.log('render', this.props.domNodes);
     return (
 			<div className={s.root}>
 

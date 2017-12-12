@@ -23,6 +23,7 @@ class BeatList extends React.Component {
 		this.setState({
 			clickedPlay: [],
 			sequences: [],
+			domNodes: [],
 		});
 	}
 
@@ -32,13 +33,6 @@ class BeatList extends React.Component {
 		const Tone = require('tone');
 		this.populateBeatArray(this.props);
 		this.setState({ Tone }, () => this.populateSequenceArray(this.props.beats));
-		//this.lines.renderLines();
-		// const domNodes = [];
-		// this.props.beats.forEach((beat) => {
-		// 	console.log(beat.id);
-		// 	domNodes.push(document.getElementById(beat.id));
-		// });
-		console.log(this.box);
 	}
 
 	/* Populate the beat array and the sequence array on new props from redux
@@ -99,6 +93,13 @@ class BeatList extends React.Component {
 		this.setState({ sequences });
 	}
 
+	/* Store DOM-nodes of the boxes in the beatlist */
+	storeDomNodes(domNode) {
+		const domNodes = this.state.domNodes;
+		domNodes.push(domNode);
+		this.setState({ domNodes });
+	}
+
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props) {
 		const { beats, scoreBeatComponent } = props;
@@ -112,6 +113,7 @@ class BeatList extends React.Component {
 				  scoreBeat={scoreBeatComponent}
 				  key={beat.id}
 				  onPlayClick={this.onPlayClick.bind(this)}
+					storeDomNodes={(domNode) => this.storeDomNodes(domNode)}
 				/>);
 		});
 	}
@@ -134,7 +136,7 @@ class BeatList extends React.Component {
 				  tabIndex="-2"
 				>RESET BEATS</div>
 
-				<Lines onRef={(component) => { this.lines = component; }} />
+				<Lines domNodes={this.state.domNodes} />
 			</div>
 		);
 	}
