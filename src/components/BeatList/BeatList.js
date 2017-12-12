@@ -5,32 +5,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import { newPopulation } from './GeneticAlgorithm';
-import Scorer from '../Scorer';
 import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat } from './playBeat';
-
-// import cx from 'classnames';
-// let cx = classNames.bind(s);
-
-/* Box component, rendering a single box of a beat
-*/
-const Box = (props) => {
-	const { beat, index, scoreBeat, onPlayClick, id } = props;
-	return (
-		<div className={s.box} id={id}>
-			<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
-
-			<div className={s.textContainer}>
-				<p>K: {beat.kick}</p>
-				<p>C: {beat.closedhat}</p>
-				<p>O: {beat.openhat}</p>
-				<p>S: {beat.clap}</p>
-			</div>
-
-			<Scorer {...props} />
-		</div>
-	);
-};
+import Lines from '../Lines';
+import Box from '../Box';
 
 /* Bealist component. Displays a list of beats that can be votable.
 */
@@ -54,6 +32,13 @@ class BeatList extends React.Component {
 		const Tone = require('tone');
 		this.populateBeatArray(this.props);
 		this.setState({ Tone }, () => this.populateSequenceArray(this.props.beats));
+		//this.lines.renderLines();
+		// const domNodes = [];
+		// this.props.beats.forEach((beat) => {
+		// 	console.log(beat.id);
+		// 	domNodes.push(document.getElementById(beat.id));
+		// });
+		console.log(this.box);
 	}
 
 	/* Populate the beat array and the sequence array on new props from redux
@@ -98,19 +83,10 @@ class BeatList extends React.Component {
 	/* When clicking the button that runs the genetic algorithm. Check for score
 	 * of the beat first. */
 	onGenesisClick() {
-		const el1 = document.getElementById('beat0');
-		const el2 = document.getElementById('beat4');
-		const coords1 = this.getCoord(el1);
-		const coords2 = this.getCoord(el2);
-
-		console.log(coords1);
-		console.log(coords2);
-		console.log(el1);
+		// TODO: make a modal thing for the error message
 		const scoreZero = this.props.beats.map(beat => beat.score).includes(0);
-		document.getElementById('line1').setAttribute('x1', coords1.x);
-		document.getElementById('line1').setAttribute('y1', coords1.y);
 		if (scoreZero) console.log('Please score all the beats');
-		//else newPopulation(this.props);
+		else newPopulation(this.props);
 	}
 
 	/* Initialize sequences and put in the state to be able to play them. */
@@ -125,7 +101,7 @@ class BeatList extends React.Component {
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props) {
-		const { beats, scoreBeat, addNewPopulation } = props;
+		const { beats, scoreBeatComponent } = props;
 		this.beatList = [];
 		beats.forEach((beat, index) => {
 			this.beatList.push(
@@ -133,24 +109,16 @@ class BeatList extends React.Component {
 					id={beat.id}
 				  beat={beat}
 				  index={index}
-				  scoreBeat={scoreBeat}
+				  scoreBeat={scoreBeatComponent}
 				  key={beat.id}
 				  onPlayClick={this.onPlayClick.bind(this)}
 				/>);
 		});
 	}
 
-	getCoord(el) {
-		const coords = {};
-		coords.x = el.offsetLeft + (el.offsetWidth / 2);
-		coords.y = el.offsetTop + (el.offsetHeight / 2);
-		return coords;
-	}
-
 	render() {
-		console.log(this.state);
 		return (
-			<div className={s.root}>
+			<div className={s.root} id="beatList">
 				{ this.beatList }
 				<div
 				  className={s.runButton}
@@ -166,7 +134,7 @@ class BeatList extends React.Component {
 				  tabIndex="-2"
 				>RESET BEATS</div>
 
-				<svg className={s.line} width="100vw" height="100vh"><line id="line1" strokeWidth="6" strokeLinecap="round" x1="0" y1="0" x2="213" y2="354" stroke="rgba(100,100,100,0.4)"/></svg>
+				<Lines onRef={(component) => { this.lines = component; }} />
 			</div>
 		);
 	}
@@ -178,7 +146,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-	scoreBeat: (index, score) => dispatch(scoreBeat(index, score)),
+	scoreBeatComponent: (index, score) => dispatch(scoreBeat(index, score)),
 	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
 	resetBeats: () => dispatch(resetBeats()),
 });

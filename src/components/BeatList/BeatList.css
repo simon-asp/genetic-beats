@@ -11,51 +11,6 @@
 	box-sizing: border-box;
 	position:relative;
 
-	& .line {
-		position: absolute;
-		z-index: 0;
-	}
-
-	& .box {
-		background: #383f56;
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		justify-content: center;
-		width:20%;
-		padding:20px 16px;
-		margin:0 20px 0 20px;
-		color:white;
-		cursor:pointer;
-		user-select: none;
-		box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
-		font-size: 12px;
-		letter-spacing: 3px;
-		font-family: monospace;
-		z-index: 1;
-
-		& .textContainer {
-			& p {
-				margin:4px 0 0 0;
-			}
-		}
-
-		& h3 {
-			margin:0 0 8px 0;
-		}
-
-		& .playButton {
-			background:url('./playbutton.svg') no-repeat;
-			width:50px;
-			height:50px;
-			margin-right:24px;
-			outline:0;
-		}
-	}
-
-	& .box:hover {
-	}
-
 	& .newPopulation {
 		margin:40px 0 0 20px;
 	}
