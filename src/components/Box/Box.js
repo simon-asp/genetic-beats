@@ -20,7 +20,6 @@ class Box extends React.Component {
 
   render() {
 		const { beat, index, scoreBeat, onPlayClick, id } = this.props;
-		console.log(this.boxDiv);
     return (
 			<div className={s.root}>
 				<div className={s.box} id={id} ref={(ref) => { this.boxDiv = ref; }}>

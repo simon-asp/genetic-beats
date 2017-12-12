@@ -10,8 +10,10 @@ class Lines extends React.Component {
   static propTypes = {
   };
 
-	componentDidReceiveProps() {
-		console.log(this.props.domNodes);
+	componentWillReceiveProps() {
+		if (this.props.domNodes.length === 8) {
+			this.renderLines();
+		}
 	}
 
 	/* Get the center coordinates for a DOM element */
@@ -34,16 +36,18 @@ class Lines extends React.Component {
 
 		document.getElementById('line1').setAttribute('x1', coords1.x);
 		document.getElementById('line1').setAttribute('y1', coords1.y);
+		document.getElementById('line1').setAttribute('x2', coords2.y);
+		document.getElementById('line1').setAttribute('y2', coords2.y);
 	}
 
   render() {
-		console.log('render', this.props.domNodes);
+		//console.log('render', this.props.domNodes);
     return (
 			<div className={s.root}>
-
+				<svg><line id="line1" stroke="black" strokeWidth="20" className={s.line} /></svg>
 			</div>
     );
   }
 }
-// <svg><line id="line1" className={s.line} /></svg>
+
 export default withStyles(s)(Lines);
