@@ -48,6 +48,8 @@ module.exports = {
 		'linebreak-style': 0,
 		'prefer-template': 0,
 		'prefer-default-export': 0,
+		'no-console': 0,
+		'react/forbid-prop-types': 0,
     // Not supporting nested package.json yet
     // https://github.com/benmosher/eslint-plugin-import/issues/458
     'import/no-extraneous-dependencies': 'off',

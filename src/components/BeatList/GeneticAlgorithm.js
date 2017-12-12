@@ -65,22 +65,23 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 /* Mutation part of the algorithm. Uses a bit flip mutation of 1% mutation rate.
  * Flips one random bit in the incoming beat array.
  */
-const mutation = (beat) => {
-	const noTicks = Object.values(beat)[0].length;
+const mutation = (beat, beatInfo) => {
 	const copiedBeat = Object.assign({}, beat);
 
-	// if (Math.random() <= 0.01) {
-		// Object.values(beat).forEach((instrument) => {
-		// 	const rand = utils.getRandomIntInclusive(0, noTicks - 1);
-		// 	console.log('rand', rand);
-		// 	console.log(instrument[rand]);
-		// 	instrument[rand] = 1 - instrument[rand];
-		// 	console.log(instrument[rand]);
-    //
-		// });
-    //
-		// console.log('beatcopy', beat);
-	// }
+	if (Math.random() <= 0.03) {
+		const instrKeys = Object.keys(beat).filter(key => key !== 'id' && key !== 'score');
+		const randomKey = instrKeys[utils.getRandomIntInclusive(0, instrKeys.length - 1)];
+		const randomIndex = utils.getRandomIntInclusive(0, beatInfo.noOfTicks - 1);
+
+		const mutatedArr = copiedBeat[randomKey].map((tick, i) => {
+			if (i === randomIndex) return 1 - tick;
+			return tick;
+		});
+		copiedBeat[randomKey] = mutatedArr;
+		console.log(beat.id, 'mutated at', randomKey, 'index', randomIndex, '!');
+	}
+
+	return copiedBeat;
 };
 
 /* Generates a new population based on what is voted on.
@@ -91,7 +92,6 @@ export const newPopulation = (props) => {
 	const newBeatArray = [];
 
 	// TODO: Flush all clicked buttons
-	// TODO: Stop all beats on new population, remove the beat array
 
 	// Create new offspring 8 times.
 	for (let i = 0; i < 8; i++) {
@@ -99,10 +99,10 @@ export const newPopulation = (props) => {
 		const parent2Index = selection(beats);
 
 		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
-		// mutation(offspring);
-
 		offspring.id = 'beat' + i;
-		newBeatArray.push(offspring);
+		const mutatedOffspring = mutation(offspring, beatInfo);
+
+		newBeatArray.push(mutatedOffspring);
 	}
 	addNewPopulation(newBeatArray);
 };

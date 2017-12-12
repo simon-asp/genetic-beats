@@ -28,11 +28,10 @@ export default function getInitialPopulation() {
 		const beat = {};
 		beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.3);
 		beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.5);
-		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
-		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
+		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.25);
+		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
 		beat.score = 0;
 		beat.id = 'beat' + i;
-		beat.clicked = false;
 
 		beatList.push(beat);
 	}

@@ -1,4 +1,4 @@
-import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT } from '../constants';
+import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS } from '../constants';
 import getInitialPopulation from './initialPopulation';
 
 const initialPopulation = getInitialPopulation();
@@ -28,6 +28,8 @@ export default function beats(state = initialPopulation, action) {
 						score: 0,
 				};
 		});
+	case RESET_BEATS:
+		return initialPopulation;
 	default:
 		return state;
 	}

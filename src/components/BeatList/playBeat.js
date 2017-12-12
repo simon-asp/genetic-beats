@@ -22,10 +22,10 @@ export function initializeBeat(Tone, beats, beatInfo, index) {
 		closedhat: require('./sounds/closedhat.wav'),
 		openhat: require('./sounds/openhat.wav'),
 	}, {
-		volume: 20,
+		volume: 10,
 	}).toMaster();
 
-	Tone.Transport.bpm.value = 110;
+	Tone.Transport.bpm.value = 106;
 
 	const sequence = new Tone.Sequence((time, tick) => {
 		instrumentKeys.forEach((key) => {

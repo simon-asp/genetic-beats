@@ -1,69 +1,78 @@
 @import '../variables.css';
 
 .root {
-  background: #27242b;
-  height: 100vh;
-  width:100vw;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  padding-bottom:200px;
-  box-sizing: border-box;
+	background: #27242b;
+	height: 100vh;
+	width:100vw;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	box-sizing: border-box;
+	position:relative;
 
-  & .box {
-    background: #383f56;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    width:20%;
-    padding:20px 16px;
-    margin:0 0 0 40px;
-    color:white;
-    cursor:pointer;
-    user-select: none;
-    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
-    font-size: 12px;
-    letter-spacing: 3px;
-    font-family: monospace;
+	& .line {
+		position: absolute;
+		z-index: 0;
+	}
 
-    & .textContainer {
-      & p {
-        margin:4px 0 0 0;
-      }
-    }
+	& .box {
+		background: #383f56;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		width:20%;
+		padding:20px 16px;
+		margin:0 20px 0 20px;
+		color:white;
+		cursor:pointer;
+		user-select: none;
+		box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
+		font-size: 12px;
+		letter-spacing: 3px;
+		font-family: monospace;
+		z-index: 1;
 
-    & h3 {
-      margin:0 0 8px 0;
-    }
+		& .textContainer {
+			& p {
+				margin:4px 0 0 0;
+			}
+		}
 
-    & .playButton {
-      background:url('./playbutton.svg') no-repeat;
-      width:50px;
-      height:50px;
-      margin-right:24px;
-      outline:0;
-    }
-  }
+		& h3 {
+			margin:0 0 8px 0;
+		}
 
-  & .box:hover {
-  }
+		& .playButton {
+			background:url('./playbutton.svg') no-repeat;
+			width:50px;
+			height:50px;
+			margin-right:24px;
+			outline:0;
+		}
+	}
 
-  & .newPopulation {
-    margin:40px 0 0 20px;
-  }
+	& .box:hover {
+	}
 
-  & .runButton {
-    text-align: center;
-    padding:12px 24px;
-    font-size:12px;
-    letter-spacing: 2px;
-    font-family: monospace;
-    color:white;
-    background:#383f56;
-    cursor:pointer;
-    box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
-    outline:0;
-  }
+	& .newPopulation {
+		margin:40px 0 0 20px;
+	}
+
+	& .runButton {
+		text-align: center;
+		padding:12px 24px;
+		font-size:12px;
+		margin:0 12px 0 12px;
+		letter-spacing: 2px;
+		font-family: monospace;
+		color:white;
+		background:#383f56;
+		cursor:pointer;
+		box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
+		outline:0;
+		user-select: none;
+		z-index: 1;
+	}
 }

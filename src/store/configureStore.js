@@ -1,12 +1,15 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import throttle from 'lodash/throttle';
 import rootReducer from '../reducers';
 import createHelpers from './createHelpers';
 import createLogger from './logger';
+import { loadState, saveState } from './localStorage';
 
 export default function configureStore(initialState, helpersConfig) {
   const helpers = createHelpers(helpersConfig);
   const middleware = [thunk.withExtraArgument(helpers)];
+	const persistedState = loadState();
 
   let enhancer;
 
@@ -25,7 +28,12 @@ export default function configureStore(initialState, helpersConfig) {
   }
 
   // See https://github.com/rackt/redux/releases/tag/v3.1.0
-  const store = createStore(rootReducer, initialState, enhancer);
+  const store = createStore(rootReducer, persistedState, enhancer);
+
+	// Save the state in the browser using the local storage api
+	store.subscribe(throttle(() => {
+		saveState(store.getState());
+	}, 1000));
 
   // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
   if (__DEV__ && module.hot) {
