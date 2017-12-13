@@ -1,0 +1,6 @@
+{
+  "name": "BeatTimeline",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./BeatTimeline.js"
+}

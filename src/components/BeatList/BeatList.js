@@ -122,7 +122,6 @@ class BeatList extends React.Component {
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
-
 				<div
 				  className={s.runButton}
 				  onClick={() => this.onGenesisClick()}

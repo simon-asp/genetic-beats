@@ -12,7 +12,7 @@ class Lines extends React.Component {
 
 	componentWillReceiveProps() {
 		if (this.props.domNodes.length === 8) {
-			this.renderLines();
+			// this.renderLines();
 		}
 	}
 
@@ -36,15 +36,14 @@ class Lines extends React.Component {
 
 		document.getElementById('line1').setAttribute('x1', coords1.x);
 		document.getElementById('line1').setAttribute('y1', coords1.y);
-		document.getElementById('line1').setAttribute('x2', coords2.y);
+		document.getElementById('line1').setAttribute('x2', coords2.x);
 		document.getElementById('line1').setAttribute('y2', coords2.y);
 	}
 
   render() {
-		//console.log('render', this.props.domNodes);
     return (
 			<div className={s.root}>
-				<svg><line id="line1" stroke="black" strokeWidth="20" className={s.line} /></svg>
+				<svg><line id="line1" stroke="rgba(255,255,255,0.4)" strokeWidth="8" className={s.line} /></svg>
 			</div>
     );
   }

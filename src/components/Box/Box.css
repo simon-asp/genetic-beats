@@ -21,6 +21,7 @@
 		letter-spacing: 3px;
 		font-family: monospace;
 		z-index: 1;
+		position: relative;
 
 		& .textContainer {
 			& p {

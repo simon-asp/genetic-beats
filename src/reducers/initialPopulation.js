@@ -19,10 +19,11 @@ const getRandomBeatArray = (size, n) => {
 
 /* Generates an initial population with a beats array containing
  * noBeats-amount of beats. One beat is an object that contains different
- * instruments.
+ * instruments. Returns a timeline array, which contains a beat array.
  */
 export default function getInitialPopulation() {
 	const beatList = [];
+	const timeline = [];
 
 	for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
 		const beat = {};
@@ -36,5 +37,6 @@ export default function getInitialPopulation() {
 		beatList.push(beat);
 	}
 
-	return beatList;
+	timeline.push(beatList);
+	return timeline;
 }
