@@ -8,22 +8,31 @@ import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import BeatList from '../BeatList';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
+/* Populate the beatlist with Box components. Used when updating from redux. */
 
-function BeatTimeline(props) {
-	const { beatTimeline, beatInfo, scoreBeatProp, addNewPopulation, resetBeats } = props;
+/* Populate the beat timeline array with beatlist components */
+const populateTimelineArray = (props) => {
+	const beatTimelineArray = [];
+	props.beatTimeline.forEach((generation, index) => {
+		beatTimelineArray.push(
+			<BeatList
+				{...props}
+				beats={props.beatTimeline[index]}
+				timeLineIndex={index}
+				key={'generation' + index}
+			/>,
+		);
+	});
+	return beatTimelineArray;
+};
+
+const BeatTimeline = (props) => {
   return (
     <div className={s.root}>
-			<BeatList
-				beats={beatTimeline[0]}
-				beatInfo={beatInfo}
-				scoreBeat={scoreBeatProp}
-				addNewPopulation={addNewPopulation}
-				resetBeats={resetBeats}
-				timeLineIndex={0}
-			/>
+			{ populateTimelineArray(props) }
     </div>
   );
-}
+};
 
 BeatTimeline.propTypes = {};
 
