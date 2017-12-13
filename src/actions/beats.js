@@ -2,6 +2,7 @@
 
 import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS } from '../constants';
 
+/* Adds a new population, newBeats is an array */
 export function addNewPopulation(newBeats) {
   return {
     type: ADD_NEW_POPULATION,
@@ -9,18 +10,12 @@ export function addNewPopulation(newBeats) {
   };
 }
 
-export function scoreBeat(index, score) {
+export function scoreBeat(timeLineIndex, index, score) {
   return {
     type: SCORE_BEAT,
+		timeLineIndex,
 		index,
 		score,
-  };
-}
-
-export function unscoreBeat(index) {
-  return {
-    type: UNSCORE_BEAT,
-		index,
   };
 }
 

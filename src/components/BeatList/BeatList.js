@@ -2,8 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import { newPopulation } from './GeneticAlgorithm';
 import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat } from './playBeat';
@@ -14,9 +12,22 @@ import Box from '../Box';
 */
 class BeatList extends React.Component {
 	static propTypes = {
-    beats: PropTypes.array.isRequired,
-		beatInfo: PropTypes.object.isRequired,
+		beats: PropTypes.array,
+		beatInfo: PropTypes.object,
+		scoreBeat: PropTypes.func,
+		addNewPopulation: PropTypes.func,
+		resetBeats: PropTypes.func,
+		timeLineIndex: PropTypes.number,
   };
+
+	static defaultProps = {
+		beats: [],
+		beatInfo: {},
+		scoreBeat: () => {},
+		addNewPopulation: () => {},
+		resetBeats: () => {},
+		timeLineIndex: 0,
+	}
 
 	/* Populate the array at init */
 	componentWillMount() {
@@ -86,11 +97,11 @@ class BeatList extends React.Component {
 	/* Initialize sequences and put in the state to be able to play them. */
 	populateSequenceArray(newBeats) {
 		// TODO: Doesn't work. same sequences are played every time.
-		const sequences = this.state.sequences;
-		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
-			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i));
-		}
-		this.setState({ sequences });
+		// const sequences = this.state.sequences;
+		// for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+		// 	sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i));
+		// }
+		// this.setState({ sequences });
 	}
 
 	/* Store DOM-nodes of the boxes in the beatlist */
@@ -102,18 +113,19 @@ class BeatList extends React.Component {
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props) {
-		const { beats, scoreBeatComponent } = props;
+		const { beats, scoreBeat, timeLineIndex } = props;
 		this.beatList = [];
 		beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
 					id={beat.id}
-				  beat={beat}
-				  index={index}
-				  scoreBeat={scoreBeatComponent}
-				  key={beat.id}
-				  onPlayClick={this.onPlayClick.bind(this)}
-					storeDomNodes={(domNode) => this.storeDomNodes(domNode)}
+					beat={beat}
+					index={index}
+					timeLineIndex={timeLineIndex}
+					scoreBeat={scoreBeat}
+					key={beat.id}
+					onPlayClick={this.onPlayClick.bind(this)}
+					storeDomNodes={domNode => this.storeDomNodes(domNode)}
 				/>);
 		});
 	}
@@ -123,17 +135,17 @@ class BeatList extends React.Component {
 			<div className={s.root} id="beatList">
 				{ this.beatList }
 				<div
-				  className={s.runButton}
-				  onClick={() => this.onGenesisClick()}
-				  role="button"
-				  tabIndex="-1"
+					className={s.runButton}
+					onClick={() => this.onGenesisClick()}
+					role="button"
+					tabIndex="-1"
 				>BEAT GENESIS</div>
 
 				<div
-				  className={s.runButton}
-				  onClick={() => this.props.resetBeats()}
-				  role="button"
-				  tabIndex="-2"
+					className={s.runButton}
+					onClick={() => this.props.resetBeats()}
+					role="button"
+					tabIndex="-2"
 				>RESET BEATS</div>
 
 				<Lines domNodes={this.state.domNodes} />
@@ -142,15 +154,4 @@ class BeatList extends React.Component {
 	}
 }
 
-const mapState = state => ({
-  beats: state.beats,
-	beatInfo: state.beatInfo,
-});
-
-const mapDispatch = dispatch => ({
-	scoreBeatComponent: (index, score) => dispatch(scoreBeat(index, score)),
-	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
-	resetBeats: () => dispatch(resetBeats()),
-});
-
-export default connect(mapState, mapDispatch)(withStyles(s)(BeatList));
+export default withStyles(s)(BeatList);

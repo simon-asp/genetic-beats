@@ -1,4 +1,4 @@
-import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS } from '../constants';
+import { ADD_NEW_POPULATION, SCORE_BEAT, RESET_BEATS } from '../constants';
 import getInitialPopulation from './initialPopulation';
 
 const initialPopulation = getInitialPopulation();
@@ -6,10 +6,14 @@ const initialPopulation = getInitialPopulation();
 export default function beatTimeline(state = initialPopulation, action) {
 	switch (action.type) {
 	case ADD_NEW_POPULATION:
-		return action.newBeats;
+		return [
+        ...state,
+				action.newBeats,
+      ];
 	// Map over the state, creating a new array with the score.
-	case SCORE_BEAT:
-		return state.map((beat, index) => {
+	case SCORE_BEAT: {
+		const newState = [];
+		newState.push(state[action.timeLineIndex].map((beat, index) => {
 				if (index !== action.index) {
 						return beat;
 				}
@@ -17,17 +21,9 @@ export default function beatTimeline(state = initialPopulation, action) {
 						...beat,
 						score: action.score,
 				};
-		});
-	case UNSCORE_BEAT:
-		return state.map((beat, index) => {
-				if (index !== action.index) {
-						return beat;
-				}
-				return {
-						...beat,
-						score: 0,
-				};
-		});
+		}));
+		return newState;
+	}
 	case RESET_BEATS:
 		return initialPopulation;
 	default:
