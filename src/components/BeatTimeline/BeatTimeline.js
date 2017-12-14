@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import BeatList from '../BeatList';
-import Lines from '../Lines';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
@@ -46,7 +45,7 @@ class BeatTimeline extends React.Component {
 
 	/* Populate the beat timeline array with beatlist components */
 	populateTimelineArray() {
-		const { beatTimeline } = this.props;
+		const { beatTimeline, evolutionPairs } = this.props;
 		const beatTimelineArray = [];
 		beatTimeline.forEach((generation, index) => {
 			beatTimelineArray.push(
@@ -54,8 +53,11 @@ class BeatTimeline extends React.Component {
 					{...this.props}
 					beats={beatTimeline[index]}
 					timelineIndex={index}
-					key={'generation' + index}
 					storeDomNodes={(domNode, timelineIndex) => this.storeDomNodes(domNode, timelineIndex)}
+					domNodes={this.state.domNodesTimeline[index]}
+					noOfGenerations={beatTimeline.length}
+					key={'generation' + index}
+					evolutionPairs={evolutionPairs[index]}
 				/>,
 			);
 		});
@@ -66,12 +68,6 @@ class BeatTimeline extends React.Component {
     return (
 			<div className={s.root}>
 				{ this.populateTimelineArray() }
-				<Lines
-					domNodesTimeline={this.state.domNodesTimeline}
-					beatInfo={this.props.beatInfo}
-					noOfGenerations={this.props.beatTimeline.length}
-					evolutionPairs={this.props.evolutionPairs}
-				/>
 			</div>
     );
   }
