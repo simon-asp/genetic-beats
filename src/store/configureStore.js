@@ -33,7 +33,7 @@ export default function configureStore(initialState, helpersConfig) {
 	// Save the state in the browser using the local storage api
 	store.subscribe(throttle(() => {
 		saveState(store.getState());
-	}, 1000));
+	}, 5000));
 
   // Hot reload reducers (requires Webpack or Browserify HMR to be enabled)
   if (__DEV__ && module.hot) {

@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import { newPopulation } from './GeneticAlgorithm';
 import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat } from './playBeat';
-import Lines from '../Lines';
 import Box from '../Box';
 
 /* Bealist component. Displays a list of beats that can be votable.
@@ -17,7 +16,8 @@ class BeatList extends React.Component {
 		scoreBeat: PropTypes.func,
 		addNewPopulation: PropTypes.func,
 		resetBeats: PropTypes.func,
-		timeLineIndex: PropTypes.number,
+		timelineIndex: PropTypes.number,
+		storeDomNodes: PropTypes.func,
   };
 
 	static defaultProps = {
@@ -26,7 +26,8 @@ class BeatList extends React.Component {
 		scoreBeat: () => {},
 		addNewPopulation: () => {},
 		resetBeats: () => {},
-		timeLineIndex: 0,
+		timelineIndex: 0,
+		storeDomNodes: () => {},
 	}
 
 	/* Populate the array at init */
@@ -34,7 +35,6 @@ class BeatList extends React.Component {
 		this.setState({
 			clickedPlay: [],
 			sequences: [],
-			domNodes: [],
 		});
 	}
 
@@ -97,23 +97,16 @@ class BeatList extends React.Component {
 	/* Initialize sequences and put in the state to be able to play them. */
 	populateSequenceArray(newBeats) {
 		// TODO: Doesn't work. same sequences are played every time.
-		// const sequences = this.state.sequences;
-		// for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
-		// 	sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i));
-		// }
-		// this.setState({ sequences });
-	}
-
-	/* Store DOM-nodes of the boxes in the beatlist */
-	storeDomNodes(domNode) {
-		const domNodes = this.state.domNodes;
-		domNodes.push(domNode);
-		this.setState({ domNodes });
+		const sequences = this.state.sequences;
+		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i));
+		}
+		this.setState({ sequences });
 	}
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props) {
-		const { beats, scoreBeat, timeLineIndex } = props;
+		const { beats, scoreBeat, timelineIndex, storeDomNodes } = props;
 		this.beatList = [];
 		beats.forEach((beat, index) => {
 			this.beatList.push(
@@ -121,11 +114,11 @@ class BeatList extends React.Component {
 					id={beat.id}
 					beat={beat}
 					index={index}
-					timeLineIndex={timeLineIndex}
+					timelineIndex={timelineIndex}
 					scoreBeat={scoreBeat}
 					key={beat.id}
 					onPlayClick={this.onPlayClick.bind(this)}
-					storeDomNodes={domNode => this.storeDomNodes(domNode)}
+					storeDomNodes={storeDomNodes}
 				/>);
 		});
 	}
@@ -147,8 +140,6 @@ class BeatList extends React.Component {
 					role="button"
 					tabIndex="-2"
 				>RESET BEATS</div>
-
-				<Lines domNodes={this.state.domNodes} />
 			</div>
 		);
 	}

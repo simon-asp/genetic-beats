@@ -10,10 +10,10 @@ export function addNewPopulation(newBeats) {
   };
 }
 
-export function scoreBeat(timeLineIndex, index, score) {
+export function scoreBeat(timelineIndex, index, score) {
   return {
     type: SCORE_BEAT,
-		timeLineIndex,
+		timelineIndex,
 		index,
 		score,
   };

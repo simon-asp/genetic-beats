@@ -14,7 +14,7 @@ class Box extends React.Component {
 	componentDidMount() {
 		const boxDomNodes = [];
 		if (this.boxDiv) {
-			this.props.storeDomNodes(this.boxDiv);
+			this.props.storeDomNodes(this.boxDiv, this.props.timelineIndex);
     }
 	}
 

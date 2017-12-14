@@ -6,33 +6,68 @@ import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import BeatList from '../BeatList';
+import Lines from '../Lines';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
-/* Populate the beat timeline array with beatlist components */
-const populateTimelineArray = (props) => {
-	const beatTimelineArray = [];
-	props.beatTimeline.forEach((generation, index) => {
-		beatTimelineArray.push(
-			<BeatList
-				{...props}
-				beats={props.beatTimeline[index]}
-				timeLineIndex={index}
-				key={'generation' + index}
-			/>,
-		);
-	});
-	return beatTimelineArray;
-};
+class BeatTimeline extends React.Component {
+  static propTypes = {
+  };
 
-const BeatTimeline = (props) => {
-  return (
-    <div className={s.root}>
-			{ populateTimelineArray(props) }
-    </div>
-  );
-};
+	componentWillMount() {
+		this.setState({
+			domNodesTimeline: [],
+		});
+		this.storeDomNodes = this.storeDomNodes.bind(this);
+	}
+
+	/* Store DOM-nodes of the boxes in the beatlist */
+	storeDomNodes(domNode, timelineIndex) {
+		const domNodesTimeline = this.state.domNodesTimeline;
+
+		if (!domNodesTimeline[timelineIndex]) {
+			const domNodes = [];
+			domNodes.push(domNode);
+			domNodesTimeline.push(domNodes);
+			this.setState({ domNodesTimeline });
+		}
+		else {
+			domNodesTimeline[timelineIndex].push(domNode);
+			this.setState({ domNodesTimeline });
+		}
+	}
+
+	/* Populate the beat timeline array with beatlist components */
+	populateTimelineArray() {
+		const { beatTimeline } = this.props;
+		const beatTimelineArray = [];
+		beatTimeline.forEach((generation, index) => {
+			beatTimelineArray.push(
+				<BeatList
+					{...this.props}
+					beats={beatTimeline[index]}
+					timelineIndex={index}
+					key={'generation' + index}
+					storeDomNodes={(domNode, timelineIndex) => this.storeDomNodes(domNode, timelineIndex)} />,
+			);
+		});
+		return beatTimelineArray;
+	}
+
+  render() {
+		console.log('state', this.state);
+    return (
+			<div className={s.root}>
+				{ this.populateTimelineArray() }
+				<Lines
+					domNodesTimeline={this.state.domNodesTimeline}
+					beatInfo={this.props.beatInfo}
+				/>
+			</div>
+    );
+  }
+}
 
 BeatTimeline.propTypes = {};
 
@@ -42,7 +77,7 @@ const mapState = state => ({
 });
 
 const mapDispatch = dispatch => ({
-	scoreBeatProp: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
+	scoreBeat: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
 	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
 	resetBeats: () => dispatch(resetBeats()),
 });

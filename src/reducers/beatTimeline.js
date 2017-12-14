@@ -12,16 +12,8 @@ export default function beatTimeline(state = initialPopulation, action) {
       ];
 	// Map over the state, creating a new array with the score.
 	case SCORE_BEAT: {
-		const newState = [];
-		newState.push(state[action.timeLineIndex].map((beat, index) => {
-				if (index !== action.index) {
-						return beat;
-				}
-				return {
-						...beat,
-						score: action.score,
-				};
-		}));
+		const newState = state.slice();
+		newState[action.timelineIndex][action.index].score = action.score;
 		return newState;
 	}
 	case RESET_BEATS:

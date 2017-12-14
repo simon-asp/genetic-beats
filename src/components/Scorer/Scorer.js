@@ -8,7 +8,7 @@ const cx = classNames.bind(s);
 
 /* Scorer function, renders stars that can be clickable */
 function Scorer(props) {
-	const { index, beat, scoreBeat, timeLineIndex } = props;
+	const { index, beat, scoreBeat, timelineIndex } = props;
 	const stars = [];
 
 	for (let i = 0; i < 5; i++) {
@@ -18,7 +18,7 @@ function Scorer(props) {
 		stars.push(
 			<div
 				className={starClass}
-				onClick={() => scoreBeat(timeLineIndex, index, i + 1)}
+				onClick={() => scoreBeat(timelineIndex, index, i + 1)}
 				role="button"
 				tabIndex={0}
 				key={i}
