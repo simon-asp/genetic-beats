@@ -30,7 +30,7 @@ class Lines extends React.Component {
 	addLines = () => {
 		const { beatInfo, timeLineIndex } = this.props;
 		const lines = [];
-		const colors = ['#FFAC81', '#FF928B', '#FEC3A6', '#EFE9AE', '#CDEAC0', '#DAD2D8', '#F06449', '#EDE580'];
+		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#F1FFFA', '#993955', '#F5CB5C', '#F786AA', '#EDE580'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {
 				lines.push(<line
@@ -45,6 +45,7 @@ class Lines extends React.Component {
 		return lines;
 	};
 
+	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines() {
 		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = this.props;
 

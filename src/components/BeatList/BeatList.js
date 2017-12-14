@@ -20,7 +20,6 @@ class BeatList extends React.Component {
 		timelineIndex: PropTypes.number,
 		storeDomNodes: PropTypes.func,
 		domNodes: PropTypes.array,
-
   };
 
 	static defaultProps = {
@@ -127,7 +126,6 @@ class BeatList extends React.Component {
 	}
 
 	render() {
-		console.log('beatlist', this.props);
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
