@@ -28,15 +28,18 @@ class Lines extends React.Component {
 	addLines = () => {
 		const beatInfo = this.props.beatInfo;
 		const lines = [];
-		for (let i = 0; i < 3; i++) {
-			for (let j = 0; j < beatInfo.noOfBeats; j++) {
-				lines.push(<line
-					id={'line' + i + '' + j}
-					stroke="rgba(255,255,255,0.4)"
-					strokeWidth="8"
-					className={s.line}
-					key={i + '' + j}
-				/>);
+
+		if (beatInfo) {
+			for (let i = 0; i < 3; i++) {
+				for (let j = 0; j < beatInfo.noOfBeats; j++) {
+					lines.push(<line
+						id={'line' + i + '' + j}
+						stroke="rgba(255,255,255,0.4)"
+						strokeWidth="8"
+						className={s.line}
+						key={i + '' + j}
+					/>);
+				}
 			}
 		}
 		return lines;
@@ -57,7 +60,7 @@ class Lines extends React.Component {
   render() {
     return (
 			<div className={s.root}>
-				<svg>
+				<svg style={{ height: this.props.noOfGenerations + '00vh' }}>
 					{ this.addLines() }
 				</svg>
 			</div>

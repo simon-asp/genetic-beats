@@ -1,5 +1,3 @@
-import { } from '../constants';
-
 export const beatInfoObj = {
 	noOfBeats: 8,
 	noOfTicks: 16,

@@ -1,3 +1,5 @@
+/* eslint-disable import/prefer-default-export */
+
 import * as utils from '../../utils/utils';
 
 /* Selection part of the algorithm. Works with Roulette Wheel Selection
@@ -87,22 +89,22 @@ const mutation = (beat, beatInfo) => {
 /* Generates a new population based on what is voted on.
 */
 export const newPopulation = (props) => {
-	// TODO: check if beats are scored yet
-	const { beats, beatInfo, addNewPopulation } = props;
+	const { beats, beatInfo, addNewPopulation, addNewSelectedPairs, timelineIndex } = props;
 	const newBeatArray = [];
-
-	// TODO: Flush all clicked buttons
+	const selectedPairs = [];
 
 	// Create new offspring 8 times.
 	for (let i = 0; i < 8; i++) {
 		const parent1Index = selection(beats);
 		const parent2Index = selection(beats);
-
 		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
+
+		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index });
 		offspring.id = 'beat' + i;
 		const mutatedOffspring = mutation(offspring, beatInfo);
 
 		newBeatArray.push(mutatedOffspring);
 	}
+	addNewSelectedPairs(selectedPairs, timelineIndex);
 	addNewPopulation(newBeatArray);
 };

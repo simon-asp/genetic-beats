@@ -5,6 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
+import { addNewSelectedPairs } from '../../actions/evolutionPairs';
 import BeatList from '../BeatList';
 import Lines from '../Lines';
 // import cx from 'classnames';
@@ -49,7 +50,8 @@ class BeatTimeline extends React.Component {
 					beats={beatTimeline[index]}
 					timelineIndex={index}
 					key={'generation' + index}
-					storeDomNodes={(domNode, timelineIndex) => this.storeDomNodes(domNode, timelineIndex)} />,
+					storeDomNodes={(domNode, timelineIndex) => this.storeDomNodes(domNode, timelineIndex)}
+				/>,
 			);
 		});
 		return beatTimelineArray;
@@ -57,12 +59,14 @@ class BeatTimeline extends React.Component {
 
   render() {
 		console.log('state', this.state);
+		console.log('propps', this.props.beatInfo);
     return (
 			<div className={s.root}>
 				{ this.populateTimelineArray() }
 				<Lines
 					domNodesTimeline={this.state.domNodesTimeline}
 					beatInfo={this.props.beatInfo}
+					noOfGenerations={this.props.beatTimeline.length}
 				/>
 			</div>
     );
@@ -80,6 +84,7 @@ const mapDispatch = dispatch => ({
 	scoreBeat: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
 	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
 	resetBeats: () => dispatch(resetBeats()),
+	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));
