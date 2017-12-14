@@ -136,7 +136,7 @@ class BeatList extends React.Component {
 
 				<div
 					className={s.runButton}
-					onClick={() => this.props.resetBeats()}
+					onClick={() => { this.props.resetBeats(); this.props.resetSelectedPairs(); }}
 					role="button"
 					tabIndex="-2"
 				>RESET BEATS</div>

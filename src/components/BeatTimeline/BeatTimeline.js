@@ -5,7 +5,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
-import { addNewSelectedPairs } from '../../actions/evolutionPairs';
+import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import BeatList from '../BeatList';
 import Lines from '../Lines';
 // import cx from 'classnames';
@@ -19,6 +19,7 @@ class BeatTimeline extends React.Component {
 	componentWillMount() {
 		this.setState({
 			domNodesTimeline: [],
+			linesTimeline: [],
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 	}
@@ -37,6 +38,10 @@ class BeatTimeline extends React.Component {
 			domNodesTimeline[timelineIndex].push(domNode);
 			this.setState({ domNodesTimeline });
 		}
+	}
+
+	storeLines(lines, timelineIndex) {
+		this.setState({ lines });
 	}
 
 	/* Populate the beat timeline array with beatlist components */
@@ -58,8 +63,6 @@ class BeatTimeline extends React.Component {
 	}
 
   render() {
-		console.log('state', this.state);
-		console.log('propps', this.props.beatInfo);
     return (
 			<div className={s.root}>
 				{ this.populateTimelineArray() }
@@ -67,6 +70,7 @@ class BeatTimeline extends React.Component {
 					domNodesTimeline={this.state.domNodesTimeline}
 					beatInfo={this.props.beatInfo}
 					noOfGenerations={this.props.beatTimeline.length}
+					evolutionPairs={this.props.evolutionPairs}
 				/>
 			</div>
     );
@@ -78,6 +82,7 @@ BeatTimeline.propTypes = {};
 const mapState = state => ({
   beatTimeline: state.beatTimeline,
 	beatInfo: state.beatInfo,
+	evolutionPairs: state.evolutionPairs,
 });
 
 const mapDispatch = dispatch => ({
@@ -85,6 +90,7 @@ const mapDispatch = dispatch => ({
 	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
 	resetBeats: () => dispatch(resetBeats()),
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
+	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));

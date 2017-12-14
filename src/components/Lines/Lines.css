@@ -2,7 +2,7 @@
 
 .root {
 	& svg {
-		width:100vw;
+		width:100%;
 		position: absolute;
 		top:0;
 		left:0;
@@ -11,5 +11,6 @@
 	& .line {
 		position: absolute;
 		z-index: 0;
+		opacity:0.5;
 	}
 }

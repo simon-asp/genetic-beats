@@ -11,6 +11,6 @@ export default function evolutionPairs(state = [], action) {
 	case RESET_EVOLUTION_PAIRS:
 		return [];
 	default:
-		return [];
+		return state;
 	}
 }

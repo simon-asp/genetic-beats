@@ -11,7 +11,7 @@ export function addNewSelectedPairs(selectedPairs, timelineIndex) {
   };
 }
 
-export function resetPairs() {
+export function resetSelectedPairs() {
   return {
     type: RESET_EVOLUTION_PAIRS,
   };
