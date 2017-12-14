@@ -36,7 +36,7 @@ class Lines extends React.Component {
 				lines.push(<line
 					id={'line' + timeLineIndex + '' + j}
 					stroke={colors[j]}
-					strokeWidth="6"
+					strokeWidth="7"
 					className={s.line}
 					key={'line' + timeLineIndex + '' + j}
 				/>);

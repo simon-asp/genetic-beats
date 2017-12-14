@@ -14,7 +14,7 @@ import Layout from '../../components/Layout';
 function action() {
   return {
     chunks: ['home'],
-    title: 'React Starter Kit',
+    title: '+ Genetic Beats ~',
     component: (
       <Layout>
         <Home />

@@ -1,18 +1,18 @@
 @import '../variables.css';
 
 .root {
-	margin:0 20px 0 20px;
-	width:20%;
+	margin:0 60px;
 
 	& .box {
-		background: #383f56;
+		background: #353434;
 		display: flex;
 		box-sizing: border-box;
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
 		width:100%;
-		padding:20px 16px;
+		height:180px;
+		padding:20px 24px;
 		color:white;
 		cursor:pointer;
 		user-select: none;
@@ -22,6 +22,7 @@
 		font-family: monospace;
 		z-index: 1;
 		position: relative;
+		border-radius: 4px;
 
 		& .textContainer {
 			& p {
@@ -29,12 +30,21 @@
 			}
 		}
 
+		& .playContainer {
+			width:100%;
+			display: flex;
+			justify-content: center;
+		}
+
 		& .playButton {
 			background:url('./playbutton.svg') no-repeat;
 			width:50px;
 			height:50px;
-			margin-right:24px;
 			outline:0;
+		}
+
+		& .playButton:hover {
+			background:url('./playbutton_h.svg') no-repeat;
 		}
 	}
 

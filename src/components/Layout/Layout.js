@@ -22,7 +22,9 @@ class Layout extends React.Component {
   render() {
     return (
       <div>
-				<figure className={s.logo} />
+				<div className={s.header}>
+					<figure className={s.logo} />
+				</div>
         {this.props.children}
       </div>
     );

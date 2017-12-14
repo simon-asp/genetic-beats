@@ -29,20 +29,28 @@ html {
 
 body {
   margin: 0;
-	background: #27242b;
+	background: #1E1E1E;
 }
 
 a {
   color: #0074c2;
 }
 
-.logo {
-	background:url('./geneticbeats-logo.svg') no-repeat;
-	width:180px;
-	height:30px;
-	margin:24px auto;
-	cursor:pointer;
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height:80px;
+	margin-bottom:-80px;
+	
+	& .logo {
+		background:url('./geneticbeats-logo.svg') no-repeat;
+		width:180px;
+		height:30px;
+		cursor:pointer;
+	}
 }
+
 /*
  * Remove text-shadow in selection highlight:
  * https://twitter.com/miketaylr/status/12228805301

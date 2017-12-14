@@ -23,20 +23,21 @@ class Box extends React.Component {
     return (
 			<div className={s.root}>
 				<div className={s.box} id={id} ref={(ref) => { this.boxDiv = ref; }}>
-					<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
-
-					<div className={s.textContainer}>
-						<p>K: {beat.kick}</p>
-						<p>C: {beat.closedhat}</p>
-						<p>O: {beat.openhat}</p>
-						<p>S: {beat.clap}</p>
+					<div className={s.playContainer}>
+						<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
 					</div>
-
 					<Scorer {...this.props} />
 				</div>
 			</div>
     );
   }
 }
+
+// <div className={s.textContainer}>
+// 	<p>K: {beat.kick}</p>
+// 	<p>C: {beat.closedhat}</p>
+// 	<p>O: {beat.openhat}</p>
+// 	<p>S: {beat.clap}</p>
+// </div>
 
 export default withStyles(s)(Box);

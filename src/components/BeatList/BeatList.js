@@ -68,7 +68,7 @@ class BeatList extends React.Component {
 
 		/* Only update the sequence array if the score has changed, or when we
 		 * have a new population with zero score */
-		if (scoreIsSame || allScoreZero) {
+		if (!scoreIsSame || allScoreZero) {
 			this.populateSequenceArray(nextProps.beats);
 		}
 	}
@@ -129,19 +129,15 @@ class BeatList extends React.Component {
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
-				<div
-					className={s.runButton}
-					onClick={() => this.onGenesisClick()}
-					role="button"
-					tabIndex="-1"
-				>BEAT GENESIS</div>
 
-				<div
-					className={s.runButton}
-					onClick={() => { this.props.resetBeats(); this.props.resetSelectedPairs(); }}
-					role="button"
-					tabIndex="-2"
-				>RESET BEATS</div>
+				<section className={s.buttons}>
+					<div
+						className={s.runButton}
+						onClick={() => this.onGenesisClick()}
+						role="button"
+						tabIndex="-1"
+					>BEAT GENESIS</div>
+				</section>
 
 				<Lines
 					domNodes={this.props.domNodes}
@@ -153,4 +149,11 @@ class BeatList extends React.Component {
 		);
 	}
 }
+
+// <div
+// 	className={s.runButton}
+// 	onClick={() => { this.props.resetBeats(); this.props.resetSelectedPairs(); }}
+// 	role="button"
+// 	tabIndex="-2"
+// >RESET BEATS</div>
 export default withStyles(s)(BeatList);

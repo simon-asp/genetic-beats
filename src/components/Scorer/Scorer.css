@@ -4,17 +4,24 @@
   display:flex;
   justify-content: space-between;
   padding:0 12px;
-  width:50%;
+  width:100%;
   margin-top:24px;
 
   & .score, & .filled {
-    background:url('./unfilledstar.svg');
+    background:url('./unfilledstar.svg') no-repeat;
     width:20px;
     height:20px;
     outline:0;
   }
 
   & .filled {
-    background:url('./filledstar.svg');
+    background:url('./filledstar.svg') no-repeat;
   }
+
+	& .score:hover {
+		background:url('./unfilledstar_h.svg') no-repeat;
+	}
+	& .filled:hover {
+		background:url('./filledstar_h.svg') no-repeat;
+	}
 }
