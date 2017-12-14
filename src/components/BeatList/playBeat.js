@@ -8,7 +8,7 @@ const createTickArray = (noTicks) => {
 };
 
 /* Function to play beats */
-export function initializeBeat(Tone, beats, beatInfo, index) {
+export function initializeBeat(Tone, beats, beatInfo, index, domNodes) {
 	const instrumentKeys = getInstrumentKeys(beats);
 	const noTicks = beatInfo.noOfTicks;
 	const tickArray = createTickArray(noTicks);
@@ -26,29 +26,33 @@ export function initializeBeat(Tone, beats, beatInfo, index) {
 	}).toMaster();
 
 	Tone.Transport.bpm.value = 106;
-
+	const colors = ['pink', 'blue', 'gold', 'aqua'];
+	let counter = 0;
 	const sequence = new Tone.Sequence((time, tick) => {
 		instrumentKeys.forEach((key) => {
 			if (beats[index][key][tick] === 1) instruments.get(key).start();
 		});
+		counter = Math.ceil(tick / 4) - 1;
+		if (tick === 3 || tick === 7 || tick === 11 || tick === 15) {
+			document.getElementById('beat' + index).style.boxShadow = '0px 0px 26px 1px ' + colors[counter];
+		}
+		else if (tick === 1 || tick === 5 || tick === 9 || tick === 13) {
+			document.getElementById('beat' + index).style.boxShadow = '0px 5px 5px 1px rgba(0,0,0,0.15)';
+		}
 	}, tickArray, '16n');
 	sequence.loop = 4;
-	// sequence.start();
 	Tone.Transport.start('+0.1');
 	return sequence;
 }
 
 // Stop the beat
-export function stopBeat(Tone, loop) {
-	// Tone.Transport.cancel();
+export function stopBeat(loop) {
 	loop.stop();
-	// Tone.Transport.stop();
 }
 
 // Start the beat
-export function startBeat(Tone, loop) {
+export function startBeat(loop) {
 	loop.start();
-	// Tone.Transport.start('+0.1');
 }
 
 // document.getElementById('playToggle').addEventListener("click", function(){

@@ -42,7 +42,7 @@ a {
 	justify-content: center;
 	height:80px;
 	margin-bottom:-80px;
-	
+
 	& .logo {
 		background:url('./geneticbeats-logo.svg') no-repeat;
 		width:180px;

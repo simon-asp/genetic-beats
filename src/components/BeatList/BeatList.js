@@ -83,8 +83,8 @@ class BeatList extends React.Component {
 		this.setState({ clickedPlay });
 
 		// Stop all beats first, then play.
-		sequences.forEach((seq, i) => stopBeat(Tone, sequences[i]));
-		if (clickedPlay[index]) startBeat(Tone, sequences[index]);
+		sequences.forEach((seq, i) => stopBeat(sequences[i]));
+		if (clickedPlay[index]) startBeat(sequences[index]);
 	}
 
 	/* When clicking the button that runs the genetic algorithm. Check for score
@@ -98,10 +98,9 @@ class BeatList extends React.Component {
 
 	/* Initialize sequences and put in the state to be able to play them. */
 	populateSequenceArray(newBeats) {
-		// TODO: Doesn't work. same sequences are played every time.
 		const sequences = this.state.sequences;
 		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
-			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i));
+			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i, this.props.domNodes));
 		}
 		this.setState({ sequences });
 	}
