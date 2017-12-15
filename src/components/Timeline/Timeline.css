@@ -1,0 +1,42 @@
+@import '../variables.css';
+
+.root {
+	width:96px;
+	min-height:100vh;
+	position: absolute;
+	top:0;
+	left:0;
+	padding-top:45vh;
+	box-sizing: border-box;
+
+	& .circleContainer, & .lineContainer {
+		width:100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	& .circleContainer {
+		height:14px;
+		position: relative;
+
+		& .circle {
+			width:24px;
+			height:24px;
+			border-radius: 32px;
+			background:var(--light-color);
+			color:var(--box-color);
+			font-size:0.7em;
+			font-weight: bold;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			user-select: none;
+		}
+	}
+
+	& .verticalLine {
+		width:3px;
+		height:100vh;
+		background:var(--light-color);
+	}
+}

@@ -20,6 +20,7 @@ class BeatList extends React.Component {
 		timelineIndex: PropTypes.number,
 		storeDomNodes: PropTypes.func,
 		domNodes: PropTypes.array,
+		evolutionPairs: PropTypes.array,
   };
 
 	static defaultProps = {
@@ -37,6 +38,7 @@ class BeatList extends React.Component {
 		this.setState({
 			clickedPlay: [],
 			sequences: [],
+			clickedGenesis: false,
 		});
 	}
 
@@ -100,7 +102,7 @@ class BeatList extends React.Component {
 	populateSequenceArray(newBeats) {
 		const sequences = this.state.sequences;
 		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
-			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i, this.props.domNodes));
+			sequences[i] = (initializeBeat(this.state.Tone, newBeats, this.props.beatInfo, i, this.props.timelineIndex));
 		}
 		this.setState({ sequences });
 	}
@@ -112,7 +114,7 @@ class BeatList extends React.Component {
 		beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
-					id={beat.id}
+					id={'beat' + timelineIndex + '' + index}
 					beat={beat}
 					index={index}
 					timelineIndex={timelineIndex}
@@ -136,6 +138,13 @@ class BeatList extends React.Component {
 						role="button"
 						tabIndex="-1"
 					>BEAT GENESIS</div>
+
+					<div
+						className={s.runButton}
+						onClick={() => { this.props.resetBeats(); this.props.resetSelectedPairs(); }}
+						role="button"
+						tabIndex="-2"
+					>RESET BEATS</div>
 				</section>
 
 				<Lines
@@ -149,10 +158,5 @@ class BeatList extends React.Component {
 	}
 }
 
-// <div
-// 	className={s.runButton}
-// 	onClick={() => { this.props.resetBeats(); this.props.resetSelectedPairs(); }}
-// 	role="button"
-// 	tabIndex="-2"
-// >RESET BEATS</div>
+
 export default withStyles(s)(BeatList);

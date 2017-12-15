@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import BeatList from '../BeatList';
+import Timeline from '../Timeline';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
@@ -65,9 +66,11 @@ class BeatTimeline extends React.Component {
 	}
 
   render() {
+		console.log('beattime', this.props, 'state', this.state);
     return (
 			<div className={s.root}>
 				{ this.populateTimelineArray() }
+				<Timeline noOfGenerations={this.props.beatTimeline.length} />
 			</div>
     );
   }

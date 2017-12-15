@@ -13,10 +13,10 @@ class Lines extends React.Component {
 		evolutionPairs: PropTypes.array,
   };
 
-	componentWillReceiveProps() {
-		if (this.props.domNodes) {
-			this.renderLines();
-		}
+	componentWillReceiveProps(nextProps) {
+		console.log('lines', nextProps);
+		if (nextProps.domNodes) this.renderLines(nextProps);
+		if (!nextProps.evolutionPairs) this.unrenderLines(nextProps);
 	}
 
 	/* Get the center coordinates for a DOM element */
@@ -27,8 +27,8 @@ class Lines extends React.Component {
 		return coords;
 	};
 
-	addLines = () => {
-		const { beatInfo, timeLineIndex } = this.props;
+	addLines = (props) => {
+		const { beatInfo, timeLineIndex } = props;
 		const lines = [];
 		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#F1FFFA', '#993955', '#F5CB5C', '#F786AA', '#EDE580'];
 		if (beatInfo) {
@@ -45,14 +45,24 @@ class Lines extends React.Component {
 		return lines;
 	};
 
+	/* Reset all lines */
+	unrenderLines(props) {
+		const { beatInfo, timeLineIndex } = props;
+		for (let i = 0; i < beatInfo.noOfBeats; i++) {
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x1', 0);
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y1', 0);
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x2', 0);
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y2', 0);
+		}
+	}
 	/* Calculate the x, y-coordinates for the lines and draw them out */
-	renderLines() {
-		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = this.props;
+	renderLines(props) {
+		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = props;
 
 		if (evolutionPairs) {
-			for (let j = 0; j < beatInfo.noOfBeats; j++) {
-				const parent1 = evolutionPairs[j].parent1;
-				const parent2 = evolutionPairs[j].parent2;
+			for (let i = 0; i < beatInfo.noOfBeats; i++) {
+				const parent1 = evolutionPairs[i].parent1;
+				const parent2 = evolutionPairs[i].parent2;
 
 				const el1 = domNodes[parent1];
 				const el2 = domNodes[parent2];
@@ -60,10 +70,10 @@ class Lines extends React.Component {
 				const coords1 = this.getCenterCoords(el1);
 				const coords2 = this.getCenterCoords(el2);
 
-				document.getElementById('line' + timeLineIndex + '' + j).setAttribute('x1', coords1.x);
-				document.getElementById('line' + timeLineIndex + '' + j).setAttribute('y1', coords1.y);
-				document.getElementById('line' + timeLineIndex + '' + j).setAttribute('x2', coords2.x);
-				document.getElementById('line' + timeLineIndex + '' + j).setAttribute('y2', coords2.y);
+				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x1', coords1.x);
+				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y1', coords1.y);
+				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x2', coords2.x);
+				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y2', coords2.y);
 			}
 		}
 	}
@@ -72,7 +82,7 @@ class Lines extends React.Component {
     return (
 			<div className={s.root}>
 				<svg>
-					{ this.addLines() }
+					{ this.addLines(this.props) }
 				</svg>
 			</div>
     );

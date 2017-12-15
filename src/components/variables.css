@@ -28,4 +28,8 @@
   --screen-sm-min: 768px;  /* Small screen / tablet */
   --screen-md-min: 992px;  /* Medium screen / desktop */
   --screen-lg-min: 1200px; /* Large screen / wide desktop */
+
+	/* COLORS */
+	--light-color: #C1C1C1;
+	--box-color: #313133;
 }
