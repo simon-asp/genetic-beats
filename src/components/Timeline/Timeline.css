@@ -16,17 +16,15 @@
 	}
 
 	& .circleContainer {
-		height:14px;
 		position: relative;
 
 		& .circle {
 			width:24px;
 			height:24px;
-			border-radius: 32px;
-			background:var(--light-color);
-			color:var(--box-color);
+			border-radius: 24px;
+			border:2px solid var(--light-overlay);
+			color:var(--light-overlay);
 			font-size:0.7em;
-			font-weight: bold;
 			display: flex;
 			justify-content: center;
 			align-items: center;
@@ -35,8 +33,8 @@
 	}
 
 	& .verticalLine {
-		width:3px;
+		width:1px;
 		height:100vh;
-		background:var(--light-color);
+		background:var(--light-overlay);
 	}
 }
