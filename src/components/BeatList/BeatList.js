@@ -136,7 +136,7 @@ class BeatList extends React.Component {
 
 	render() {
 		const runButtonClass = cx('runButton', { hidden: this.state.hideRunButton });
-		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists, notActive: !this.state.scoreZeroExists });
+		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }

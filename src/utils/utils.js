@@ -15,3 +15,7 @@ export function getInstrumentKeys(beats) {
 export function getNoOfInstruments(beats) {
 	return getInstrumentKeys(beats).length;
 }
+/* Maps a value from one range to another */
+export function mapRange(x, inMin, inMax, outMin, outMax) {
+  return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+}

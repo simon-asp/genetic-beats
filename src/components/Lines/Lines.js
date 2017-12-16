@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 import s from './Lines.css';
+import { mapRange } from '../../utils';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 
@@ -26,19 +27,23 @@ class Lines extends React.Component {
 		return coords;
 	};
 
+	/* Add lines to the DOM */
 	addLines = (props) => {
 		const { beatInfo, timeLineIndex } = props;
 		const lines = [];
 		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#F1FFFA', '#993955', '#F5CB5C', '#F786AA', '#EDE580'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {
-				lines.push(<line
+				const strokeWidth = mapRange(j, 0, beatInfo.noOfBeats, 1, 6);
+				lines.push(<path
 					id={'line' + timeLineIndex + '' + j}
 					stroke={colors[j]}
-					strokeWidth="7"
+					strokeWidth={strokeWidth}
 					className={s.line}
 					key={'line' + timeLineIndex + '' + j}
+					fill="transparent"
 				/>);
+				lines.push(<text id={'lineText' + timeLineIndex + '' + j} fontSize="14" fill="white" />);
 			}
 		}
 		return lines;
@@ -69,10 +74,20 @@ class Lines extends React.Component {
 				const coords1 = this.getCenterCoords(el1);
 				const coords2 = this.getCenterCoords(el2);
 
-				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x1', coords1.x);
-				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y1', coords1.y);
-				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x2', coords2.x);
-				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y2', coords2.y);
+				const midX = coords1.x + ((coords2.x - coords1.x) * 0.50);
+				const midY = coords1.y + ((coords2.y - coords1.y) * 0.30);
+
+				const sx1 = coords1.x + 300;
+				const sy1 = coords1.y + 150;
+				const sx2 = coords2.x - 200;
+				const sy2 = coords2.y - 150;
+
+				const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
+				const textNode = document.createTextNode(i);
+				document.getElementById('lineText' + timeLineIndex + '' + i).setAttribute('x', midX);
+				document.getElementById('lineText' + timeLineIndex + '' + i).setAttribute('y', midY);
+				//document.getElementById('lineText' + timeLineIndex + '' + i).appendChild(textNode);
+				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', d);
 			}
 		}
 	}
