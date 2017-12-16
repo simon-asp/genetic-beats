@@ -8,6 +8,8 @@ import { initializeBeat, startBeat, stopBeat } from './playBeat';
 import Box from '../Box';
 import Lines from '../Lines';
 
+const cx = classNames.bind(s);
+
 /* Bealist component. Displays a list of beats that can be votable.
 */
 class BeatList extends React.Component {
@@ -95,7 +97,10 @@ class BeatList extends React.Component {
 		// TODO: make a modal thing for the error message
 		const scoreZero = this.props.beats.map(beat => beat.score).includes(0);
 		if (scoreZero) console.log('Please score all the beats');
-		else newPopulation(this.props);
+		else {
+			this.setState({ clickedGenesis: true });
+			newPopulation(this.props);
+		}
 	}
 
 	/* Initialize sequences and put in the state to be able to play them. */
@@ -127,13 +132,14 @@ class BeatList extends React.Component {
 	}
 
 	render() {
+		const runButtonClass = cx('runButton', { hidden: this.state.clickedGenesis });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
 
 				<section className={s.buttons}>
 					<div
-						className={s.runButton}
+						className={runButtonClass}
 						onClick={() => this.onGenesisClick()}
 						role="button"
 						tabIndex="-1"
