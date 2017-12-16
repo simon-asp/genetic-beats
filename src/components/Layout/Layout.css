@@ -44,6 +44,7 @@ a {
 	margin-bottom:-80px;
 	z-index: 1;
 	position: relative;
+	padding-left:80px;
 
 	& .logo {
 		background:url('./geneticbeats-logo.svg') no-repeat;

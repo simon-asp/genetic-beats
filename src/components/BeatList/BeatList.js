@@ -41,6 +41,7 @@ class BeatList extends React.Component {
 			clickedPlay: [],
 			sequences: [],
 			hideRunButton: false,
+			scoreZeroExists: false,
 		});
 	}
 
@@ -57,7 +58,6 @@ class BeatList extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const nextBeats = nextProps.beats;
 		const beats = this.props.beats;
-		console.log(nextProps);
 		// Reset the clickedPlay array
 		this.setState({ clickedPlay: [] });
 		this.populateBeatArray(nextProps);
@@ -99,11 +99,11 @@ class BeatList extends React.Component {
 	 * of the beat first. */
 	onGenesisClick() {
 		// TODO: make a modal thing for the error message
-		const scoreZero = this.props.beats.map(beat => beat.score).includes(0);
-		if (scoreZero) console.log('Please score all the beats');
-		else {
-			newPopulation(this.props);
-		}
+		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
+		this.setState({ scoreZeroExists });
+		setTimeout(() => { this.setState({ scoreZeroExists: false }); }, 5000);
+
+		if (!scoreZeroExists) newPopulation(this.props);
 	}
 
 	/* Initialize sequences and put in the state to be able to play them. */
@@ -136,6 +136,7 @@ class BeatList extends React.Component {
 
 	render() {
 		const runButtonClass = cx('runButton', { hidden: this.state.hideRunButton });
+		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists, notActive: !this.state.scoreZeroExists });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
@@ -148,6 +149,10 @@ class BeatList extends React.Component {
 						tabIndex="-1"
 					>BEAT GENESIS</div>
 				</section>
+				<div className={overlayClass}>
+					Please score all beats
+					<div className={s.triangle} />
+				</div>
 
 				<Lines
 					domNodes={this.props.domNodes}
@@ -159,6 +164,5 @@ class BeatList extends React.Component {
 		);
 	}
 }
-
 
 export default withStyles(s)(BeatList);
