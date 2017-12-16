@@ -66,7 +66,6 @@ class BeatTimeline extends React.Component {
 	}
 
   render() {
-		console.log('beattime', this.props, 'state', this.state);
     return (
 			<div className={s.root}>
 				{ this.populateTimelineArray() }

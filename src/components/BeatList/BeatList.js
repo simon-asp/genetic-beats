@@ -40,7 +40,7 @@ class BeatList extends React.Component {
 		this.setState({
 			clickedPlay: [],
 			sequences: [],
-			clickedGenesis: false,
+			hideRunButton: false,
 		});
 	}
 
@@ -57,7 +57,7 @@ class BeatList extends React.Component {
 	componentWillReceiveProps(nextProps) {
 		const nextBeats = nextProps.beats;
 		const beats = this.props.beats;
-
+		console.log(nextProps);
 		// Reset the clickedPlay array
 		this.setState({ clickedPlay: [] });
 		this.populateBeatArray(nextProps);
@@ -75,6 +75,10 @@ class BeatList extends React.Component {
 		if (!scoreIsSame || allScoreZero) {
 			this.populateSequenceArray(nextProps.beats);
 		}
+		if (nextProps.timelineIndex !== nextProps.noOfGenerations - 1) {
+			this.setState({ hideRunButton: true });
+		}
+		else this.setState({ hideRunButton: false });
 	}
 
 	/* When clicking the beat to play */
@@ -98,7 +102,6 @@ class BeatList extends React.Component {
 		const scoreZero = this.props.beats.map(beat => beat.score).includes(0);
 		if (scoreZero) console.log('Please score all the beats');
 		else {
-			this.setState({ clickedGenesis: true });
 			newPopulation(this.props);
 		}
 	}
@@ -132,7 +135,7 @@ class BeatList extends React.Component {
 	}
 
 	render() {
-		const runButtonClass = cx('runButton', { hidden: this.state.clickedGenesis });
+		const runButtonClass = cx('runButton', { hidden: this.state.hideRunButton });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }

@@ -14,7 +14,6 @@ class Lines extends React.Component {
   };
 
 	componentWillReceiveProps(nextProps) {
-		console.log('lines', nextProps);
 		if (nextProps.domNodes) this.renderLines(nextProps);
 		if (!nextProps.evolutionPairs) this.unrenderLines(nextProps);
 	}
