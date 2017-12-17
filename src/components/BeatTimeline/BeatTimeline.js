@@ -9,8 +9,9 @@ import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolution
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
-// import cx from 'classnames';
-// let cx = classNames.bind(s);
+import WelcomeInfo from '../WelcomeInfo';
+
+const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
 class BeatTimeline extends React.Component {
@@ -67,8 +68,10 @@ class BeatTimeline extends React.Component {
 	}
 
   render() {
+		const welcomeInfoClass = cx('welcomeInfo', { active: this.state.scoreZeroExists });
     return (
 			<div className={s.root}>
+				<WelcomeInfo toggleHiddenClassName={welcomeInfoClass} />
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} />
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />

@@ -141,7 +141,6 @@ class BeatList extends React.Component {
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
-
 				<section className={s.buttons}>
 					<div
 						className={runButtonClass}

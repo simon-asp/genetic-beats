@@ -49,9 +49,10 @@ class Box extends React.Component {
 	}
 
   render() {
-		const { beat, index, scoreBeat, onPlayClick, id } = this.props;
+		const { beat, index, scoreBeat, onPlayClick, id, timelineIndex } = this.props;
 		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#B79477', '#993955', '#84C18F', '#F786AA', '#EDE6A4'];
 		const infoOverlayClass = cx('infoOverlay', { active: this.state.infoVisible });
+		const descriptionClass = cx('description', { hidden: this.props.timelineIndex === 0 });
     return (
 			<div className={s.root}>
 				<div className={s.box} id={id} ref={(ref) => { this.boxDiv = ref; }}>
@@ -60,7 +61,7 @@ class Box extends React.Component {
 						<div className={s.beatTicks}>
 							{ this.populateBeatTicks() }
 						</div>
-						<div className={s.description}>
+						<div className={descriptionClass}>
 							<div>
 								The previous generation made <br />
 								this beat with this connection:

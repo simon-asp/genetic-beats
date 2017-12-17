@@ -22,14 +22,14 @@ else
 		done
 	fi
 
-	if [ ! -f $path ] || [ $continue=true ]; then
+	if [ ! -f $path ] || [ $continue=true ]; then
 	  mkdir $path
 
 	  jsPath=$path/$1.js
 	  cssPath=$path/$1.css
 	  packagePath=$path/package.json
 
-	  jsContent="import React from 'react';\nimport classNames from 'classnames/bind';\nimport withStyles from 'isomorphic-style-loader/lib/withStyles';\nimport s from './${1}.css';\nimport PropTypes from 'prop-types';\n// import cx from 'classnames';\n// let cx = classNames.bind(s);\n\nconst ${1} = () => {\n  return (\n    <div className={s.root}>\n    </div>\n  );\n}\n\n${1}.propTypes = {};\n\nexport default withStyles(s)(${1});"
+	  jsContent="import React from 'react';\nimport classNames from 'classnames/bind';\nimport withStyles from 'isomorphic-style-loader/lib/withStyles';\nimport s from './${1}.css';\nimport PropTypes from 'prop-types';\n// import cx from 'classnames';\n// let cx = classNames.bind(s);\n\nfunction ${1}() {\n  return (\n    <div className={s.root}>\n    </div>\n  );\n}\n\n${1}.propTypes = {};\n\nexport default withStyles(s)(${1});"
 		cssContent="@import '../variables.css';\n\n.root {\n}"
 		packageContent="{\n  \"name\": \"${1}\",\n  \"version\": \"0.0.0\",\n  \"private\": true,\n  \"main\": \"./${1}.js\"\n}"
 
