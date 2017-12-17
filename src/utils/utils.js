@@ -8,12 +8,12 @@ export function getRandomIntInclusive(min, max) {
 }
 
 /* Get the instrument keys and filter out other stuff, returns an array */
-export function getInstrumentKeys(beats) {
-	return Object.keys(beats[0]).filter(key => key !== 'score' && key !== 'id');
+export function getInstrumentKeys(beat) {
+	return Object.keys(beat).filter(key => key !== 'score' && key !== 'id');
 }
 /* Counts instruments in an arbitrary beat object, returns an integer  */
-export function getNoOfInstruments(beats) {
-	return getInstrumentKeys(beats).length;
+export function getNoOfInstruments(beat) {
+	return getInstrumentKeys(beat).length;
 }
 /* Maps a value from one range to another */
 export function mapRange(x, inMin, inMax, outMin, outMax) {

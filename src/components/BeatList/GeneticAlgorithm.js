@@ -27,11 +27,13 @@ const selection = (beats) => {
  * Parent1, Parent2 = indices from the beat array.
  */
 const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
-	const noInstruments = utils.getNoOfInstruments(beats);
+	const noInstruments = utils.getNoOfInstruments(beats[0]);
 	const noTicks = beatInfo.noOfTicks;
-	const instrumentNames = utils.getInstrumentKeys(beats);
+	const instrumentNames = utils.getInstrumentKeys(beats[0]);
 	const offspring = {};
 
+	console.log('crossover', beats[parent1Index]);
+	console.log('crossover', beats[parent2Index]);
 	// Go through every instrument and crossover bits from the parents
 	for (let i = 0; i < noInstruments; i++) {
 		const parent1Copy = beats[parent1Index][`${instrumentNames[i]}`];
@@ -60,7 +62,7 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 		offspring[`${instrumentNames[i]}`] = instrNew;
 		offspring.score = 0;
 	}
-
+	console.log('offspring', offspring);
 	return offspring;
 };
 
@@ -99,7 +101,7 @@ export const newPopulation = (props) => {
 		const parent2Index = selection(beats);
 		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
 
-		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index });
+		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
 		offspring.id = 'beat' + i;
 		const mutatedOffspring = mutation(offspring, beatInfo);
 

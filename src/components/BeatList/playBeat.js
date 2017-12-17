@@ -9,7 +9,7 @@ const createTickArray = (noTicks) => {
 
 /* Function to play beats */
 export function initializeBeat(Tone, beats, beatInfo, index, timelineIndex) {
-	const instrumentKeys = getInstrumentKeys(beats);
+	const instrumentKeys = getInstrumentKeys(beats[0]);
 	const noTicks = beatInfo.noOfTicks;
 	const tickArray = createTickArray(noTicks);
 

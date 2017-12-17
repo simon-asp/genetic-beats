@@ -4,12 +4,17 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Box.css';
 import PropTypes from 'prop-types';
 import Scorer from '../Scorer';
-// import cx from 'classnames';
-// let cx = classNames.bind(s);
+import { getNoOfInstruments, getInstrumentKeys } from '../../utils/utils';
+
+const cx = classNames.bind(s);
 
 class Box extends React.Component {
   static propTypes = {
   };
+
+	componentWillMount() {
+		this.setState({ infoVisible: false });
+	}
 
 	componentDidMount() {
 		const boxDomNodes = [];
@@ -18,15 +23,59 @@ class Box extends React.Component {
     }
 	}
 
+	onClickInfo() {
+		const infoVisible = this.state.infoVisible;
+		this.setState({ infoVisible: !infoVisible });
+	}
+
+	populateBeatTicks() {
+		const noOfInstruments = getNoOfInstruments(this.props.beat);
+		const instrumentKeys = getInstrumentKeys(this.props.beat);
+		const beatTicks = [];
+
+		for (let i = 0; i < noOfInstruments; i++) {
+			beatTicks.push(<div className={s.instrumentText} key={'instrument' + i}>{instrumentKeys[i].toUpperCase()}</div>);
+
+			for (let j = 0; j < this.props.beat.kick.length; j++) {
+				const filled = this.props.beat[instrumentKeys[i]][j] === 1;
+				const tickClass = cx('beatTick', { filled });
+
+				if (j % 4 === 0 && j !== 0) beatTicks.push(<div key={'divider' + i + '' + j}className={s.divider} />);
+				beatTicks.push(<div key={'beatTick' + i + '' + j} className={tickClass} />);
+			}
+		}
+
+		return beatTicks;
+	}
+
   render() {
 		const { beat, index, scoreBeat, onPlayClick, id } = this.props;
+		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#B79477', '#993955', '#84C18F', '#F786AA', '#EDE6A4'];
+		const infoOverlayClass = cx('infoOverlay', { active: this.state.infoVisible });
     return (
 			<div className={s.root}>
 				<div className={s.box} id={id} ref={(ref) => { this.boxDiv = ref; }}>
+
+					<div className={infoOverlayClass}>
+						<div className={s.beatTicks}>
+							{ this.populateBeatTicks() }
+						</div>
+						<div className={s.description}>
+							<div>
+								The previous generation made <br />
+								this beat with this connection:
+							</div>
+							<div className={s.colorLine} style={{ background: colors[index] }} />
+						</div>
+					</div>
+
 					<div className={s.playContainer}>
 						<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
 					</div>
 					<Scorer {...this.props} />
+					<div className={s.infoButton} onClick={() => this.onClickInfo()} role="button" tabIndex={index - 2}>
+						i
+					</div>
 				</div>
 			</div>
     );

@@ -12,6 +12,7 @@
     width:20px;
     height:20px;
     outline:0;
+		cursor: pointer;
   }
 
   & .filled {

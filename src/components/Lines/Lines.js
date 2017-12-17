@@ -14,6 +14,9 @@ class Lines extends React.Component {
 		evolutionPairs: PropTypes.array,
   };
 
+	componentDidMount() {
+		this.addFilter();
+	}
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.domNodes) this.renderLines(nextProps);
 		if (!nextProps.evolutionPairs) this.unrenderLines(nextProps);
@@ -31,7 +34,7 @@ class Lines extends React.Component {
 	addLines = (props) => {
 		const { beatInfo, timeLineIndex } = props;
 		const lines = [];
-		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#F1FFFA', '#993955', '#F5CB5C', '#F786AA', '#EDE580'];
+		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#B79477', '#993955', '#84C18F', '#F786AA', '#EDE6A4'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {
 				const strokeWidth = mapRange(j, 0, beatInfo.noOfBeats, 1, 6);
@@ -43,22 +46,39 @@ class Lines extends React.Component {
 					key={'line' + timeLineIndex + '' + j}
 					fill="transparent"
 				/>);
-				lines.push(<text id={'lineText' + timeLineIndex + '' + j} fontSize="14" fill="white" />);
 			}
 		}
 		return lines;
 	};
 
 	/* Reset all lines */
-	unrenderLines(props) {
+	unrenderLines = (props) => {
 		const { beatInfo, timeLineIndex } = props;
 		for (let i = 0; i < beatInfo.noOfBeats; i++) {
-			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x1', 0);
-			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y1', 0);
-			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('x2', 0);
-			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('y2', 0);
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
 		}
 	}
+
+	addFilter = () => {
+		const svg = document.getElementById('svg');
+		if (svg) {
+			console.log(svg);
+			const defs = svg.append('defs');
+			console.log(defs);
+			// // Filter for the outside glow
+			// const filter = defs.append('filter').attr('id', 'glow');
+			// filter.append('feGaussianBlur').attr('stdDeviation', '3.5').attr('result', 'coloredBlur');
+			//
+			// const feMerge = filter.append('feMerge');
+			// feMerge.append('feMergeNode').attr('in', 'coloredBlur');
+			// feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
+		}
+	}
+
+	applyGlow = () => {
+		//d3.selectAll(".class-of-elements").style("filter", "url(#glow)");
+	}
+
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
 		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = props;
@@ -74,28 +94,23 @@ class Lines extends React.Component {
 				const coords1 = this.getCenterCoords(el1);
 				const coords2 = this.getCenterCoords(el2);
 
-				const midX = coords1.x + ((coords2.x - coords1.x) * 0.50);
-				const midY = coords1.y + ((coords2.y - coords1.y) * 0.30);
-
 				const sx1 = coords1.x + 300;
 				const sy1 = coords1.y + 150;
 				const sx2 = coords2.x - 200;
 				const sy2 = coords2.y - 150;
 
+				// Bezier curve coords
 				const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
-				const textNode = document.createTextNode(i);
-				document.getElementById('lineText' + timeLineIndex + '' + i).setAttribute('x', midX);
-				document.getElementById('lineText' + timeLineIndex + '' + i).setAttribute('y', midY);
-				//document.getElementById('lineText' + timeLineIndex + '' + i).appendChild(textNode);
 				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', d);
 			}
 		}
 	}
 
+
   render() {
     return (
 			<div className={s.root}>
-				<svg>
+				<svg id="svg">
 					{ this.addLines(this.props) }
 				</svg>
 			</div>
