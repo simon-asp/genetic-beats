@@ -6,6 +6,7 @@ import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
+import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
@@ -68,10 +69,9 @@ class BeatTimeline extends React.Component {
 	}
 
   render() {
-		const welcomeInfoClass = cx('welcomeInfo', { active: this.state.scoreZeroExists });
     return (
 			<div className={s.root}>
-				<WelcomeInfo toggleHiddenClassName={welcomeInfoClass} />
+				<WelcomeInfo welcomeInfoVisible={this.props.beatInfo.welcomeInfoVisible} hideWelcomeInfo={this.props.hideWelcomeInfo} />
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} />
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />
@@ -94,6 +94,7 @@ const mapDispatch = dispatch => ({
 	resetBeats: () => dispatch(resetBeats()),
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
+	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
 });
 
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));

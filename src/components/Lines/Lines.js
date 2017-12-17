@@ -62,9 +62,7 @@ class Lines extends React.Component {
 	addFilter = () => {
 		const svg = document.getElementById('svg');
 		if (svg) {
-			console.log(svg);
 			const defs = svg.append('defs');
-			console.log(defs);
 			// // Filter for the outside glow
 			// const filter = defs.append('filter').attr('id', 'glow');
 			// filter.append('feGaussianBlur').attr('stdDeviation', '3.5').attr('result', 'coloredBlur');

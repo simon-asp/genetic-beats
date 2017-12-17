@@ -3,10 +3,13 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './WelcomeInfo.css';
 import PropTypes from 'prop-types';
-// import cx from 'classnames';
-// let cx = classNames.bind(s);
+
+const cx = classNames.bind(s);
 
 const WelcomeInfo = (props) => {
+	console.log(props);
+	if (!props.welcomeInfoVisible) return null;
+
   return (
     <div className={s.root}>
 			<div className={s.top}>
@@ -27,9 +30,10 @@ const WelcomeInfo = (props) => {
 				ones that are the best, and create new beats based on their scoring.</p>
 			</div>
 
-
 			<div className={s.bottom}>
-				<div className={s.goButton}>GO!</div>
+				<div className={s.goButton} onClick={() => props.hideWelcomeInfo()} role="button" tabIndex="-10">
+					GO!
+				</div>
 			</div>
     </div>
   );
