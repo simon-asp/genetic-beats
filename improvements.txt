@@ -1,0 +1,5 @@
+* Make info button about beats to one button that toggles all info
+* Save beat function
+* Animate one line at a time, make it more GENESIS
+* Lock kick, lock snare, create your own start beat
+* 
