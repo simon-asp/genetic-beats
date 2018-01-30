@@ -21,7 +21,11 @@ class Box extends React.Component {
 		if (this.boxDiv) {
 			this.props.storeDomNodes(this.boxDiv, this.props.timelineIndex);
     }
+    this.props.onRef(this);
 	}
+  componentWillUnmount() {
+    this.props.onRef(undefined);
+  }
 
 	onClickInfo() {
 		const infoVisible = this.state.infoVisible;
@@ -74,9 +78,6 @@ class Box extends React.Component {
 						<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
 					</div>
 					<Scorer {...this.props} />
-					<div className={s.infoButton} onClick={() => this.onClickInfo()} role="button" tabIndex={index - 2}>
-						i
-					</div>
 				</div>
 			</div>
     );

@@ -77,8 +77,7 @@ class BeatList extends React.Component {
 		}
 		if (nextProps.timelineIndex !== nextProps.noOfGenerations - 1) {
 			this.setState({ hideRunButton: true });
-		}
-		else this.setState({ hideRunButton: false });
+		} else this.setState({ hideRunButton: false });
 	}
 
 	/* When clicking the beat to play */
@@ -98,7 +97,6 @@ class BeatList extends React.Component {
 	/* When clicking the button that runs the genetic algorithm. Check for score
 	 * of the beat first. */
 	onGenesisClick() {
-		// TODO: make a modal thing for the error message
 		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
 		this.setState({ scoreZeroExists });
 		setTimeout(() => { this.setState({ scoreZeroExists: false }); }, 5000);
@@ -106,6 +104,13 @@ class BeatList extends React.Component {
 		if (!scoreZeroExists) newPopulation(this.props);
 	}
 
+	/* Click on all box refs and display their info
+	*/
+	onBeatInfoClick = () => {
+		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+			this[`box${i}`].onClickInfo();
+		}
+	}
 	/* Initialize sequences and put in the state to be able to play them. */
 	populateSequenceArray(newBeats) {
 		const sequences = this.state.sequences;
@@ -131,6 +136,7 @@ class BeatList extends React.Component {
 					onPlayClick={this.onPlayClick.bind(this)}
 					storeDomNodes={storeDomNodes}
 					evolutionPairs={evolutionPairs}
+					onRef={ref => (this[`box${index}`] = ref)}
 				/>);
 		});
 	}
@@ -142,17 +148,27 @@ class BeatList extends React.Component {
 			<div className={s.root} id="beatList">
 				{ this.beatList }
 				<section className={s.buttons}>
-					<div
-						className={runButtonClass}
-						onClick={() => this.onGenesisClick()}
-						role="button"
-						tabIndex="-1"
-					>BEAT GENESIS</div>
+					<div className={s.flexGrow}>
+						<div
+							className={s.beatInfoButton}
+							onClick={this.onBeatInfoClick.bind(this)}
+							tabIndex={-10}
+							role="button"
+						>i</div>
+					</div>
+
+						<div
+							className={runButtonClass}
+							onClick={() => this.onGenesisClick()}
+							role="button"
+							tabIndex="-1"
+						>BEAT GENESIS</div>
+
+					<div className={overlayClass}>
+						Please score all beats
+						<div className={s.triangle} />
+					</div>
 				</section>
-				<div className={overlayClass}>
-					Please score all beats
-					<div className={s.triangle} />
-				</div>
 
 				<Lines
 					domNodes={this.props.domNodes}
