@@ -38,6 +38,7 @@ const Timeline = (props) => {
 	const height = (props.noOfGenerations) + '00vh';
   return (
     <div className={s.root} style={{ height }}>
+			GENERATION
 			{ renderTimeline(props) }
     </div>
   );

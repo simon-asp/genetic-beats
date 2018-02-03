@@ -42,6 +42,7 @@ class BeatList extends React.Component {
 			sequences: [],
 			hideRunButton: false,
 			scoreZeroExists: false,
+			allInfoActive: false,
 		});
 	}
 
@@ -107,10 +108,21 @@ class BeatList extends React.Component {
 	/* Click on all box refs and display their info
 	*/
 	onBeatInfoClick = () => {
-		for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
-			this[`box${i}`].onClickInfo();
+		let allInfoActiveState = this.state.allInfoActive;
+		this.setState({ allInfoActive: !allInfoActiveState });
+
+		allInfoActiveState = this.state.allInfoActive;
+		if (allInfoActiveState) {
+			for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+				this[`box${i}`].hideInfo();
+			}
+		} else {
+			for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+				this[`box${i}`].showInfo();
+			}
 		}
 	}
+
 	/* Initialize sequences and put in the state to be able to play them. */
 	populateSequenceArray(newBeats) {
 		const sequences = this.state.sequences;
