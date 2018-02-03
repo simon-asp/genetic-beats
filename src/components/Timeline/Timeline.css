@@ -40,7 +40,7 @@
 
 	& .verticalLine {
 		width:1px;
-		height:100vh;
+		height:calc(100vh - 28px);
 		background:var(--light-overlay);
 	}
 }

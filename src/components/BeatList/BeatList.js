@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
-import { newPopulation } from './GeneticAlgorithm';
+import * as ga from './GeneticAlgorithm';
 import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat } from './playBeat';
 import Box from '../Box';
@@ -100,9 +100,10 @@ class BeatList extends React.Component {
 	onGenesisClick() {
 		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
 		this.setState({ scoreZeroExists });
+		// Reset scoreZero
 		setTimeout(() => { this.setState({ scoreZeroExists: false }); }, 5000);
 
-		if (!scoreZeroExists) newPopulation(this.props);
+		if (!scoreZeroExists) ga.newPopulation(this.props);
 	}
 
 	/* Click on all box refs and display their info

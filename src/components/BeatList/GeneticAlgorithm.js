@@ -32,8 +32,6 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 	const instrumentNames = utils.getInstrumentKeys(beats[0]);
 	const offspring = {};
 
-	console.log('crossover', beats[parent1Index]);
-	console.log('crossover', beats[parent2Index]);
 	// Go through every instrument and crossover bits from the parents
 	for (let i = 0; i < noInstruments; i++) {
 		const parent1Copy = beats[parent1Index][`${instrumentNames[i]}`];
@@ -62,7 +60,6 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 		offspring[`${instrumentNames[i]}`] = instrNew;
 		offspring.score = 0;
 	}
-	console.log('offspring', offspring);
 	return offspring;
 };
 
@@ -82,13 +79,17 @@ const mutation = (beat, beatInfo) => {
 			return tick;
 		});
 		copiedBeat[randomKey] = mutatedArr;
-		console.log(beat.id, 'mutated at', randomKey, 'index', randomIndex, '!');
 	}
 
 	return copiedBeat;
 };
 
 /* Generates a new population based on what is voted on.
+* Parameters: beats = the beats as a list
+* 						beatInfo = information about the beats, from redux.
+*							addNewPopulation = Function to add new population to redux
+*							addNewSelectedPairs = Function to add selected pairs to redux.
+*							timelineIndex = Which index in the timeline were on. 
 */
 export const newPopulation = (props) => {
 	const { beats, beatInfo, addNewPopulation, addNewSelectedPairs, timelineIndex } = props;

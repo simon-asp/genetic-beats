@@ -59,6 +59,7 @@ class Lines extends React.Component {
 		}
 	}
 
+  // Doesn't work yet. Should add a glow-effect to the lines.
 	addFilter = () => {
 		const svg = document.getElementById('svg');
 		if (svg) {
