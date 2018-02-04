@@ -27,6 +27,20 @@ class BeatTimeline extends React.Component {
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 	}
 
+  componentDidMount() {
+    this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
+  }
+
+  showHideWelcomeInfo = (welcomeInfoVisible) => {
+    const welcomeInfoDiv = document.getElementById('welcomeInfo');
+    if (welcomeInfoVisible) welcomeInfoDiv.style.display = 'flex';
+    else welcomeInfoDiv.style.display = 'none';
+  }
+
 	/* Store DOM-nodes of the boxes in the beatlist */
 	storeDomNodes(domNode, timelineIndex) {
 		const domNodesTimeline = this.state.domNodesTimeline;
@@ -36,14 +50,13 @@ class BeatTimeline extends React.Component {
 			domNodes.push(domNode);
 			domNodesTimeline.push(domNodes);
 			this.setState({ domNodesTimeline });
-		}
-		else {
+		} else {
 			domNodesTimeline[timelineIndex].push(domNode);
 			this.setState({ domNodesTimeline });
 		}
 	}
 
-	storeLines(lines, timelineIndex) {
+	storeLines(lines) {
 		this.setState({ lines });
 	}
 
@@ -68,10 +81,11 @@ class BeatTimeline extends React.Component {
 		return beatTimelineArray;
 	}
 
+
   render() {
     return (
 			<div className={s.root}>
-				<WelcomeInfo welcomeInfoVisible={this.props.beatInfo.welcomeInfoVisible} hideWelcomeInfo={this.props.hideWelcomeInfo} />
+        <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} />
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />

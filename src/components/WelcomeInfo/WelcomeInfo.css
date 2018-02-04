@@ -16,6 +16,7 @@
 	letter-spacing: 1px;
 	padding:42px;
 	box-sizing: border-box;
+	display: none;
 
 	& > div {
 		width:25%;

@@ -7,11 +7,8 @@ import PropTypes from 'prop-types';
 const cx = classNames.bind(s);
 
 const WelcomeInfo = (props) => {
-	console.log(props);
-	if (!props.welcomeInfoVisible) return null;
-
   return (
-    <div className={s.root}>
+    <div className={s.root} id="welcomeInfo">
 			<div className={s.top}>
 				<h1>WELCOME TO </h1>
 				<div className={s.logo} />
