@@ -100,10 +100,11 @@ class BeatList extends React.Component {
 	onGenesisClick() {
 		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
 		this.setState({ scoreZeroExists });
-		// Reset scoreZero
-		setTimeout(() => { this.setState({ scoreZeroExists: false }); }, 5000);
 
-		if (!scoreZeroExists) ga.newPopulation(this.props);
+		// Reset the scorer check after new population has been made. 
+		if (!scoreZeroExists) ga.newPopulation(this.props, () => {
+			this.setState({ scoreZeroExists: false });
+		});
 	}
 
 	/* Click on all box refs and display their info

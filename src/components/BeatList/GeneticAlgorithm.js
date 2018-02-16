@@ -69,7 +69,7 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 const mutation = (beat, beatInfo) => {
 	const copiedBeat = Object.assign({}, beat);
 
-	if (Math.random() <= 0.03) {
+	if (Math.random() <= 0.1) {
 		const instrKeys = Object.keys(beat).filter(key => key !== 'id' && key !== 'score');
 		const randomKey = instrKeys[utils.getRandomIntInclusive(0, instrKeys.length - 1)];
 		const randomIndex = utils.getRandomIntInclusive(0, beatInfo.noOfTicks - 1);
@@ -89,15 +89,14 @@ const mutation = (beat, beatInfo) => {
 * 						beatInfo = information about the beats, from redux.
 *							addNewPopulation = Function to add new population to redux
 *							addNewSelectedPairs = Function to add selected pairs to redux.
-*							timelineIndex = Which index in the timeline were on. 
+*							timelineIndex = Which index in the timeline were on.
 */
-export const newPopulation = (props) => {
+export const newPopulation = (props, callback) => {
 	const { beats, beatInfo, addNewPopulation, addNewSelectedPairs, timelineIndex } = props;
 	const newBeatArray = [];
 	const selectedPairs = [];
 
-	// Create new offspring 8 times.
-	for (let i = 0; i < 8; i++) {
+	for (let i = 0; i < beatInfo.noOfBeats; i++) {
 		const parent1Index = selection(beats);
 		const parent2Index = selection(beats);
 		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);

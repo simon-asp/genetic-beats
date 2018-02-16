@@ -22,7 +22,7 @@ export function initializeBeat(Tone, beats, beatInfo, index, timelineIndex) {
 		closedhat: require('./sounds/closedhat.wav'),
 		openhat: require('./sounds/openhat.wav'),
 	}, {
-		volume: 10,
+		volume: 0,
 	}).toMaster();
 
 	Tone.Transport.bpm.value = 106;

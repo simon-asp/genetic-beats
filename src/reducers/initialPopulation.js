@@ -33,6 +33,7 @@ export default function getInitialPopulation() {
 		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
 		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
 
+		// For testing
 		// beat.kick = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0];
 		// beat.closedhat = [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1];
 		// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];

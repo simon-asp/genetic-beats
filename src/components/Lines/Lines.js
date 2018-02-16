@@ -17,9 +17,16 @@ class Lines extends React.Component {
 	componentDidMount() {
 		this.addFilter();
 	}
+
+  // Render or unrender the lines depending on Redux props
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.domNodes) this.renderLines(nextProps);
-		if (!nextProps.evolutionPairs) this.unrenderLines(nextProps);
+    console.log('nextprops', nextProps);
+
+    // Only render lines if the domNodes of the boxes and the evolution pairs exists.
+		if (nextProps.domNodes && nextProps.evolutionPairs) this.renderLines(nextProps);
+
+    // Only unrender lines for the first generation, when we click the reset beats.
+		if (!nextProps.evolutionPairs && nextProps.timeLineIndex === 0) this.unrenderLines(nextProps);
 	}
 
 	/* Get the center coordinates for a DOM element */
@@ -51,14 +58,6 @@ class Lines extends React.Component {
 		return lines;
 	};
 
-	/* Reset all lines */
-	unrenderLines = (props) => {
-		const { beatInfo, timeLineIndex } = props;
-		for (let i = 0; i < beatInfo.noOfBeats; i++) {
-			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
-		}
-	}
-
   // Doesn't work yet. Should add a glow-effect to the lines.
 	addFilter = () => {
 		const svg = document.getElementById('svg');
@@ -78,30 +77,39 @@ class Lines extends React.Component {
 		//d3.selectAll(".class-of-elements").style("filter", "url(#glow)");
 	}
 
+  /* Reset all lines */
+  unrenderLines = (props) => {
+    console.log("unrender lines" + props.timeLineIndex);
+    const { beatInfo, timeLineIndex } = props;
+    for (let i = 0; i < beatInfo.noOfBeats; i++) {
+      document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
+    }
+  }
+
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
+    console.log("render lines" + props.timeLineIndex);
+
 		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = props;
 
-		if (evolutionPairs) {
-			for (let i = 0; i < beatInfo.noOfBeats; i++) {
-				const parent1 = evolutionPairs[i].parent1;
-				const parent2 = evolutionPairs[i].parent2;
+		for (let i = 0; i < beatInfo.noOfBeats; i++) {
+			const parent1 = evolutionPairs[i].parent1;
+			const parent2 = evolutionPairs[i].parent2;
 
-				const el1 = domNodes[parent1];
-				const el2 = domNodes[parent2];
+			const el1 = domNodes[parent1];
+			const el2 = domNodes[parent2];
 
-				const coords1 = this.getCenterCoords(el1);
-				const coords2 = this.getCenterCoords(el2);
+			const coords1 = this.getCenterCoords(el1);
+			const coords2 = this.getCenterCoords(el2);
 
-				const sx1 = coords1.x + 300;
-				const sy1 = coords1.y + 150;
-				const sx2 = coords2.x - 200;
-				const sy2 = coords2.y - 150;
+			const sx1 = coords1.x + 300;
+			const sy1 = coords1.y + 150;
+			const sx2 = coords2.x - 200;
+			const sy2 = coords2.y - 150;
 
-				// Bezier curve coords
-				const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
-				document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', d);
-			}
+			// Bezier curve coords
+			const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
+			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', d);
 		}
 	}
 
