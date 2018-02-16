@@ -20,8 +20,6 @@ class Lines extends React.Component {
 
   // Render or unrender the lines depending on Redux props
 	componentWillReceiveProps(nextProps) {
-    console.log('nextprops', nextProps);
-
     // Only render lines if the domNodes of the boxes and the evolution pairs exists.
 		if (nextProps.domNodes && nextProps.evolutionPairs) this.renderLines(nextProps);
 
@@ -41,7 +39,7 @@ class Lines extends React.Component {
 	addLines = (props) => {
 		const { beatInfo, timeLineIndex } = props;
 		const lines = [];
-		const colors = ['#DFE0E2', '#75ABBC', '#090C9B', '#B79477', '#993955', '#84C18F', '#F786AA', '#EDE6A4'];
+		const colors = ['#5C429B', '#81DFEF', '#090C9B', '#EF4136', '#E9E8EA', '#8FDD76', '#F286B1', '#EDDA54'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {
 				const strokeWidth = mapRange(j, 0, beatInfo.noOfBeats, 1, 6);
@@ -79,7 +77,6 @@ class Lines extends React.Component {
 
   /* Reset all lines */
   unrenderLines = (props) => {
-    console.log("unrender lines" + props.timeLineIndex);
     const { beatInfo, timeLineIndex } = props;
     for (let i = 0; i < beatInfo.noOfBeats; i++) {
       document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
@@ -88,10 +85,7 @@ class Lines extends React.Component {
 
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
-    console.log("render lines" + props.timeLineIndex);
-
-		const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = props;
-
+    const { evolutionPairs, beatInfo, domNodes, timeLineIndex } = props;
 		for (let i = 0; i < beatInfo.noOfBeats; i++) {
 			const parent1 = evolutionPairs[i].parent1;
 			const parent2 = evolutionPairs[i].parent2;
@@ -110,9 +104,8 @@ class Lines extends React.Component {
 			// Bezier curve coords
 			const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
 			document.getElementById('line' + timeLineIndex + '' + i).setAttribute('d', d);
-		}
+    }
 	}
-
 
   render() {
     return (

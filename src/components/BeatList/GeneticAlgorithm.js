@@ -109,4 +109,5 @@ export const newPopulation = (props, callback) => {
 	}
 	addNewSelectedPairs(selectedPairs, timelineIndex);
 	addNewPopulation(newBeatArray);
+	callback();
 };

@@ -51,7 +51,34 @@
 			position: absolute;
 			left:8px;
 			top:8px;
+      cursor:pointer;
 		}
+    & .colorLine:hover + .colorLineTooltip {
+      display: block;
+      height:70px;
+      width:90%;
+      padding:9px 18px;
+      border-radius: 2px;
+      box-sizing: border-box;
+      font-size:0.75em;
+      color: white;
+      position: absolute;
+      top:-82px;
+      left: 0;
+    }
+    & .colorLineTooltip {
+      display: none;
+    }
+    & .triangle {
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      position: absolute;
+      bottom:-8px;
+      left:12px;
+    }
+
 		& .hidden {
 			display:none;
 		}

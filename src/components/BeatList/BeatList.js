@@ -43,6 +43,7 @@ class BeatList extends React.Component {
 			hideRunButton: false,
 			scoreZeroExists: false,
 			allInfoActive: false,
+			showArrow: false,
 		});
 	}
 
@@ -53,7 +54,6 @@ class BeatList extends React.Component {
 		this.populateBeatArray(this.props);
 		this.setState({ Tone }, () => this.populateSequenceArray(this.props.beats));
 	}
-
 	/* Populate the beat array and the sequence array on new props from redux
 	 * Don't update the sequence array when the score is changed. */
 	componentWillReceiveProps(nextProps) {
@@ -100,10 +100,18 @@ class BeatList extends React.Component {
 	onGenesisClick() {
 		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
 		this.setState({ scoreZeroExists });
+		// Remove the tooltip after 3 seconds
+		setTimeout(() => {this.setState({scoreZeroExists: false})}, 3000);
 
-		// Reset the scorer check after new population has been made. 
+		// Reset the scorer check after new population has been made.
 		if (!scoreZeroExists) ga.newPopulation(this.props, () => {
-			this.setState({ scoreZeroExists: false });
+			this.setState({scoreZeroExists: false});
+
+			// Set a timer for the arrow tooltip
+			if(this.props.timelineIndex === 0) {
+				this.setState({showArrow: true});
+				setTimeout(() => this.setState({showArrow: false}), 6000);
+			}
 		});
 	}
 
@@ -158,6 +166,7 @@ class BeatList extends React.Component {
 	render() {
 		const runButtonClass = cx('runButton', { hidden: this.state.hideRunButton });
 		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists });
+		const arrowDownTooltipClass = cx('arrowDownTooltip', { active: this.state.showArrow && this.props.timelineIndex === 0 });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
@@ -171,18 +180,20 @@ class BeatList extends React.Component {
 						>i</div>
 					</div>
 
-						<div
-							className={runButtonClass}
-							onClick={() => this.onGenesisClick()}
-							role="button"
-							tabIndex="-1"
-						>BEAT GENESIS</div>
+					<div
+						className={runButtonClass}
+						onClick={() => this.onGenesisClick()}
+						role="button"
+						tabIndex="-1"
+					>BEAT GENESIS</div>
+					<div className={arrowDownTooltipClass} />
 
 					<div className={overlayClass}>
 						Please score all beats
 						<div className={s.triangle} />
 					</div>
 				</section>
+
 
 				<Lines
 					domNodes={this.props.domNodes}
