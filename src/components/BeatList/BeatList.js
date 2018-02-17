@@ -40,7 +40,7 @@ class BeatList extends React.Component {
 		this.setState({
 			clickedPlay: [],
 			sequences: [],
-			hideRunButton: false,
+			higherGenerationExists: false,
 			scoreZeroExists: false,
 			allInfoActive: false,
 			showArrow: false,
@@ -61,9 +61,12 @@ class BeatList extends React.Component {
 		const beats = this.props.beats;
 		// Reset the clickedPlay array
 		this.setState({ clickedPlay: [] });
-		this.populateBeatArray(nextProps);
+
 		let scoreIsSame = true;
 		let allScoreZero = true;
+		/* Since setState is asynchronus. When resetting beats, we need to know if
+		higher generations exists to pass to the box component and score component */
+		let higherGenerationExists = false;
 
 		// Check if the score has changed
 		for (let i = 0; i < nextBeats.length; i++) {
@@ -76,9 +79,19 @@ class BeatList extends React.Component {
 		if (!scoreIsSame || allScoreZero) {
 			this.populateSequenceArray(nextProps.beats);
 		}
+
+		// If we have a beatlist with a higher index than this, update state.
+		// Used to disable the run-button and scorer
 		if (nextProps.timelineIndex !== nextProps.noOfGenerations - 1) {
-			this.setState({ hideRunButton: true });
-		} else this.setState({ hideRunButton: false });
+			this.setState({ higherGenerationExists: true });
+			higherGenerationExists = true;
+		} else {
+			this.setState({ higherGenerationExists: false });
+			higherGenerationExists = false;
+
+		};
+
+		this.populateBeatArray(nextProps, higherGenerationExists);
 	}
 
 	/* When clicking the beat to play */
@@ -143,8 +156,8 @@ class BeatList extends React.Component {
 	}
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
-	populateBeatArray(props) {
-		const { beats, scoreBeat, timelineIndex, storeDomNodes, evolutionPairs, beatInfo } = props;
+	populateBeatArray(props, higherGenerationExists) {
+		const { beats, scoreBeat, timelineIndex, storeDomNodes, evolutionPairs, beatInfo, noOfGenerations } = props;
 		this.beatList = [];
 		beats.forEach((beat, index) => {
 			this.beatList.push(
@@ -159,13 +172,14 @@ class BeatList extends React.Component {
 					storeDomNodes={storeDomNodes}
 					evolutionPairs={evolutionPairs}
 					onRef={ref => (this[`box${index}`] = ref)}
-					noOfGenerations={this.props.noOfGenerations}
+					noOfGenerations={noOfGenerations}
+					higherGenerationExists={higherGenerationExists}
 				/>);
-		});
-	}
+			});
+		}
 
 	render() {
-		const runButtonClass = cx('runButton', { hidden: this.state.hideRunButton });
+		const runButtonClass = cx('runButton', { hidden: this.state.higherGenerationExists });
 		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists });
 		const arrowDownTooltipClass = cx('arrowDownTooltip', { active: this.state.showArrow && this.props.timelineIndex === 0 });
 		return (

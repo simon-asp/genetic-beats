@@ -7,20 +7,20 @@ import s from './Scorer.css';
 const cx = classNames.bind(s);
 
 const scoreBeatCheck = (props, i) => {
-	const { index, scoreBeat, timelineIndex, noOfGenerations } = props;
-	if(timelineIndex === noOfGenerations-1) {
+	const { index, scoreBeat, higherGenerationExists, timelineIndex } = props;
+	if(!higherGenerationExists) {
 		scoreBeat(timelineIndex, index, i + 1);
 	}
 }
 /* Scorer function, renders stars that can be clickable */
 function Scorer(props) {
-	const { index, beat, scoreBeat, timelineIndex, noOfGenerations } = props;
+	const { index, beat, scoreBeat, timelineIndex, noOfGenerations, higherGenerationExists } = props;
 	const stars = [];
 
 	for (let i = 0; i < 5; i++) {
 		const starClass = cx('score', {
 			filled: beat.score >= i + 1,
-			dark: timelineIndex !== noOfGenerations-1,
+			dark: higherGenerationExists,
 		});
 		stars.push(
 			<div

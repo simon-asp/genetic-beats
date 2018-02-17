@@ -105,7 +105,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
 	scoreBeat: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
 	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
-	resetBeats: () => dispatch(resetBeats()),
+	resetBeats: () => {dispatch(resetBeats())},
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
