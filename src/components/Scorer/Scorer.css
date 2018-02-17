@@ -5,7 +5,7 @@
   justify-content: space-between;
   padding:0 12px;
   width:100%;
-  margin-top:24px;
+  z-index: 2;
 
   & .score, & .filled {
     mask:url('./unfilledstar.svg') no-repeat;
@@ -23,9 +23,9 @@
      background:white;
   }
   & .dark {
-    background:#555;
+    background:#777;
   }
   & .dark:hover {
-    background:#555;
+    background:#777;
   }
 }
