@@ -9,75 +9,90 @@
 	left:0;
 	display: flex;
 	justify-content: center;
-	align-items:center;
 	z-index: 4;
 	flex-wrap: wrap;
 	color: rgba(255,255,255,0.6);
 	letter-spacing: 1px;
-	padding:42px;
 	box-sizing: border-box;
-	display: none;
+	/* visibility: hidden; */
 
-	& > div {
-		width:25%;
+	& .container {
+		width:70%;
+		max-width:1000px;
+		padding:48px;
 		display: flex;
-		justify-content: center;
 		flex-wrap: wrap;
-	}
-	& .top, & .bottom {
-		width:100%;
-	}
+		align-items:flex-start;
 
-	& .top {
-		margin: 0;
-	}
-
-	& .boxImage {
-		background: url('./infographic.svg') no-repeat;
-		width:300px;
-		height:300px;
-		margin-right: 82px;
-	}
-	& .goButton {
-		text-align: center;
-		padding:12px 32px;
-		font-size:12px;
-		margin:0 12px 0 12px;
-		letter-spacing: 3px;
-		border:2px solid rgba(255,255,255,0.9);
-		color:rgba(255,255,255,0.9);
-		cursor:pointer;
-		box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
-		outline:0;
-		user-select: none;
-		z-index: 1;
-		border-radius:4px;
-		font-size: 1.2em;
-	}
-	& .goButton:hover {
-		border:2px solid rgba(255,255,255,0.5);
-		color:rgba(255,255,255,0.4);
-		box-shadow: 0px 5px 20px 3px rgba(0,0,0,0.3);
-	}
-	& h1 {
-		margin:0;
-		font-size:1.5em;
-		letter-spacing: -1px;
-		color:rgba(255,255,255,0.95);
-		text-shadow: 0px 2px 10px rgba(50,50,50,0.7);
-		margin:7px 12px 0 0;
-	}
-	& p {
-		width:100%;
-
-		& span {
-			font-weight: bold;
+		& .top, & .bottom {
+			width:100%;
 		}
-	}
-	& .logo {
-		background: url('../Layout/geneticbeats-logo.svg') no-repeat;
-		width:300px;
-		height:56px;
-		margin:0 0 0 16px;
+		& .top {
+			& h1 {
+				margin:0;
+				font-size:3.7em;
+				letter-spacing: -1px;
+				color:rgba(255,255,255,0.95);
+				text-shadow: 0px 2px 10px rgba(50,50,50,0.7);
+			}
+
+			& .logo {
+				background: url('../Layout/geneticbeats-logo.svg') no-repeat;
+				width:350px;
+				height:58px;
+				margin-left:-16px;
+			}
+		}
+		& .beats {
+			background: url('./beats.png') no-repeat;
+			background-size:contain;
+			width:92%;
+			height:200px;
+			margin-top:24px;
+		}
+		& .middle {
+			margin:0 0 42px 0;
+			display: flex;
+			justify-content:space-between;
+		}
+		& .item {
+			width:30%;
+			display: flex;
+			justify-content: center;
+			flex-wrap: wrap;
+
+			& .beat {
+				background: url('./beat2.svg') no-repeat;
+				width:250px;
+				height:180px;
+				margin-left:-24px;
+			}
+
+			& h2 {
+				font-size:1em;
+				color:#ccc;
+			}
+		}
+		& .goButton {
+			text-align: center;
+			padding:12px 32px;
+			font-size:0.8em;
+			margin:0 12px 0 12px;
+			letter-spacing: 3px;
+			border:2px solid rgba(255,255,255,0.9);
+			color:rgba(255,255,255,0.9);
+			cursor:pointer;
+			box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.1);
+			outline:0;
+			user-select: none;
+			z-index: 1;
+			border-radius:4px;
+			width:84px;
+		}
+		& .goButton:hover {
+			border:2px solid rgba(255,255,255,0.5);
+			color:rgba(255,255,255,0.4);
+			box-shadow: 0px 5px 20px 3px rgba(0,0,0,0.3);
+		}
 	}
 }

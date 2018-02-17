@@ -15,6 +15,6 @@ export default function beatInfo(state = beatInfoObj, action) {
 			return newState;
 		}
 	default:
-		return state;
+		return beatInfoObj;
 	}
 }
