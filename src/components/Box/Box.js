@@ -29,9 +29,6 @@ class Box extends React.Component {
   componentWillUnmount() {
     this.props.onRef(undefined);
   }
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-  }
 	onClickInfo() {
 		const infoVisible = this.state.infoVisible;
 		this.setState({ infoVisible: !infoVisible });

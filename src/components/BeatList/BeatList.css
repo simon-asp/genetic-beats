@@ -11,7 +11,7 @@
   flex-wrap: wrap;
   box-sizing: border-box;
   position:relative;
-  padding:2% 0 9% 80px;
+  padding:4% 0 9% 80px;
 
   & .buttons {
     width:100%;
