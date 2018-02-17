@@ -200,6 +200,7 @@ class BeatList extends React.Component {
 					beatInfo={this.props.beatInfo}
 					evolutionPairs={this.props.evolutionPairs}
 					timeLineIndex={this.props.timelineIndex}
+					beatList={this.beatList}
 				/>
 			</div>
 		);

@@ -65,7 +65,7 @@ class Box extends React.Component {
 
   render() {
 		const { beat, index, scoreBeat, onPlayClick, id, timelineIndex } = this.props;
-    const colors = ['#5C429B', '#81DFEF', '#090C9B', '#EF4136', '#E9E8EA', '#8FDD76', '#F286B1', '#EDDA54'];
+    const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
 		const infoOverlayClass = cx('infoOverlay', { active: this.state.infoVisible });
 		const colorLineClass = cx('colorLine', { hidden: this.props.timelineIndex === 0 });
     return (

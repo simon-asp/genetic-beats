@@ -37,12 +37,18 @@ class Lines extends React.Component {
 
 	/* Add lines to the DOM */
 	addLines = (props) => {
-		const { beatInfo, timeLineIndex } = props;
+		const { beatInfo, timeLineIndex, beatList, evolutionPairs } = props;
 		const lines = [];
-		const colors = ['#5C429B', '#81DFEF', '#090C9B', '#EF4136', '#E9E8EA', '#8FDD76', '#F286B1', '#EDDA54'];
+		const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {
-				const strokeWidth = mapRange(j, 0, beatInfo.noOfBeats, 1, 6);
+        let score = 0;
+        if(beatList && evolutionPairs) {
+          const score1 = beatList[evolutionPairs[j].parent1].props.beat.score;
+          const score2 = beatList[evolutionPairs[j].parent2].props.beat.score;
+          score = (score1 + score2) / 2;
+        }
+				const strokeWidth = mapRange(score, 1.5, 5, 1, 8);
 				lines.push(<path
 					id={'line' + timeLineIndex + '' + j}
 					stroke={colors[j]}
