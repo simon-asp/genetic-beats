@@ -144,7 +144,7 @@ class BeatList extends React.Component {
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props) {
-		const { beats, scoreBeat, timelineIndex, storeDomNodes, evolutionPairs } = props;
+		const { beats, scoreBeat, timelineIndex, storeDomNodes, evolutionPairs, beatInfo } = props;
 		this.beatList = [];
 		beats.forEach((beat, index) => {
 			this.beatList.push(
@@ -159,6 +159,7 @@ class BeatList extends React.Component {
 					storeDomNodes={storeDomNodes}
 					evolutionPairs={evolutionPairs}
 					onRef={ref => (this[`box${index}`] = ref)}
+					noOfGenerations={this.props.noOfGenerations}
 				/>);
 		});
 	}

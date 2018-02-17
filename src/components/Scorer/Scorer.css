@@ -8,7 +8,8 @@
   margin-top:24px;
 
   & .score, & .filled {
-    background:url('./unfilledstar.svg') no-repeat;
+    mask:url('./unfilledstar.svg') no-repeat;
+    background:#E5E5E5;
     width:20px;
     height:20px;
     outline:0;
@@ -16,13 +17,15 @@
   }
 
   & .filled {
-    background:url('./filledstar.svg') no-repeat;
+    mask:url('./filledstar.svg') no-repeat;
   }
-
-	& .score:hover {
-		background:url('./unfilledstar_h.svg') no-repeat;
-	}
-	& .filled:hover {
-		background:url('./filledstar_h.svg') no-repeat;
-	}
+  & .score:hover, & .filled:hover {
+     background:white;
+  }
+  & .dark {
+    background:#555;
+  }
+  & .dark:hover {
+    background:#555;
+  }
 }
