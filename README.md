@@ -23,3 +23,8 @@ Run the application
 ```npm start```
 
 This will open the application in your browser on port 3000.
+
+## Demo
+A demo is located on [Heroku](https://genetic-beats.herokuapp.com/)
+
+My portfolio is located [Issuu](https://issuu.com/asppp/docs/simonasp-portfolio2018)
