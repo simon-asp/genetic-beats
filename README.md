@@ -1,4 +1,4 @@
-![Genetic Beats](genetic-beats-overview.png)
+![Genetic Beats](genetic-beats-overview2.png)
 
 # genetic-beats
 Genetic Beats is an application for artists, musicians and dj’s who want to create musical beats in a new way.
