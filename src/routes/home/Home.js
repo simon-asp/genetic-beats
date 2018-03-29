@@ -13,13 +13,34 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import BeatTimeline from '../../components/BeatTimeline';
 import s from './Home.css';
 import Login from '../../components/Login';
+import { auth } from 'firebase';
 
 class Home extends React.Component {
+
+  componentWillMount() {
+    this.setState({
+      loggedIn: false,
+    });
+  }
+
+  componentDidMount() {
+    auth().onAuthStateChanged(firebaseUser => {
+      if(firebaseUser) {
+        this.setState({loggedIn:true})
+        console.log('logged in')
+      }
+      else {
+        this.setState({loggedIn:false})
+        console.log('not logged in')
+      }
+    });
+  }
+
   render() {
+    console.log(this.state.loggedIn)
     return (
       <div className={s.root}>
-        <Login />
-        {/*<BeatTimeline />*/}
+        {this.state.loggedIn ? <BeatTimeline /> : <Login />}
       </div>
     );
   }
