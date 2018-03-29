@@ -12,12 +12,14 @@ import PropTypes from 'prop-types';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import BeatTimeline from '../../components/BeatTimeline';
 import s from './Home.css';
+import Login from '../../components/Login';
 
 class Home extends React.Component {
   render() {
     return (
       <div className={s.root}>
-        <BeatTimeline />
+        <Login />
+        {/*<BeatTimeline />*/}
       </div>
     );
   }
