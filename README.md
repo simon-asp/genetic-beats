@@ -1,3 +1,5 @@
+![Genetic Beats](genetic-beats-overview2.png)
+
 # genetic-beats
 Genetic Beats is an application for artists, musicians and dj’s who want to create musical beats in a new way.
 
@@ -21,3 +23,8 @@ Run the application
 ```npm start```
 
 This will open the application in your browser on port 3000.
+
+## Demo
+A demo is located on [Heroku](https://genetic-beats.herokuapp.com/)
+
+My portfolio is located [Issuu](https://issuu.com/asppp/docs/simonasp-portfolio2018)
