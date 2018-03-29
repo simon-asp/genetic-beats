@@ -11,7 +11,7 @@ class Login extends React.Component {
     this.setState({
       email:'',
       password:'',
-      error:false,
+      error: false,
       errorMessage:'',
       errorGreen: false
     })

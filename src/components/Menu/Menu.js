@@ -3,6 +3,7 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './Menu.css';
 import PropTypes from 'prop-types';
+import { auth } from 'firebase';
 
 let cx = classNames.bind(s);
 
@@ -35,6 +36,10 @@ class Menu extends React.Component {
 		this.setState({ clickedReset: false });
 	}
 
+	logout() {
+		auth().signOut();
+	} 
+
   render() {
 		const menuContainerClass = cx('menuContainer', { active: this.state.clickedMenu });
 		const menuIconClass = cx('menuIcon', { dark: this.state.clickedMenu });
@@ -51,6 +56,14 @@ class Menu extends React.Component {
 						tabIndex="-2"
 					>
 						RESET BEATS
+					</div>
+					<div
+						className={s.resetButton}
+						onClick={() => this.logout()}
+						role="button"
+						tabIndex="-3"
+					>
+						LOGOUT
 					</div>
 
 					<div className={confirmationClass}>
