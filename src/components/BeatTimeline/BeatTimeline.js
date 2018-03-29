@@ -37,8 +37,8 @@ class BeatTimeline extends React.Component {
 
   showHideWelcomeInfo = (welcomeInfoVisible) => {
     const welcomeInfoDiv = document.getElementById('welcomeInfo');
-    if (welcomeInfoVisible) welcomeInfoDiv.style.display = 'flex';
-    else welcomeInfoDiv.style.display = 'none';
+    if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
+    else welcomeInfoDiv.style.visibility = 'hidden';
   }
 
 	/* Store DOM-nodes of the boxes in the beatlist */
