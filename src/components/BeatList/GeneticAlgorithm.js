@@ -103,6 +103,7 @@ export const newPopulation = (props, callback) => {
 
 		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
 		offspring.id = 'beat' + i;
+		offspring.liked = false;
 		const mutatedOffspring = mutation(offspring, beatInfo);
 
 		newBeatArray.push(mutatedOffspring);

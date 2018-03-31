@@ -23,6 +23,7 @@ class BeatList extends React.Component {
 		storeDomNodes: PropTypes.func,
 		domNodes: PropTypes.array,
 		evolutionPairs: PropTypes.array,
+		likeBeatToggle: PropTypes.func,
   };
 
 	static defaultProps = {
@@ -33,6 +34,7 @@ class BeatList extends React.Component {
 		resetBeats: () => {},
 		timelineIndex: 0,
 		storeDomNodes: () => {},
+		likeBeatToggle: () => {}		
 	}
 
 	/* Populate the array at init */
@@ -174,6 +176,7 @@ class BeatList extends React.Component {
 					onRef={ref => (this[`box${index}`] = ref)}
 					noOfGenerations={noOfGenerations}
 					higherGenerationExists={higherGenerationExists}
+					likeBeatToggle={this.props.likeBeatToggle}
 				/>);
 			});
 		}

@@ -32,5 +32,6 @@
 	/* COLORS */
 	--light-color: #C1C1C1;
 	--box-color: #313133;
-	--light-overlay: rgba(255,255,255,0.3);
+  --light-overlay: rgba(255,255,255,0.3);
+  --red: #724141;
 }

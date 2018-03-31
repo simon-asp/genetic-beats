@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
-import { addNewPopulation, scoreBeat, resetBeats } from '../../actions/beats';
+import { addNewPopulation, scoreBeat, resetBeats, likeBeatToggle } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
@@ -109,6 +109,6 @@ const mapDispatch = dispatch => ({
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
+	likeBeatToggle: (timelineIndex, index) => dispatch(likeBeatToggle(timelineIndex, index))
 });
-
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));

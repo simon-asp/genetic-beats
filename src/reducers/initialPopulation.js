@@ -40,6 +40,7 @@ export default function getInitialPopulation() {
 		// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
 		beat.score = 0;
 		beat.id = 'beat' + i;
+		beat.liked = false;
 
 		beatList.push(beat);
 	}

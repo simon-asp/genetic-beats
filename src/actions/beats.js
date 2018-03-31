@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
 
-import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS } from '../constants';
+import { ADD_NEW_POPULATION, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS, LIKE_BEAT_TOGGLE } from '../constants';
 
 /* Adds a new population, newBeats is an array */
 export function addNewPopulation(newBeats) {
@@ -16,6 +16,14 @@ export function scoreBeat(timelineIndex, index, score) {
 		timelineIndex,
 		index,
 		score,
+  };
+}
+
+export function likeBeatToggle(timelineIndex, index) {
+  return {
+    type: LIKE_BEAT_TOGGLE,
+		timelineIndex,
+		index,
   };
 }
 

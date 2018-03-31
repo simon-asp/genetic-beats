@@ -43,6 +43,23 @@
 			bottom:8px;
 			right:8px;
     }
+    & .heart {
+      mask:url(./heart.svg) no-repeat;
+      background: var(--light-overlay);
+      width:18px;
+      height:18px;
+      position: absolute;
+      bottom:8px;
+      right:8px;
+      cursor: pointer;
+    }
+    & .heart:hover {
+      background: white;      
+    }
+    & .filled-heart {
+      mask:url(./heart_filled.svg) no-repeat;
+      background: var(--red);
+    }
 		& .colorLine {
 			mask: url('./line.svg') no-repeat;
 			background: var(--light-overlay);
@@ -98,7 +115,7 @@
       height:100%;
       border-radius: 4px;
       background:var(--box-color);
-      padding:12px 16px;
+      padding:4px 16px 12px 10px;
       box-sizing: border-box;
       color:var(--light-overlay);
       font-size: 0.6em;
