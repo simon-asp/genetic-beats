@@ -8,8 +8,6 @@ import { auth } from 'firebase';
 let cx = classNames.bind(s);
 
 class Menu extends React.Component {
-  static propTypes = {
-  };
 
 	componentWillMount() {
 		this.setState({ clickedMenu: false, clickedReset: false });
@@ -49,6 +47,7 @@ class Menu extends React.Component {
 			<div className={s.root}>
 				<div className={menuIconClass} role="button" tabIndex="-1" onClick={() => this.menuOnClick()} />
 				<div className={menuContainerClass}>
+					<div className={s.userName}>Logged in as: <span>{this.props.currentUser.email}</span></div>
 					<div
 						className={s.resetButton}
 						onClick={() => { this.resetButtonOnClick(); }}

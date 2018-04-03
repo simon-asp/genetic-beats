@@ -11,6 +11,7 @@ import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
+import * as firebase from 'firebase';
 
 const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
@@ -23,18 +24,24 @@ class BeatTimeline extends React.Component {
 		this.setState({
 			domNodesTimeline: [],
 			linesTimeline: [],
+			currentUser: firebase.auth().currentUser
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
+		this.database = firebase.database().ref().child('users');
+		
 	}
 
+	/* Determine if we want to show the welcome info, also subscribe to the database */
   componentDidMount() {
-    this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
+		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
+		this.database.on('value', snap => console.log(snap.val()));
   }
 
   componentWillReceiveProps(nextProps) {
     this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
   }
 
+	/* Shows and hides the welcome info */
   showHideWelcomeInfo = (welcomeInfoVisible) => {
     const welcomeInfoDiv = document.getElementById('welcomeInfo');
     if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
@@ -86,7 +93,7 @@ class BeatTimeline extends React.Component {
     return (
 			<div className={s.root}>
         <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
-				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} />
+				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />
 			</div>

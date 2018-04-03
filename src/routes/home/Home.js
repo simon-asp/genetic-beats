@@ -13,9 +13,9 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import BeatTimeline from '../../components/BeatTimeline';
 import Login from '../../components/Login';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import { auth } from 'firebase';
 
 import s from './Home.css';
-import { auth } from 'firebase';
 
 class Home extends React.Component {
 
@@ -30,11 +30,9 @@ class Home extends React.Component {
     auth().onAuthStateChanged(firebaseUser => {
       if(firebaseUser) {
         this.setState({loggedIn:true, loading:false})
-        console.log('logged in')
       }
       else {
         this.setState({loggedIn:false, loading:false})
-        console.log('not logged in')
       }
     });
   }
@@ -45,7 +43,6 @@ class Home extends React.Component {
   }
 
   render() {
-    console.log(this.state.loggedIn)
     return (
       <div className={s.root}>
         {this.state.loading ? <LoadingSpinner /> : this.showLogin() }

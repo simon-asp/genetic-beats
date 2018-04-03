@@ -43,6 +43,15 @@
     text-align: center;
     font-size: 0.6em;
 
+    & .userName {
+      text-align:left;
+      font-size:1.3em;
+      color:var(--box-color);
+      margin-bottom:18px;
+      & span {
+        font-weight: bold;
+      }
+    }
     & .description {
       width:100%;
       margin-top:256px;
