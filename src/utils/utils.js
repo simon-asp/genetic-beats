@@ -9,7 +9,7 @@ export function getRandomIntInclusive(min, max) {
 
 /* Get the instrument keys and filter out other stuff, returns an array */
 export function getInstrumentKeys(beat) {
-	return Object.keys(beat).filter(key => key !== 'score' && key !== 'id');
+	return Object.keys(beat).filter(key => key !== 'score' && key !== 'id' && key !== 'liked');
 }
 /* Counts instruments in an arbitrary beat object, returns an integer  */
 export function getNoOfInstruments(beat) {

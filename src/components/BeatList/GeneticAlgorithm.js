@@ -86,10 +86,10 @@ const mutation = (beat, beatInfo) => {
 
 /* Generates a new population based on what is voted on.
 * Parameters: beats = the beats as a list
-* 						beatInfo = information about the beats, from redux.
-*							addNewPopulation = Function to add new population to redux
-*							addNewSelectedPairs = Function to add selected pairs to redux.
-*							timelineIndex = Which index in the timeline were on.
+* beatInfo = information about the beats, from redux.
+* addNewPopulation = Function to add new population to redux
+* addNewSelectedPairs = Function to add selected pairs to redux.
+* timelineIndex = Which index in the timeline were on.
 */
 export const newPopulation = (props, callback) => {
 	const { beats, beatInfo, addNewPopulation, addNewSelectedPairs, timelineIndex } = props;
