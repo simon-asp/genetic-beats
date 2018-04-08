@@ -34,7 +34,6 @@ class BeatTimeline extends React.Component {
 	/* Determine if we want to show the welcome info, also subscribe to the database */
   componentDidMount() {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
-		this.database.on('value', snap => console.log(snap.val()));
   }
 
   componentWillReceiveProps(nextProps) {

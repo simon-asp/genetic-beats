@@ -67,7 +67,6 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
  * Flips one random bit in the incoming beat array.
  */
 const mutation = (beat, beatInfo) => {
-	console.log('mutation', beat)
 	const copiedBeat = Object.assign({}, beat);
 
 	if (Math.random() <= 0.1) {
@@ -103,7 +102,7 @@ export const newPopulation = (props, callback) => {
 		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
 
 		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
-		offspring.id = 'beat' + i;
+		offspring.id = 'beat' + (timelineIndex + 1) + i;
 		offspring.liked = false;
 		const mutatedOffspring = mutation(offspring, beatInfo);
 

@@ -164,7 +164,6 @@ class BeatList extends React.Component {
 		beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
-					id={'beat' + timelineIndex + '' + index}
 					beat={beat}
 					index={index}
 					timelineIndex={timelineIndex}

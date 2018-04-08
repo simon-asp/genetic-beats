@@ -6,12 +6,19 @@ import database from '../database';
 /* Adds a new population, newBeats is an array */
 export function pressGenerateButton(newBeats, timelineIndex) {
   return dispatch => {
-    dispatch(addNewPopulation(newBeats));
     const userRef = database.ref('/users');
-    userRef.child('1').child('beats').push({
-      timelineIndex,
-      ...newBeats
-    })
+    
+    dispatch(addNewPopulation(newBeats));
+    Promise.all([
+      userRef.child('1').child('beats').push({
+        timelineIndex,
+        ...newBeats
+      }),
+      userRef.child('1').update({
+        // + 2 since it is the next one, + 1 for human readable form
+        noOfGenerations: timelineIndex + 2
+      })
+    ])
     .catch((error) => {
       console.log(error)
       dispatch(addNewPopulationError());

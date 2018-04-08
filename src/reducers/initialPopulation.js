@@ -39,7 +39,7 @@ export default function getInitialPopulation() {
 		// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
 		// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
 		beat.score = 0;
-		beat.id = 'beat' + i;
+		beat.id = 'beat0' + i;
 		beat.liked = false;
 
 		beatList.push(beat);

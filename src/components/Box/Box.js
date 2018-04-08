@@ -69,7 +69,7 @@ class Box extends React.Component {
 	}
 
   render() {
-		const { beat, index, scoreBeat, onPlayClick, id, timelineIndex } = this.props;
+		const { beat, index, scoreBeat, onPlayClick, timelineIndex } = this.props;
     const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
 		const infoOverlayClass = cx('infoOverlay', { active: this.state.infoVisible });
 		const colorLineClass = cx('colorLine', { hidden: timelineIndex === 0 });
@@ -78,7 +78,7 @@ class Box extends React.Component {
 
     return (
 			<div className={s.root}>
-				<div className={s.box} id={id} ref={(ref) => { this.boxDiv = ref; }}>
+				<div className={s.box} id={beat.id} ref={(ref) => { this.boxDiv = ref; }}>
 
 					<div className={infoOverlayClass}>
 						<div className={s.beatTicks}>
