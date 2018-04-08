@@ -19,18 +19,7 @@ import configureStore from './store/configureStore';
 import history from './history';
 import { updateMeta } from './DOMUtils';
 import router from './router';
-import * as firebase from 'firebase';
 
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDV-Q5Ox99g1rsj0CcnHO8rvn_hhmq2Tls",
-  authDomain: "genetic-beats.firebaseapp.com",
-  databaseURL: "https://genetic-beats.firebaseio.com",
-  projectId: "genetic-beats",
-  storageBucket: "genetic-beats.appspot.com",
-  messagingSenderId: "647929446006"
-};
-firebase.initializeApp(firebaseConfig);
 /* eslint-disable global-require */
 
 // Global (context) variables that can be easily accessed from any React component

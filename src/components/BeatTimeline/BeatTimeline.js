@@ -4,14 +4,15 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
-import { addNewPopulation, scoreBeat, resetBeats, likeBeatToggle } from '../../actions/beats';
+import { pressGenerateButton, scoreBeat, resetBeats, likeBeatToggle } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
-import * as firebase from 'firebase';
+import database from '../../database';
+import { auth } from 'firebase';
 
 const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
@@ -24,11 +25,10 @@ class BeatTimeline extends React.Component {
 		this.setState({
 			domNodesTimeline: [],
 			linesTimeline: [],
-			currentUser: firebase.auth().currentUser
+			currentUser: auth().currentUser
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
-		this.database = firebase.database().ref().child('users');
-		
+		this.database = database.ref().child('users');
 	}
 
 	/* Determine if we want to show the welcome info, also subscribe to the database */
@@ -111,7 +111,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
 	scoreBeat: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
-	addNewPopulation: newBeats => dispatch(addNewPopulation(newBeats)),
+	pressGenerateButton: (newBeats, timelineIndex) => dispatch(pressGenerateButton(newBeats, timelineIndex)),
 	resetBeats: () => {dispatch(resetBeats())},
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),

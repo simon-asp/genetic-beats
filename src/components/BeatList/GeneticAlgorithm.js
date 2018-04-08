@@ -67,6 +67,7 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
  * Flips one random bit in the incoming beat array.
  */
 const mutation = (beat, beatInfo) => {
+	console.log('mutation', beat)
 	const copiedBeat = Object.assign({}, beat);
 
 	if (Math.random() <= 0.1) {
@@ -87,12 +88,12 @@ const mutation = (beat, beatInfo) => {
 /* Generates a new population based on what is voted on.
 * Parameters: beats = the beats as a list
 * beatInfo = information about the beats, from redux.
-* addNewPopulation = Function to add new population to redux
+* pressGenerateButton = Function to add new population to redux
 * addNewSelectedPairs = Function to add selected pairs to redux.
 * timelineIndex = Which index in the timeline were on.
 */
 export const newPopulation = (props, callback) => {
-	const { beats, beatInfo, addNewPopulation, addNewSelectedPairs, timelineIndex } = props;
+	const { beats, beatInfo, pressGenerateButton, addNewSelectedPairs, timelineIndex } = props;
 	const newBeatArray = [];
 	const selectedPairs = [];
 
@@ -109,6 +110,6 @@ export const newPopulation = (props, callback) => {
 		newBeatArray.push(mutatedOffspring);
 	}
 	addNewSelectedPairs(selectedPairs, timelineIndex);
-	addNewPopulation(newBeatArray);
+	pressGenerateButton(newBeatArray, timelineIndex);
 	callback();
 };
