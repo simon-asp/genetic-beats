@@ -5,7 +5,7 @@ import s from './Login.css';
 import PropTypes from 'prop-types';
 import { auth } from 'firebase';
 const cx = classNames.bind(s);
-import database from '../../database';
+import { database, setUserUniqueKey } from '../../database';
 
 class Login extends React.Component {
   componentWillMount() {
@@ -35,6 +35,9 @@ class Login extends React.Component {
       .catch(e => {
         this.setState({error: true, errorMessage: e.message})
       })
+      .then(() => {
+        setUserUniqueKey();
+      })
     }
     else {
       this.setState({error:true, errorMessage:'Please fill in the input fields'})
@@ -55,6 +58,9 @@ class Login extends React.Component {
         .catch(e => {
           // If database error
           this.setState({error: true, errorMessage: 'Something went wrong, try again'})
+        })
+        .then(() => {
+          setUserUniqueKey();
         })
       })
       .catch(e => {

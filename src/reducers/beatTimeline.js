@@ -19,7 +19,6 @@ export default function beatTimeline(state = initialPopulation, action) {
 	case LIKE_BEAT_TOGGLE: {
 		const newState = state.slice();
 		const prevLiked = state[action.timelineIndex][action.index].liked;
-		console.log(!prevLiked)
 		newState[action.timelineIndex][action.index].liked = !prevLiked;
 		return newState;
 	}

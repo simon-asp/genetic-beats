@@ -145,6 +145,8 @@ class BeatList extends React.Component {
 			for (let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
 				this[`box${i}`].showInfo();
 			}
+			// Update database with BeatInfoShowedCount
+			this.props.showBeatInfoAction();
 		}
 	}
 

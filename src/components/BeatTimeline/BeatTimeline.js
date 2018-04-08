@@ -4,14 +4,14 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
-import { pressGenerateButton, scoreBeat, resetBeats, likeBeatToggle } from '../../actions/beats';
+import { pressGenerateButton, scoreBeat, resetBeats, likeBeatToggle, showBeatInfoAction } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
-import database from '../../database';
+import { database } from '../../database';
 import { auth } from 'firebase';
 
 const cx = classNames.bind(s);
@@ -31,7 +31,7 @@ class BeatTimeline extends React.Component {
 		this.database = database.ref().child('users');
 	}
 
-	/* Determine if we want to show the welcome info, also subscribe to the database */
+	/* Determine if we want to show the welcome info */
   componentDidMount() {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
   }
@@ -115,6 +115,7 @@ const mapDispatch = dispatch => ({
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
-	likeBeatToggle: (timelineIndex, index) => dispatch(likeBeatToggle(timelineIndex, index))
+	likeBeatToggle: (timelineIndex, index) => dispatch(likeBeatToggle(timelineIndex, index)),
+	showBeatInfoAction: () => dispatch(showBeatInfoAction())
 });
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));
