@@ -2,6 +2,7 @@
 
 import { ADD_NEW_POPULATION, ADD_NEW_POPULATION_ERROR, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS, LIKE_BEAT_TOGGLE } from '../constants';
 import database from '../database';
+import { auth } from 'firebase';
 
 /* Adds a new population, newBeats is an array */
 export function pressGenerateButton(newBeats, timelineIndex) {
@@ -9,19 +10,28 @@ export function pressGenerateButton(newBeats, timelineIndex) {
     const userRef = database.ref('/users');
     
     dispatch(addNewPopulation(newBeats));
-    Promise.all([
-      userRef.child('1').child('beats').push({
-        timelineIndex,
-        ...newBeats
-      }),
-      userRef.child('1').update({
-        // + 2 since it is the next one, + 1 for human readable form
-        noOfGenerations: timelineIndex + 2
-      })
-    ])
-    .catch((error) => {
-      console.log(error)
-      dispatch(addNewPopulationError());
+    let userUniqueKey = 0;
+    const query = database.ref('/users').orderByChild('userId').equalTo(auth().currentUser.email);
+    query.once( 'value', data => {
+        data.forEach(userSnapshot => {
+            userUniqueKey = userSnapshot.key;
+        });
+    })
+    .then(() => {
+      Promise.all([
+        userRef.child(userUniqueKey).child('beats').push({
+          timelineIndex: timelineIndex+1,
+          ...newBeats
+        }),
+        userRef.child(userUniqueKey).update({
+          // + 2 since it is the next one, + 1 for human readable form
+          noOfGenerations: timelineIndex + 2
+        })
+      ])
+      .catch((error) => {
+        console.log(error)
+        dispatch(addNewPopulationError());
+      });
     });
   }
 }
