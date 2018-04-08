@@ -26,7 +26,7 @@ const selection = (beats) => {
  * Returns a new beat which is the offspring from parent1, parent2.
  * Parent1, Parent2 = indices from the beat array.
  */
-const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
+const crossover = (beats, beatInfo, parent1Index, parent2Index, finishedCallback) => {
 	const noInstruments = utils.getNoOfInstruments(beats[0]);
 	const noTicks = beatInfo.noOfTicks;
 	const instrumentNames = utils.getInstrumentKeys(beats[0]);
@@ -60,7 +60,7 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
 		offspring[`${instrumentNames[i]}`] = instrNew;
 		offspring.score = 0;
 	}
-	return offspring;
+	finishedCallback(offspring);
 };
 
 /* Mutation part of the algorithm. Uses a bit flip mutation of 1% mutation rate.
@@ -68,7 +68,7 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index) => {
  */
 const mutation = (beat, beatInfo) => {
 	const copiedBeat = Object.assign({}, beat);
-
+	console.log(copiedBeat.length)
 	if (Math.random() <= 0.1) {
 		const instrKeys = Object.keys(beat).filter(key => key !== 'id' && key !== 'score');
 		const randomKey = instrKeys[utils.getRandomIntInclusive(0, instrKeys.length - 1)];
@@ -99,14 +99,16 @@ export const newPopulation = (props, callback) => {
 	for (let i = 0; i < beatInfo.noOfBeats; i++) {
 		const parent1Index = selection(beats);
 		const parent2Index = selection(beats);
-		const offspring = crossover(beats, beatInfo, parent1Index, parent2Index);
 
-		selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
-		offspring.id = 'beat' + (timelineIndex + 1) + i;
-		offspring.liked = false;
-		const mutatedOffspring = mutation(offspring, beatInfo);
+		// When offspring is finished, continue with the rest
+		crossover(beats, beatInfo, parent1Index, parent2Index, (offspring) => {
+			selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
+			offspring.id = 'beat' + (timelineIndex + 1) + i;
+			offspring.liked = false;
+			const mutatedOffspring = mutation(offspring, beatInfo);
 
-		newBeatArray.push(mutatedOffspring);
+			newBeatArray.push(mutatedOffspring);
+		});
 	}
 	addNewSelectedPairs(selectedPairs, timelineIndex);
 	pressGenerateButton(newBeatArray, timelineIndex);
