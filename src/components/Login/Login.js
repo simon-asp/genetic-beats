@@ -5,6 +5,7 @@ import s from './Login.css';
 import PropTypes from 'prop-types';
 import { auth } from 'firebase';
 const cx = classNames.bind(s);
+import database from '../../database';
 
 class Login extends React.Component {
   componentWillMount() {
@@ -17,6 +18,7 @@ class Login extends React.Component {
     })
   }
 
+  // Set email and password in state
   onChangeInput(e, type) {
     e.preventDefault();
     this.setState({
@@ -24,11 +26,13 @@ class Login extends React.Component {
     });
   }
 
+
   logIn(e) {
     e.preventDefault();
     const { email, password } = this.state;
     if(email !== '' || password !== '') {
-      auth().signInWithEmailAndPassword(email, password).catch(e => {
+      auth().signInWithEmailAndPassword(email, password)
+      .catch(e => {
         this.setState({error: true, errorMessage: e.message})
       })
     }
@@ -41,10 +45,20 @@ class Login extends React.Component {
     e.preventDefault();
     const { email, password } = this.state;
     if(email !== '' || password !== '') {
-      auth().createUserWithEmailAndPassword(email, password).catch(e => {
+      // Sign user up
+      auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        // Add user to database
+        database.ref('/users').push({
+          userId: email
+        })
+        .catch(e => {
+          // If database error
+          this.setState({error: true, errorMessage: 'Something went wrong, try again'})
+        })
+      })
+      .catch(e => {
         this.setState({error: true, errorMessage: e.message})
-      }).then(e => {
-        this.setState({error: true, errorMessage: 'Successfully registered', errorColor:true});
       });
     }
     else {
