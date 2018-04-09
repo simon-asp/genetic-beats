@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
-import { pressGenerateButton, scoreBeat, resetBeats, likeBeatToggle, showBeatInfoAction, showLineInfoAction } from '../../actions/beats';
+import { pressGenerateButton, scoreBeat, resetBeats, likeBeatFirebaseAction, showBeatInfoAction, showLineInfoAction } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
@@ -115,7 +115,7 @@ const mapDispatch = dispatch => ({
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
-	likeBeatToggle: (timelineIndex, index) => dispatch(likeBeatToggle(timelineIndex, index)),
+	likeBeatFirebaseAction: (timelineIndex, index, beat) => dispatch(likeBeatFirebaseAction(timelineIndex, index, beat)),
 	showBeatInfoAction: () => dispatch(showBeatInfoAction()),
 	showLineInfoAction: () => dispatch(showLineInfoAction())
 });

@@ -100,7 +100,7 @@ class Box extends React.Component {
 
           <Scorer {...this.props} />
 
-					<div className={heartClass} onClick={() => this.props.likeBeatToggle(timelineIndex, index)}/>
+					<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>
           
 				</div>
 			</div>

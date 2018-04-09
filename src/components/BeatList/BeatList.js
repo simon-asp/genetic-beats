@@ -106,8 +106,14 @@ class BeatList extends React.Component {
 		this.setState({ clickedPlay });
 
 		// Stop all beats first, then play.
-		sequences.forEach((seq, i) => stopBeat(sequences[i]));
+		this.stopAllBeats();
 		if (clickedPlay[index]) startBeat(sequences[index]);
+	}
+
+	// Stop all beats in this BeatList
+	stopAllBeats() {
+		const { sequences } = this.state;
+		sequences.forEach((seq, i) => stopBeat(sequences[i]));
 	}
 
 	/* When clicking the button that runs the genetic algorithm. Check for score
@@ -177,7 +183,7 @@ class BeatList extends React.Component {
 					onRef={ref => (this[`box${index}`] = ref)}
 					noOfGenerations={noOfGenerations}
 					higherGenerationExists={higherGenerationExists}
-					likeBeatToggle={this.props.likeBeatToggle}
+					likeBeatFirebaseAction={this.props.likeBeatFirebaseAction}
 					showLineInfoAction={this.props.showLineInfoAction}
 				/>);
 			});

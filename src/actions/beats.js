@@ -57,11 +57,18 @@ export function likeBeatToggle(timelineIndex, index) {
 		index,
   };
 }
-export function likeBeatFirebaseAction(timelineIndex, index) {
+// Like the beat, store in database
+export function likeBeatFirebaseAction(timelineIndex, index, beat) {
   return dispatch => {
-    
+    dispatch(likeBeatToggle(timelineIndex, index));
+    const userRef = database.ref('/users');
+    const userUniqueKey = getUserUniqueKey()
+    userRef.child(userUniqueKey).child('likedBeats').push({
+      ...beat
+    })
   }
 }
+
 export function unlikeBeatFirebaseAction(timelineIndex, index) {
   return dispatch => {
     
