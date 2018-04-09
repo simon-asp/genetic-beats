@@ -178,6 +178,7 @@ class BeatList extends React.Component {
 					noOfGenerations={noOfGenerations}
 					higherGenerationExists={higherGenerationExists}
 					likeBeatToggle={this.props.likeBeatToggle}
+					showLineInfoAction={this.props.showLineInfoAction}
 				/>);
 			});
 		}

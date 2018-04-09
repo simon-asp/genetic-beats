@@ -12,7 +12,7 @@ export function pressGenerateButton(newBeats, timelineIndex) {
     dispatch(addNewPopulation(newBeats));
 
     // Get user unique key
-    const userKey = getUserUniqueKey()
+    const userUniqueKey = getUserUniqueKey()
 
     // Update database
     Promise.all([
@@ -71,8 +71,7 @@ export function unlikeBeatFirebaseAction(timelineIndex, index) {
 export function showBeatInfoAction() {
   return dispatch => {
     let showedCount = 0;
-    
-    let userKey = getUserUniqueKey()
+    const userUniqueKey = getUserUniqueKey()
 
     const userRef = database.ref('/users/'+userUniqueKey);    
     userRef.child('beatInfoShowedCount').once('value', snap => {
@@ -82,6 +81,24 @@ export function showBeatInfoAction() {
     .then(() => {
       userRef.update({
         beatInfoShowedCount: showedCount  
+      })
+    })
+  }
+}
+// Increment the number of times a user accesses the info about the lines in the db
+export function showLineInfoAction() {
+  return dispatch => {
+    let showedCount = 0;
+    const userUniqueKey = getUserUniqueKey()
+
+    const userRef = database.ref('/users/'+userUniqueKey);    
+    userRef.child('lineInfoShowedCount').once('value', snap => {
+      if(snap.val()) showedCount = snap.val() + 1;
+      else showedCount = 1;
+    })
+    .then(() => {
+      userRef.update({
+        lineInfoShowedCount: showedCount  
       })
     })
   }

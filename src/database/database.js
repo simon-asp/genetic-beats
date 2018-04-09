@@ -11,8 +11,6 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 export const database = firebase.database();
 
-let currentUserUniqueKey;
-
 // Get the user unique key from the users child node in firebase. Returns a Promise
 export function setUserUniqueKey() {
   let userUniqueKey = 0;
@@ -24,11 +22,10 @@ export function setUserUniqueKey() {
     });
   })
   .then(() => {
-    currentUserUniqueKey = userUniqueKey;
-    console.log(currentUserUniqueKey)
+    localStorage.setItem('userKey', userUniqueKey);
   })
 }
 
 export function getUserUniqueKey() {
-  return currentUserUniqueKey;
+  return localStorage.getItem('userKey');
 }
