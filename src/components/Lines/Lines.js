@@ -39,6 +39,7 @@ class Lines extends React.Component {
 	addLines = (props) => {
 		const { beatInfo, timeLineIndex, beatList, evolutionPairs } = props;
 		const lines = [];
+		// Purple, light blue, dark blue, 
 		const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
 		if (beatInfo) {
 			for (let j = 0; j < beatInfo.noOfBeats; j++) {

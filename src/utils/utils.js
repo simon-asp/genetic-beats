@@ -19,3 +19,7 @@ export function getNoOfInstruments(beat) {
 export function mapRange(x, inMin, inMax, outMin, outMax) {
   return (x - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
 }
+// Calculates the time from when the user logged in to the time now
+export function calculateLoginTime() {
+  return (new Date().getTime() - localStorage.getItem('timer')) / 60000;
+}

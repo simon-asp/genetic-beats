@@ -7,6 +7,7 @@ import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat } from './playBeat';
 import Box from '../Box';
 import Lines from '../Lines';
+import Button from '../Button';
 
 const cx = classNames.bind(s);
 
@@ -206,12 +207,9 @@ class BeatList extends React.Component {
 						>i</div>
 					</div>
 
-					<div
-						className={runButtonClass}
-						onClick={() => this.onGenesisClick()}
-						role="button"
-						tabIndex="-1"
-					>BEAT GENESIS</div>
+					<Button text="BEAT GENESIS" onClick={() => this.onGenesisClick()} filled={false} />
+					<Button text="FINISH TEST" onClick={this.props.finishExperiment} filled={true} />
+					
 					<div className={arrowDownTooltipClass} />
 
 					<div className={overlayClass}>

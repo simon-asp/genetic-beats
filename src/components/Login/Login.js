@@ -47,7 +47,7 @@ class Login extends React.Component {
 
   // Sets a date to local storage
   startTimer() {
-    localStorage.setItem('timer', new Date.getTime());    
+    localStorage.setItem('timer', new Date().getTime());
   }
 
   signUp(e) {

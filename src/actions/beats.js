@@ -74,6 +74,19 @@ export function unlikeBeatFirebaseAction(timelineIndex, index) {
     
   }
 }
+
+// Action to post the amount of minutes a user has been logged in to the site
+export function loginTimeAction(minutes) {
+  return dispatch => {
+    const userUniqueKey = getUserUniqueKey()
+    
+    const userRef = database.ref('/users/'+userUniqueKey);    
+    userRef.child('activeTime').update({
+      minutes
+    });
+  }
+}
+
 // Increment the beatInfoShowedCount in the database
 export function showBeatInfoAction() {
   return dispatch => {

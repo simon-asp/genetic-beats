@@ -4,16 +4,15 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
-import { pressGenerateButton, scoreBeat, resetBeats, likeBeatFirebaseAction, showBeatInfoAction, showLineInfoAction } from '../../actions/beats';
+import { pressGenerateButton, scoreBeat, resetBeats, likeBeatFirebaseAction, showBeatInfoAction, showLineInfoAction, loginTimeAction } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
 import { hideWelcomeInfo } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
-import { database } from '../../database';
 import { auth } from 'firebase';
-
+import { calculateLoginTime } from '../../utils';
 const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
@@ -28,17 +27,17 @@ class BeatTimeline extends React.Component {
 			currentUser: auth().currentUser
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
-		this.database = database.ref().child('users');
+		this.props.loginTimeAction(calculateLoginTime());		
 	}
 
 	componentWillUnmount() {
-		this.database.off();
+		// Set the active time the user has been logged in
+		this.props.loginTimeAction(calculateLoginTime());
 	}
 	/* Determine if we want to show the welcome info */
   componentDidMount() {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
   }
-
   componentWillReceiveProps(nextProps) {
     this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
   }
@@ -69,6 +68,11 @@ class BeatTimeline extends React.Component {
 		this.setState({ lines });
 	}
 
+	// Terminate the experiment from the user
+	finishExperiment() {
+		this.props.loginTimeAction(calculateLoginTime());		
+	}
+
 	/* Populate the beat timeline array with beatlist components */
 	populateTimelineArray() {
 		const { beatTimeline, evolutionPairs } = this.props;
@@ -84,6 +88,7 @@ class BeatTimeline extends React.Component {
 					noOfGenerations={beatTimeline.length}
 					key={'generation' + index}
 					evolutionPairs={evolutionPairs[index]}
+					finishExperiment={this.finishExperiment}
 				/>,
 			);
 		});
@@ -120,6 +125,7 @@ const mapDispatch = dispatch => ({
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
 	likeBeatFirebaseAction: (timelineIndex, index, beat) => dispatch(likeBeatFirebaseAction(timelineIndex, index, beat)),
 	showBeatInfoAction: () => dispatch(showBeatInfoAction()),
-	showLineInfoAction: () => dispatch(showLineInfoAction())
+	showLineInfoAction: () => dispatch(showLineInfoAction()),
+	loginTimeAction: (minutes) => dispatch(loginTimeAction(minutes)),
 });
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));
