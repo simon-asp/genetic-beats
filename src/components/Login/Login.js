@@ -37,11 +37,17 @@ class Login extends React.Component {
       })
       .then(() => {
         setUserUniqueKey();
+        this.startTimer();
       })
     }
     else {
       this.setState({error:true, errorMessage:'Please fill in the input fields'})
     }
+  }
+
+  // Sets a date to local storage
+  startTimer() {
+    localStorage.setItem('timer', new Date.getTime());    
   }
 
   signUp(e) {
@@ -61,6 +67,7 @@ class Login extends React.Component {
         })
         .then(() => {
           setUserUniqueKey();
+          this.startTimer();
         })
       })
       .catch(e => {

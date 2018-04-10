@@ -31,6 +31,9 @@ class BeatTimeline extends React.Component {
 		this.database = database.ref().child('users');
 	}
 
+	componentWillUnmount() {
+		this.database.off();
+	}
 	/* Determine if we want to show the welcome info */
   componentDidMount() {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
