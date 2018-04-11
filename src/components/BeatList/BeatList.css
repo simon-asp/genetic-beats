@@ -70,35 +70,6 @@
       visibility: hidden;
     }
   }
-
-  /* Error overlay */
-  & .overlay {
-    visibility: hidden;
-    background: rgba(120,20,0,0.6);
-    padding:18px 52px;
-    position: absolute;
-    bottom:62px;
-    z-index: 4;
-    box-shadow: 0 2px 30px 3px rgba(0,0,0,0.3);
-    border-radius: 3px;
-    color:white;
-    font-size:10pt;
-
-    & .triangle {
-      width: 0;
-      height: 0;
-      border-left: 8px solid transparent;
-      border-right: 8px solid transparent;
-      border-top: 8px solid rgba(120,20,0,0.6);
-      position: absolute;
-      bottom:-8px;
-      left:104px;
-    }
-  }
-
-  & .active {
-    visibility: visible;
-  }
 }
 
 @keyframes bounce {

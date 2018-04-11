@@ -8,6 +8,7 @@ import { initializeBeat, startBeat, stopBeat } from './playBeat';
 import Box from '../Box';
 import Lines from '../Lines';
 import Button from '../Button';
+import Tooltip from '../Tooltip';
 
 const cx = classNames.bind(s);
 
@@ -191,7 +192,6 @@ class BeatList extends React.Component {
 		}
 
 	render() {
-		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists });
 		const arrowDownTooltipClass = cx('arrowDownTooltip', { active: this.state.showArrow && this.props.timelineIndex === 0 });
 		return (
 			<div className={s.root} id="beatList">
@@ -217,12 +217,9 @@ class BeatList extends React.Component {
 						hidden={this.state.higherGenerationExists}
 						unRender={this.props.timelineIndex < 3} />
 					
+					<Tooltip text="Please score all beats" active={this.state.scoreZeroExists} />
 					<div className={arrowDownTooltipClass} />
 
-					<div className={overlayClass}>
-						Please score all beats
-						<div className={s.triangle} />
-					</div>
 				</section>
 
 
