@@ -6,10 +6,11 @@ import PropTypes from 'prop-types';
 const cx = classNames.bind(s);
 
 function Button(props) {
-  const buttonClass = cx('root', {filled:props.filled, hidden:props.hidden});  
+  const buttonClass = cx('root', {filled:props.filled, hidden:props.hidden});
+  if (props.unRender) return null;
   return (
-    <div className={buttonClass} onClick={props.onClick}>
-    {props.text}
+    <div className={buttonClass} onClick={() => props.onClick()}>
+      {props.text}
     </div>
   );
 }

@@ -27,7 +27,7 @@ class BeatTimeline extends React.Component {
 			currentUser: auth().currentUser
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
-		this.props.loginTimeAction(calculateLoginTime());		
+		this.finishExperiment = this.finishExperiment.bind(this);
 	}
 
 	componentWillUnmount() {
@@ -70,7 +70,7 @@ class BeatTimeline extends React.Component {
 
 	// Terminate the experiment from the user
 	finishExperiment() {
-		this.props.loginTimeAction(calculateLoginTime());		
+		this.props.loginTimeAction(calculateLoginTime());	
 	}
 
 	/* Populate the beat timeline array with beatlist components */

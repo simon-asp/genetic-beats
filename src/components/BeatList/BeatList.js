@@ -191,7 +191,6 @@ class BeatList extends React.Component {
 		}
 
 	render() {
-		const runButtonClass = cx('runButton', { hidden: this.state.higherGenerationExists });
 		const overlayClass = cx('overlay', { active: this.state.scoreZeroExists });
 		const arrowDownTooltipClass = cx('arrowDownTooltip', { active: this.state.showArrow && this.props.timelineIndex === 0 });
 		return (
@@ -207,8 +206,16 @@ class BeatList extends React.Component {
 						>i</div>
 					</div>
 
-					<Button text="BEAT GENESIS" onClick={() => this.onGenesisClick()} filled={false} />
-					<Button text="FINISH TEST" onClick={this.props.finishExperiment} filled={true} />
+					<Button text="NEW ITERATION" 
+						onClick={this.onGenesisClick.bind(this)} 
+						filled={false} 
+						hidden={this.state.higherGenerationExists} />
+					
+					<Button text="I AM SATISFIED" 
+						onClick={this.props.finishExperiment} 
+						filled={true} 
+						hidden={this.state.higherGenerationExists}
+						unRender={this.props.timelineIndex < 3} />
 					
 					<div className={arrowDownTooltipClass} />
 
