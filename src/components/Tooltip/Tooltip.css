@@ -20,9 +20,27 @@
         border-top: 8px solid rgba(120,20,0,0.6);
         position: absolute;
         bottom:-8px;
-        left:104px;
+        left:47%;
     }
 }
 .active {
     visibility: visible;
+}
+.error {
+    background: rgba(120,20,0,0.6);
+    & .triangle {
+        border-top: 8px solid rgba(120,20,0,0.6);        
+    }    
+}
+.warning {
+    background: rgb(196, 157, 60, 0.8);
+    & .triangle {
+        border-top: 8px solid rgb(196, 157, 60, 0.8);        
+    }    
+}
+.info {
+    background: rgba(100,100,100,0.9);
+    & .triangle {
+        border-top: 8px solid rgba(100,100,100,0.9);       
+    }    
 }

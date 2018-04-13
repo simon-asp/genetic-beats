@@ -16,7 +16,6 @@ const cx = classNames.bind(s);
 */
 class BeatList extends React.Component {
 	static propTypes = {
-		beats: PropTypes.array,
 		beatInfo: PropTypes.object,
 		scoreBeat: PropTypes.func,
 		pressGenerateButton: PropTypes.func,
@@ -45,9 +44,13 @@ class BeatList extends React.Component {
 			clickedPlay: [],
 			sequences: [],
 			higherGenerationExists: false,
-			scoreZeroExists: false,
+			showTooltip: false,
 			allInfoActive: false,
 			showArrow: false,
+			tooltipText: 'Please score all beats',
+			tooltipType: 'error',
+			tooltipButtons: false,
+			confirmedFinish: false,
 		});
 	}
 
@@ -121,21 +124,31 @@ class BeatList extends React.Component {
 	/* When clicking the button that runs the genetic algorithm. Check for score
 	 * of the beat first. */
 	onGenesisClick() {
-		const scoreZeroExists = this.props.beats.map(beat => beat.score).includes(0);
-		this.setState({ scoreZeroExists });
+		const showTooltip = this.props.beats.map(beat => beat.score).includes(0);
+		this.setState({ showTooltip, tooltipText: 'Please score all beats', tooltipType:'error', tooltipButtons:false });
 		// Remove the tooltip after 3 seconds
-		setTimeout(() => {this.setState({scoreZeroExists: false})}, 3000);
+		setTimeout(() => {this.setState({showTooltip: false})}, 3000);
 
-		// Reset the scorer check after new population has been made.
-		if (!scoreZeroExists) ga.newPopulation(this.props, () => {
-			this.setState({scoreZeroExists: false});
+		if (!showTooltip) ga.newPopulation(this.props, () => {
+			// Reset the scorer check after new population has been made.
+			this.setState({showTooltip: false});
 
-			// Set a timer for the arrow tooltip
+			// Set a timer for the jumping down arrow
 			if(this.props.timelineIndex === 0) {
 				this.setState({showArrow: true});
 				setTimeout(() => this.setState({showArrow: false}), 6000);
 			}
 		});
+	}
+	onFinishClick() {
+		this.setState({showTooltip: true, 
+			tooltipText: 'Are you sure you want to end the session?', 
+			tooltipType: 'info',
+			tooltipButtons:true});
+	}
+	onConfirmClick(confirm) {
+		if(confirm) this.props.finishExperiment();
+		this.setState({showTooltip:false});
 	}
 
 	/* Click on all box refs and display their info
@@ -212,12 +225,21 @@ class BeatList extends React.Component {
 						hidden={this.state.higherGenerationExists} />
 					
 					<Button text="I AM SATISFIED" 
-						onClick={this.props.finishExperiment} 
-						filled={true} 
+						onClick={this.onFinishClick.bind(this)}
+						colored={true} 
 						hidden={this.state.higherGenerationExists}
 						unRender={this.props.timelineIndex < 3} />
 					
-					<Tooltip text="Please score all beats" active={this.state.scoreZeroExists} />
+					<Tooltip text={this.state.tooltipText} 
+						active={this.state.showTooltip}
+						type={this.state.tooltipType}>
+						{this.state.tooltipButtons ? (
+							<div style={{display:'flex'}}>
+								<Button text="NO" onClick={this.onConfirmClick.bind(this, false)} />
+								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} />
+							</div>							
+						) : ('')}
+					</Tooltip>
 					<div className={arrowDownTooltipClass} />
 
 				</section>

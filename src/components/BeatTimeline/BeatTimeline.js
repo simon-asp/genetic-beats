@@ -70,11 +70,9 @@ class BeatTimeline extends React.Component {
 
 	// Terminate the experiment from the user
 	finishExperiment() {
-		this.props.loginTimeAction(calculateLoginTime());
-	}
-
-	finishExperimentConfirm() {
+		console.log('finished')
 		
+		this.props.loginTimeAction(calculateLoginTime());
 	}
 
 	/* Populate the beat timeline array with beatlist components */
