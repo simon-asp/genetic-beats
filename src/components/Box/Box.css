@@ -69,22 +69,28 @@
 			left:8px;
 			top:8px;
       cursor:pointer;
-		}
+    }
     & .colorLine:hover + .colorLineTooltip {
       display: block;
-      height:70px;
-      width:90%;
-      padding:9px 18px;
-      border-radius: 2px;
-      box-sizing: border-box;
-      font-size:0.75em;
-      position: absolute;
-      top:-82px;
-      left: 0;
     }
     & .colorLineTooltip {
       display: none;
       color: white;
+      height:70px;
+      width:100%;
+      padding:9px 18px;
+      border-radius: 2px;
+      box-sizing: border-box;
+      font-size:0.8em;
+      position: absolute;
+      top:-86px;
+      left: 0;
+    }
+    & .activeTooltip {
+      display:block;
+    }
+    & .hidden {
+      display:none;
     }
     & .triangle {
       width: 0;

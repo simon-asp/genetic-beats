@@ -201,6 +201,8 @@ class BeatList extends React.Component {
 					higherGenerationExists={higherGenerationExists}
 					likeBeatFirebaseAction={this.props.likeBeatFirebaseAction}
 					showLineInfoAction={this.props.showLineInfoAction}
+					hideLineTooltip={this.props.hideLineTooltip}
+					lineTooltipHidden={this.props.beatInfo.lineTooltipHidden}
 				/>);
 			});
 		}

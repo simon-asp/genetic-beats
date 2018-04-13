@@ -6,7 +6,7 @@ import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { pressGenerateButton, scoreBeat, resetBeats, likeBeatFirebaseAction, showBeatInfoAction, showLineInfoAction, loginTimeAction } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
-import { hideWelcomeInfo } from '../../actions/beatInfo';
+import { hideWelcomeInfo, hideLineTooltip } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
@@ -134,5 +134,6 @@ const mapDispatch = dispatch => ({
 	showBeatInfoAction: () => dispatch(showBeatInfoAction()),
 	showLineInfoAction: () => dispatch(showLineInfoAction()),
 	loginTimeAction: (minutes) => dispatch(loginTimeAction(minutes)),
+	hideLineTooltip: () => dispatch(hideLineTooltip()),
 });
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));
