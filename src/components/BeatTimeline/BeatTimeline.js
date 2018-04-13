@@ -11,6 +11,7 @@ import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
+import InitialGuide from '../../components/InitialGuide';
 import { auth } from 'firebase';
 import { calculateLoginTime } from '../../utils';
 const cx = classNames.bind(s);
@@ -24,9 +25,11 @@ class BeatTimeline extends React.Component {
 		this.setState({
 			domNodesTimeline: [],
 			linesTimeline: [],
-			currentUser: auth().currentUser
+			currentUser: auth().currentUser,
+			showInitialGuide: false,
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
+		// Not used yet
 		this.finishExperiment = this.finishExperiment.bind(this);
 	}
 
@@ -102,6 +105,8 @@ class BeatTimeline extends React.Component {
     return (
 			<div className={s.root}>
         <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
+        <InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
+				
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />

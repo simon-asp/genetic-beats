@@ -3,7 +3,7 @@ import classNames from 'classnames/bind';
 import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 import s from './Lines.css';
-import { mapRange } from '../../utils';
+import { mapRange, getCenterCoords } from '../../utils';
 // import cx from 'classnames';
 // let cx = classNames.bind(s);
 
@@ -15,7 +15,7 @@ class Lines extends React.Component {
   };
 
 	componentDidMount() {
-		this.addFilter();
+		//this.addFilter();
 	}
 
   // Render or unrender the lines depending on Redux props
@@ -26,14 +26,6 @@ class Lines extends React.Component {
     // Only unrender lines for the first generation, when we click the reset beats.
 		if (!nextProps.evolutionPairs && nextProps.timeLineIndex === 0) this.unrenderLines(nextProps);
 	}
-
-	/* Get the center coordinates for a DOM element */
-	getCenterCoords = (el) => {
-		const coords = {};
-		coords.x = el.offsetLeft + (el.offsetWidth / 2);
-		coords.y = el.offsetTop + (el.offsetHeight / 2);
-		return coords;
-	};
 
 	/* Add lines to the DOM */
 	addLines = (props) => {
@@ -100,8 +92,8 @@ class Lines extends React.Component {
 			const el1 = domNodes[parent1];
 			const el2 = domNodes[parent2];
 
-			const coords1 = this.getCenterCoords(el1);
-			const coords2 = this.getCenterCoords(el2);
+			const coords1 = getCenterCoords(el1);
+			const coords2 = getCenterCoords(el2);
 
 			const sx1 = coords1.x + 300;
 			const sy1 = coords1.y + 150;

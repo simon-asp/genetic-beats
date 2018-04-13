@@ -23,3 +23,10 @@ export function mapRange(x, inMin, inMax, outMin, outMax) {
 export function calculateLoginTime() {
   return (new Date().getTime() - localStorage.getItem('timer')) / 60000;
 }
+// Get center coordinates for a dom element
+export function getCenterCoords(el) {
+  const coords = {};
+  coords.x = el.offsetLeft + (el.offsetWidth / 2);
+  coords.y = el.offsetTop + (el.offsetHeight / 2);
+  return coords;
+};

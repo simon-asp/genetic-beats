@@ -37,15 +37,19 @@ class Home extends React.Component {
     });
   }
 
-  showLogin() {
-    if(this.state.loggedIn) return <BeatTimeline />
-    return <Login />
-  }
-
   render() {
+    // Show the initial tooltip guide first time
     return (
       <div className={s.root}>
-        {this.state.loading ? <LoadingSpinner /> : this.showLogin() }
+        {this.state.loading ? (
+          <LoadingSpinner />
+        ) : (
+          this.state.loggedIn ? (
+            <BeatTimeline />
+          ) : (
+            <Login />
+          )
+        )}
       </div>
     );
   }

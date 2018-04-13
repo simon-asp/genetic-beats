@@ -189,6 +189,7 @@ class BeatList extends React.Component {
 				<Box
 					beat={beat}
 					index={index}
+					id={index}
 					timelineIndex={timelineIndex}
 					scoreBeat={scoreBeat}
 					key={beat.id}
@@ -235,8 +236,8 @@ class BeatList extends React.Component {
 						type={this.state.tooltipType}>
 						{this.state.tooltipButtons ? (
 							<div style={{display:'flex'}}>
-								<Button text="NO" onClick={this.onConfirmClick.bind(this, false)} />
 								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} />
+								<Button text="NO" onClick={this.onConfirmClick.bind(this, false)} filled={true} />
 							</div>							
 						) : ('')}
 					</Tooltip>
