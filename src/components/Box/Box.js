@@ -16,7 +16,7 @@ class Box extends React.Component {
 		this.setState({
       infoVisible: false,
 			allInfoVisible: false,
-			lineTooltipHidden: this.props.lineTooltipHidden,
+			lineTooltipHidden: true,
      });
 	}
 	/* If we have a reference to this box, put this box in the parents dom node list */
@@ -33,8 +33,7 @@ class Box extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		// Todo: Doesn't work directly. the linetooltiphidden doesnt get updated...
-		this.setState({lineTooltipHidden: nextProps.lineTooltipHidden});
+		this.setState({lineTooltipHidden: nextProps.beatInfo.lineTooltipHidden});
 	}
 	
 	/* Toggle if the info should be visible or not */
@@ -53,9 +52,10 @@ class Box extends React.Component {
 		this.setState({ infoVisible: false });
 	}
 
+	// Hide the tooltip when a user hovers away from the line
 	lineOnMouseOut() {
-		const { index, timelineIndex, lineTooltipHidden, hideLineTooltip } = this.props;
-		if(index === 0 && timelineIndex === 1) {
+		const { index, timelineIndex, hideLineTooltip, lineTooltipHidden } = this.props;
+		if(index === 0 && timelineIndex === 1 && lineTooltipHidden) {
 			hideLineTooltip();
 		}	
 	}

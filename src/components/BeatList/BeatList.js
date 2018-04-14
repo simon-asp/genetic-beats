@@ -182,27 +182,21 @@ class BeatList extends React.Component {
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
 	populateBeatArray(props, higherGenerationExists) {
-		const { beats, scoreBeat, timelineIndex, storeDomNodes, evolutionPairs, beatInfo, noOfGenerations } = props;
+		/* Remove all the props we don't want. The ones we want is in ...others */
+		const { addNewSelectedPairs, beatTimeline, domNodes, finishExperiment, hideWelcomeInfo, loginTimeAction, 
+			pressGenerateButton, resetBeats, resetSelectedPairs, showBeatInfoAction, ...others } = props;
 		this.beatList = [];
-		beats.forEach((beat, index) => {
+		this.props.beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
 					beat={beat}
 					index={index}
 					id={index}
-					timelineIndex={timelineIndex}
-					scoreBeat={scoreBeat}
 					key={beat.id}
 					onPlayClick={this.onPlayClick.bind(this)}
-					storeDomNodes={storeDomNodes}
-					evolutionPairs={evolutionPairs}
 					onRef={ref => (this[`box${index}`] = ref)}
-					noOfGenerations={noOfGenerations}
 					higherGenerationExists={higherGenerationExists}
-					likeBeatFirebaseAction={this.props.likeBeatFirebaseAction}
-					showLineInfoAction={this.props.showLineInfoAction}
-					hideLineTooltip={this.props.hideLineTooltip}
-					lineTooltipHidden={this.props.beatInfo.lineTooltipHidden}
+					{...others}
 				/>);
 			});
 		}
