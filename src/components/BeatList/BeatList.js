@@ -51,6 +51,7 @@ class BeatList extends React.Component {
 			tooltipType: 'error',
 			tooltipButtons: false,
 			confirmedFinish: false,
+			currentlyPlaying: undefined,
 		});
 	}
 
@@ -104,15 +105,21 @@ class BeatList extends React.Component {
 	/* When clicking the beat to play */
 	onPlayClick(index) {
 		const { Tone, sequences } = this.state;
+		let currentlyPlaying;
 
 		// Update the state with the clicked state of the beat
 		const clickedPlay = this.state.clickedPlay.slice();
 		clickedPlay[index] = !clickedPlay[index];
-		this.setState({ clickedPlay });
 
+		// Find out if we clicked play on the same beat, then null it
+		if(index === this.state.currentlyPlaying) currentlyPlaying = undefined;
+		else currentlyPlaying = index;
+
+		this.setState({ clickedPlay, currentlyPlaying });
 		// Stop all beats first, then play.
 		this.stopAllBeats();
 		if (clickedPlay[index]) startBeat(sequences[index]);
+		this.populateBeatArray(this.props, this.state.higherGenerationExists, currentlyPlaying);
 	}
 
 	// Stop all beats in this BeatList
@@ -134,7 +141,8 @@ class BeatList extends React.Component {
 		// Remove the tooltip after 3 seconds
 		setTimeout(() => {this.setState({showTooltip: false})}, 3000);
 
-		if (!showTooltip) ga.newPopulation(this.props, () => {
+		// if(!shottooltop) ***important***
+		if (showTooltip) ga.newPopulation(this.props, () => {
 			// Reset the scorer check after new population has been made.
 			this.setState({showTooltip: false});
 
@@ -186,7 +194,7 @@ class BeatList extends React.Component {
 	}
 
 	/* Populate the beatlist with Box components. Used when updating from redux. */
-	populateBeatArray(props, higherGenerationExists) {
+	populateBeatArray(props, higherGenerationExists, currentlyPlaying) {
 		/* Remove all the props we don't want. The ones we want is in ...others */
 		const { addNewSelectedPairs, beatTimeline, domNodes, finishExperiment, hideWelcomeInfo, loginTimeAction, 
 			pressGenerateButton, resetBeats, resetSelectedPairs, showBeatInfoAction, ...others } = props;
@@ -201,17 +209,19 @@ class BeatList extends React.Component {
 					onPlayClick={this.onPlayClick.bind(this)}
 					onRef={ref => (this[`box${index}`] = ref)}
 					higherGenerationExists={higherGenerationExists}
+					currentlyPlaying={currentlyPlaying}
 					{...others}
 				/>);
-			});
-		}
+		});
+	}
 
 	render() {
+		const flexGrowClass = cx('flexGrow', {hidden:this.state.higherGenerationExists});
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
 				<section className={s.buttons}>
-					<div className={s.flexGrow}>
+					<div className={flexGrowClass}>
 						<div
 							className={s.beatInfoButton}
 							onClick={this.onBeatInfoClick.bind(this)}
@@ -241,13 +251,6 @@ class BeatList extends React.Component {
 							</div>							
 						) : ('')}
 					</Tooltip>
-
-					<Tooltip text={'New beats have been generated!'}
-						bounce={true}
-						active={this.state.showArrow && this.props.timelineIndex === 0}
-						type={'blue'}
-						style={{bottom:0}}
-					/>
 
 				</section>
 

@@ -1,17 +1,15 @@
 @import '../variables.css';
 
 .root {
-  height: 100vh;
+  height: 40vh;
   width:100%;
   margin:0 auto;
   max-width: 1400px;
   display:flex;
   justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
   box-sizing: border-box;
   position:relative;
-  padding:4% 0 9% 80px;
+  padding:0 0 0 80px;
 
   & .buttons {
     width:100%;
@@ -20,13 +18,16 @@
     justify-content:center;
     align-items:center;
     position: absolute;
-    bottom:44px;
     flex-wrap: wrap;
+    bottom:0;
 
     & .flexGrow {
       width:100%;
       display: flex;
       justify-content: center;
+    }
+    & .hidden {
+      display:none;
     }
 
     & .beatInfoButton {
