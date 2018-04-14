@@ -4,7 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 import * as ga from './GeneticAlgorithm';
 import s from './BeatList.css';
-import { initializeBeat, startBeat, stopBeat } from './playBeat';
+import { initializeBeat, startBeat, stopBeat, removeColorShadow } from './playBeat';
 import Box from '../Box';
 import Lines from '../Lines';
 import Button from '../Button';
@@ -118,6 +118,11 @@ class BeatList extends React.Component {
 	// Stop all beats in this BeatList
 	stopAllBeats() {
 		const { sequences } = this.state;
+		
+		// Remove all color shadows
+		for(let i = 0; i < this.props.beatInfo.noOfBeats; i++) {
+			removeColorShadow(this.props.timelineIndex, i);
+		}
 		sequences.forEach((seq, i) => stopBeat(sequences[i]));
 	}
 
@@ -202,7 +207,6 @@ class BeatList extends React.Component {
 		}
 
 	render() {
-		const arrowDownTooltipClass = cx('arrowDownTooltip', { active: this.state.showArrow && this.props.timelineIndex === 0 });
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
@@ -237,6 +241,13 @@ class BeatList extends React.Component {
 							</div>							
 						) : ('')}
 					</Tooltip>
+
+					<Tooltip text={'New beats have been generated!'}
+						bounce={true}
+						active={this.state.showArrow && this.props.timelineIndex === 0}
+						type={'blue'}
+						style={{bottom:0}}
+					/>
 
 				</section>
 

@@ -7,6 +7,7 @@ const cx = classNames.bind(s);
 
 function Tooltip(props) {
   const tooltipClass = cx('root', { active: props.active, 
+      bounce: props.bounce,
       error: (props.type === 'error'), 
       warning: (props.type === 'warning'),
       info: (props.type === 'info'),

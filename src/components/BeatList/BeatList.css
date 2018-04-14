@@ -53,17 +53,5 @@
     & .beatInfoButton:hover {
       background: rgba(255,255,255,0.5);
     }
-    & .active {
-      visibility: visible;
-    }
-    & .hidden {
-      visibility: hidden;
-    }
-  }
-}
-
-@keyframes bounce {
-  50% {
-    bottom:8px;
   }
 }

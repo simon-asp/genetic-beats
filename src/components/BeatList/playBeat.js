@@ -28,20 +28,25 @@ export function initializeBeat(Tone, beats, beatInfo, index, timelineIndex) {
 	Tone.Transport.bpm.value = 106;
 	const colors = ['deeppink', 'blue', 'gold', 'aqua'];
 	let counter = 0;
+	let sumTicks = 0;
 	const sequence = new Tone.Sequence((time, tick) => {
+		sumTicks++;
 		instrumentKeys.forEach((key) => {
 			if (beats[index][key][tick] === 1) instruments.get(key).start();
 		});
 		// Make the boxes glow at certain ticks
 		counter = Math.ceil(tick / 4) - 1;
 		if (tick === 3 || tick === 7 || tick === 11 || tick === 15) {
-			document.getElementById('beat' + timelineIndex + '' + index).style.boxShadow = '0px 0px 26px 1px ' + colors[counter];
+			addColorShadow(timelineIndex, index, colors[counter]);
 		}
 		// Remove the glow at certain ticks
 		else if (tick === 1 || tick === 5 || tick === 9 || tick === 13) {
-			document.getElementById('beat' + timelineIndex + '' + index).style.boxShadow = '0px 5px 5px 1px rgba(0,0,0,0.15)';
+			removeColorShadow(timelineIndex, index);
 		}
+		if(sumTicks === 64) removeColorShadow(timelineIndex, index);
+		
 	}, tickArray, '16n');
+
 	sequence.loop = 4;
 	Tone.Transport.start('+0.1');
 	return sequence;
@@ -55,6 +60,13 @@ export function stopBeat(loop) {
 // Start the beat
 export function startBeat(loop) {
 	loop.start();
+}
+
+export function removeColorShadow(timelineIndex, index) {
+	document.getElementById('beat' + timelineIndex + '' + index).style.boxShadow = '0px 5px 5px 1px rgba(0,0,0,0.15)';
+}
+export function addColorShadow(timelineIndex, index, color) {
+	document.getElementById('beat' + timelineIndex + '' + index).style.boxShadow = '0px 0px 26px 1px ' + color;
 }
 
 // document.getElementById('playToggle').addEventListener("click", function(){
