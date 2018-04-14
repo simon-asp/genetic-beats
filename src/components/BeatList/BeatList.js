@@ -237,7 +237,6 @@ class BeatList extends React.Component {
 							</div>							
 						) : ('')}
 					</Tooltip>
-					<div className={arrowDownTooltipClass} />
 
 				</section>
 

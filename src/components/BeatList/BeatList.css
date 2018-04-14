@@ -53,16 +53,6 @@
     & .beatInfoButton:hover {
       background: rgba(255,255,255,0.5);
     }
-    & .arrowDownTooltip {
-      width:28px;
-      height:14px;
-      background: url('./down_arrow.svg') no-repeat;
-      bottom:0;
-      animation: bounce 1s;
-      animation-iteration-count: infinite;
-      position: absolute;
-      visibility: hidden;
-    }
     & .active {
       visibility: visible;
     }
