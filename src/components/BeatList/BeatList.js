@@ -99,7 +99,7 @@ class BeatList extends React.Component {
 
 		};
 
-		this.populateBeatArray(nextProps, higherGenerationExists);
+		this.populateBeatArray(nextProps, higherGenerationExists, this.state.currentlyPlaying);
 	}
 
 	/* When clicking the beat to play */
@@ -111,14 +111,17 @@ class BeatList extends React.Component {
 		const clickedPlay = this.state.clickedPlay.slice();
 		clickedPlay[index] = !clickedPlay[index];
 
-		// Find out if we clicked play on the same beat, then null it
-		if(index === this.state.currentlyPlaying) currentlyPlaying = undefined;
-		else currentlyPlaying = index;
-
 		this.setState({ clickedPlay, currentlyPlaying });
 		// Stop all beats first, then play.
 		this.stopAllBeats();
-		if (clickedPlay[index]) startBeat(sequences[index]);
+		if (clickedPlay[index]) {
+			startBeat(sequences[index]);
+			// Find out if we stopped the beat, then null it
+			if(index === this.state.currentlyPlaying) currentlyPlaying = undefined;
+			else currentlyPlaying = index;
+			
+			this.setState({ currentlyPlaying });
+		}
 		this.populateBeatArray(this.props, this.state.higherGenerationExists, currentlyPlaying);
 	}
 
@@ -137,7 +140,7 @@ class BeatList extends React.Component {
 	 * of the beat first. */
 	onGenesisClick() {
 		const showTooltip = this.props.beats.map(beat => beat.score).includes(0);
-		this.setState({ showTooltip, tooltipText: 'Please score all beats', tooltipType:'error', tooltipButtons:false });
+		this.setState({ showTooltip, tooltipText: 'Please score all beats', tooltipType:'error', tooltipButtons:false, currentlyPlaying: undefined });
 		// Remove the tooltip after 3 seconds
 		setTimeout(() => {this.setState({showTooltip: false})}, 3000);
 
