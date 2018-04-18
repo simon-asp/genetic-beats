@@ -6,7 +6,6 @@ import * as ga from './GeneticAlgorithm';
 import s from './BeatList.css';
 import { initializeBeat, startBeat, stopBeat, removeColorShadow } from './playBeat';
 import Box from '../Box';
-import Lines from '../Lines';
 import Button from '../Button';
 import Tooltip from '../Tooltip';
 
@@ -254,17 +253,7 @@ class BeatList extends React.Component {
 							</div>							
 						) : ('')}
 					</Tooltip>
-
 				</section>
-
-
-				<Lines
-					domNodes={this.props.domNodes}
-					beatInfo={this.props.beatInfo}
-					evolutionPairs={this.props.evolutionPairs}
-					timeLineIndex={this.props.timelineIndex}
-					beatList={this.beatList}
-				/>
 			</div>
 		);
 	}

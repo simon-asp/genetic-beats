@@ -12,6 +12,7 @@ import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
 import InitialGuide from '../../components/InitialGuide';
+import Lines from '../Lines';
 import { auth } from 'firebase';
 import { calculateLoginTime } from '../../utils';
 const cx = classNames.bind(s);
@@ -29,7 +30,6 @@ class BeatTimeline extends React.Component {
 			showInitialGuide: false,
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
-		// Not used yet
 		this.finishExperiment = this.finishExperiment.bind(this);
 	}
 
@@ -55,7 +55,6 @@ class BeatTimeline extends React.Component {
 	/* Store DOM-nodes of the boxes in the beatlist */
 	storeDomNodes(domNode, timelineIndex) {
 		const domNodesTimeline = this.state.domNodesTimeline;
-
 		if (!domNodesTimeline[timelineIndex]) {
 			const domNodes = [];
 			domNodes.push(domNode);
@@ -110,6 +109,13 @@ class BeatTimeline extends React.Component {
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
 				{ this.populateTimelineArray() }
 				<Timeline noOfGenerations={this.props.beatTimeline.length} />
+				<Lines
+					domNodesTimeline={this.state.domNodesTimeline}
+					beatInfo={this.props.beatInfo}
+					evolutionPairs={this.props.evolutionPairs}
+					beatTimeline={this.props.beatTimeline}
+					timelineIndex={this.state.domNodesTimeline.length}
+				/>
 			</div>
     );
   }
