@@ -93,9 +93,9 @@ class Menu extends React.Component {
 					</div>
 
 					<div className={s.description}>
-						Created by <b>Simon Asp</b><br />
+						{/*Created by <b>Simon Asp</b><br />
 						+ Hanyang University, Seoul 2017 ~<br /><br />
-						simon.vilhelm.asp [at] gmail.com
+						simon.vilhelm.asp [at] gmail.com*/}
 					</div>
 				</div>
 			</div>
