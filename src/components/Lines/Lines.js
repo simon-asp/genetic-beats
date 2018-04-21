@@ -33,7 +33,8 @@ class Lines extends React.Component {
 		if (evolutionPairs.length === 0 && timelineLength === 1) this.unrenderLines(nextProps);
 	}
 
-	/* Add lines to the DOM, for every beatlist after the first generation */
+	/* Add lines to the DOM, for every beatlist after the first generation. Every new generation gets
+	 * two lines, that are connected to the previous generation. */
 	addLines = (props) => {
 		console.log("add lines")
 		return new Promise(resolve => {
@@ -121,13 +122,12 @@ class Lines extends React.Component {
 				const el1 = domNodesTimeline[index][parent1];
 				const el2 = domNodesTimeline[index][parent2];
 				const el3 = domNodesTimeline[index+1][child];
-				//console.log("elements: ", el1, el2, el3)
 
 				const coords1 = getCenterCoords(el1);
 				const coords2 = getCenterCoords(el2);
 				const coords3 = getCenterCoords(el3);
 				
-				//console.log(coords1, coords2, coords3);
+				console.log("coords: ", coords1, coords2, coords3);
 				const sx1 = coords1.x + 300;
 				const sy1 = coords1.y + 150;
 				const sx2 = coords2.x - 200;
@@ -136,9 +136,15 @@ class Lines extends React.Component {
 				// TODO: RENDER 3 LINES PER THING
 				
 				// Bezier curve coords
-				const d = 'M' + coords1.x + ' ' + coords1.y + ' C ' + sx1 + ' ' + sy1 + ', ' + sx2 + ' ' + sy2 + ', ' + coords2.x + ' ' + coords2.y;
-				let lineDom = document.getElementById('line' + index + '' + i);
-				if(lineDom) lineDom.setAttribute('d', d);
+				//const d = 'M' + coords1.x +' '+coords1.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords2.x +' '+ coords2.y;
+				const d = 'M' + coords1.x +' '+coords1.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords3.x +' '+ coords3.y;
+				const e = 'M' + coords2.x +' '+coords2.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords3.x +' '+ coords3.y;
+				let lineDom1 = document.getElementById('line' + index + i + 0);
+				let lineDom2 = document.getElementById('line' + index + i + 1);
+				if(lineDom1 && lineDom2) {
+					lineDom1.setAttribute('d', d);
+					lineDom2.setAttribute('d', d);
+				}
 			}
 		}
 	}

@@ -79,7 +79,9 @@ class Box extends React.Component {
 
 		return beatTicks;
 	}
-
+	svgOnClick(e) {
+		console.log("x: ", e.clientX, "y: ", e.clientY);
+	}
   render() {
 		const { beat, index, scoreBeat, timelineIndex, onPlayClick, currentlyPlaying } = this.props;
     const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
@@ -90,7 +92,7 @@ class Box extends React.Component {
 		const itemBoxClass = cx('itemBox', {active: this.state.currentlyPlaying});
 
     return (
-			<div className={s.root}>
+			<div className={s.root} onClick={(e) => this.svgOnClick(e)}>
 				<div className={s.box} id={beat.id} ref={(ref) => { this.boxDiv = ref; }}>
 					<div className={infoOverlayClass}>
 							<div className={s.beatTicks}>{ this.populateBeatTicks() }</div>

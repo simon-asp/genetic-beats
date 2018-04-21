@@ -143,8 +143,8 @@ class BeatList extends React.Component {
 		// Remove the tooltip after 3 seconds
 		setTimeout(() => {this.setState({showTooltip: false})}, 3000);
 
-		// if(!shottooltop) ***important***
-		if (showTooltip) ga.newPopulation(this.props, () => {
+		// if(showtooltip) if you wanna disable the score check
+		if (!showTooltip) ga.newPopulation(this.props, () => {
 			// Reset the scorer check after new population has been made.
 			this.setState({showTooltip: false});
 
