@@ -21,32 +21,35 @@ class Lines extends React.Component {
 
   // Render or unrender the lines depending on Redux props
 	componentWillReceiveProps(nextProps) {
-		const { evolutionPairs, domNodesTimeline, timelineIndex } = nextProps;
-		
-		// Add the lines to the dom, then render them.
-		this.addLines(nextProps).then((props) => {
-			// Only render lines if the domNodes of the boxes and the evolution pairs exists.
-			if (domNodesTimeline && evolutionPairs.length > 0) this.renderLines(props);
-		})
+		const { evolutionPairs, domNodesTimeline, timelineLength } = nextProps;
+		// Add the lines to the dom, on the second iteration and more, then render them.
+		if(domNodesTimeline.length > 1 && timelineLength > 1 && evolutionPairs.length > 0) {
+			this.addLines(nextProps).then((props) => {
+				this.renderLines(props);
+			});
+		}
 		
     // Only unrender lines for the first generation, when we click the reset beats.
-		if (!evolutionPairs && timelineIndex === 1) this.unrenderLines(nextProps);
+		if (evolutionPairs.length === 0 && timelineLength === 1) this.unrenderLines(nextProps);
 	}
 
-	/* Add lines to the DOM, for each beatlist in the beatTimeline*/
+	/* Add lines to the DOM, for every beatlist after the first generation */
 	addLines = (props) => {
+		console.log("add lines")
 		return new Promise(resolve => {
 			
 			// Purple, light blue, dark blue, 
 			const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
-			const { beatInfo, timelineIndex, beatlist, evolutionPairs, domNodesTimeline } = props;
+			const { beatInfo, timelineLength, beatlist, evolutionPairs, domNodesTimeline } = props;
 			const linesTimeline = [];
 			const lines = [];
-			
+
 			if (beatInfo) {
-				domNodesTimeline.forEach((domNodes, index) => {
+				// Add lines for -1 generation, so the first generation doesn't get lines.
+				for(let index = 0; index < domNodesTimeline.length-1; index++) {
 					let beatlist = beatInfo[index];
 					for (let j = 0; j < beatInfo.noOfBeats; j++) {
+						// Todo: fix score
 						let score = 0;
 						if(beatlist && evolutionPairs) {
 							const score1 = beatlist[evolutionPairs[index][j].parent1].props.beat.score;
@@ -54,18 +57,20 @@ class Lines extends React.Component {
 							score = (score1 + score2) / 2;
 						}
 						const strokeWidth = mapRange(score, 1.5, 5, 1, 8);
-						console.log('score', score)
 						
-						lines.push(<path
-							id={'line' + index + '' + j}
-							stroke={colors[j]}
-							strokeWidth={strokeWidth}
-							className={s.line}
-							key={'line' + index + '' + j}
-							fill="transparent"
-						/>);
+						// Add two lines per domNode
+						for(let lineIndex = 0; lineIndex < 2; lineIndex++) {
+							lines.push(<path
+								id={'line' + index + j + lineIndex}
+								stroke={colors[j]}
+								strokeWidth={strokeWidth}
+								className={s.line}
+								key={'line' + index + j + lineIndex}
+								fill="transparent"
+							/>);
+						}
 					}
-				})
+				}
 				linesTimeline.push(lines);			
 			}
 			// Set the lines to state, and resolve the promise
@@ -96,8 +101,8 @@ class Lines extends React.Component {
 
   /* Reset all lines */
   unrenderLines = (props) => {
-		const { beatInfo, timelineIndex } = props;
-    for (let index = 0; index < timelineIndex-1; index++) {	
+		const { beatInfo, timelineLength } = props;
+    for (let index = 0; index < timelineLength-1; index++) {	
 			for (let i = 0; i < beatInfo.noOfBeats; i++) {
 				document.getElementById('line' + index + '' + i).setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
 			}
@@ -106,22 +111,23 @@ class Lines extends React.Component {
 
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
-		const { evolutionPairs, beatInfo, domNodesTimeline, timelineIndex } = props;
-		console.log('render_lines', props)
-		for(let index = 0; index < timelineIndex-1; index++) {
+		const { evolutionPairs, beatInfo, domNodesTimeline, timelineLength } = props;
+		for(let index = 0; index < timelineLength-1; index++) {
 			for (let i = 0; i < beatInfo.noOfBeats; i++) {
 				const parent1 = evolutionPairs[index][i].parent1;
 				const parent2 = evolutionPairs[index][i].parent2;
 				const child = evolutionPairs[index][i].offspringIndex;
-
+				
 				const el1 = domNodesTimeline[index][parent1];
 				const el2 = domNodesTimeline[index][parent2];
-				const el3 = domNodesTimeline[index+1][parent2];
+				const el3 = domNodesTimeline[index+1][child];
+				//console.log("elements: ", el1, el2, el3)
 
 				const coords1 = getCenterCoords(el1);
 				const coords2 = getCenterCoords(el2);
 				const coords3 = getCenterCoords(el3);
 				
+				//console.log(coords1, coords2, coords3);
 				const sx1 = coords1.x + 300;
 				const sy1 = coords1.y + 150;
 				const sx2 = coords2.x - 200;
@@ -139,7 +145,7 @@ class Lines extends React.Component {
 
   render() {
 		// 40vh per beatlist
-		const height = (this.props.timelineIndex*40) + 'vh';
+		const height = (this.props.timelineLength*40) + 'vh';
     return (
 			<div className={s.root}>
 				<svg id="svg" style={{ height: 'calc('+height+' + 106px)'}}>

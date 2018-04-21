@@ -114,7 +114,7 @@ class BeatTimeline extends React.Component {
 					beatInfo={this.props.beatInfo}
 					evolutionPairs={this.props.evolutionPairs}
 					beatTimeline={this.props.beatTimeline}
-					timelineIndex={this.state.domNodesTimeline.length}
+					timelineLength={this.props.beatTimeline.length}
 				/>
 			</div>
     );
