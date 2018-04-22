@@ -20,9 +20,9 @@ function Tooltip(props) {
     right: (props.direction === 'right')}); 
   return (
     <div className={tooltipClass} style={props.style}>
-      { props.text }
+      <div className={s.text}>{ props.text }</div>
       <div className={triangleClass} />
-      { props.children }
+      <div className={s.buttons}>{ props.children }</div>
     </div>
   );
 }

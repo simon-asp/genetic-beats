@@ -40,6 +40,7 @@ class Lines extends React.Component {
 	scoreOrLikedChanged = (nextProps) => {
 		const { beatTimeline } = nextProps;
 
+		if(beatTimeline.length > this.props.beatTimeline.length) return false;
 		for(let i = 0; i < beatTimeline.length; i++) {
 			for(let j = 0; j < beatTimeline[0].length; j++) {				
 				const oldBeat = this.props.beatTimeline[i][j];

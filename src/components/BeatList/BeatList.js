@@ -156,7 +156,7 @@ class BeatList extends React.Component {
 		});
 	}
 	onFinishClick() {
-		this.setState({showTooltip: true, 
+		this.setState({showTooltip: !this.state.showTooltip, 
 			tooltipText: 'Are you sure you want to end the session?', 
 			tooltipType: 'info',
 			tooltipButtons:true});
@@ -218,21 +218,12 @@ class BeatList extends React.Component {
 	}
 
 	render() {
-		const flexGrowClass = cx('flexGrow', {hidden:this.state.higherGenerationExists});
 		return (
 			<div className={s.root} id="beatList">
 				{ this.beatList }
 				<section className={s.buttons}>
-					<div className={flexGrowClass}>
-						<div
-							className={s.beatInfoButton}
-							onClick={this.onBeatInfoClick.bind(this)}
-							tabIndex={-10}
-							role="button"
-						>i</div>
-					</div>
 
-					<Button text="NEW ITERATION" 
+					<Button text="MAKE NEW BEATS" 
 						onClick={this.onGenesisClick.bind(this)} 
 						filled={false} 
 						hidden={this.state.higherGenerationExists} />
@@ -241,14 +232,14 @@ class BeatList extends React.Component {
 						onClick={this.onFinishClick.bind(this)}
 						colored={true} 
 						hidden={this.state.higherGenerationExists}
-						unRender={this.props.timelineIndex < 3} />
+						unRender={false} />
 					
 					<Tooltip text={this.state.tooltipText} 
 						active={this.state.showTooltip}
 						type={this.state.tooltipType}>
 						{this.state.tooltipButtons ? (
 							<div style={{display:'flex'}}>
-								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} />
+								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} filled={true}/>
 								<Button text="NO" onClick={this.onConfirmClick.bind(this, false)} filled={true} />
 							</div>							
 						) : ('')}

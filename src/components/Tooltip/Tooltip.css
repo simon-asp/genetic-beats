@@ -15,6 +15,9 @@
     box-sizing: border-box;
     user-select: none;
 
+    & .text {
+        width:100%;
+    }
     & .triangle {
         width: 0;
         height: 0;
@@ -25,8 +28,11 @@
         border-right: 8px solid transparent;
         border-top: 8px solid rgba(120,20,0,0.6);
     }
-    & .top {
-        
+    & .buttons {
+        width:100%;
+        display:flex;
+        justify-content: center;
+        flex-wrap:wrap;
     }
     & .left {
         transform:rotate(270deg);
@@ -64,10 +70,10 @@
     }    
 }
 .info {
-    background: var(--light-color);
-    color:var(--box-color);
+    background:#eeeeee;
+    color:#555;
     & .triangle {
-        border-top-color: var(--light-color);       
+        border-top-color: #eee;       
     }    
 }
 .blue {
