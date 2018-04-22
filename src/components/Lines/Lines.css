@@ -12,7 +12,13 @@
   & .line {
     position: absolute;
     z-index: 0;
+    opacity:0.4;
+  }
+  & .strong {
     opacity:0.6;
+  }
+  & .weak {
+    opacity:0.2;
   }
 }
 

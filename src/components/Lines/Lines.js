@@ -4,8 +4,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import PropTypes from 'prop-types';
 import s from './Lines.css';
 import { mapRange, getCenterCoords } from '../../utils';
-// import cx from 'classnames';
-// let cx = classNames.bind(s);
+let cx = classNames.bind(s);
 
 class Lines extends React.Component {
   static propTypes = {
@@ -36,36 +35,38 @@ class Lines extends React.Component {
 	/* Add lines to the DOM, for every beatlist after the first generation. Every new generation gets
 	 * two lines, that are connected to the previous generation. */
 	addLines = (props) => {
-		console.log("add lines")
 		return new Promise(resolve => {
 			
 			// Purple, light blue, dark blue, 
 			const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
-			const { beatInfo, timelineLength, beatlist, evolutionPairs, domNodesTimeline } = props;
+			const { beatInfo, timelineLength, beatTimeline, evolutionPairs, domNodesTimeline } = props;
 			const linesTimeline = [];
 			const lines = [];
 
 			if (beatInfo) {
 				// Add lines for -1 generation, so the first generation doesn't get lines.
 				for(let index = 0; index < domNodesTimeline.length-1; index++) {
-					let beatlist = beatInfo[index];
+					let beatlist = beatTimeline[index];
 					for (let j = 0; j < beatInfo.noOfBeats; j++) {
 						// Todo: fix score
-						let score = 0;
-						if(beatlist && evolutionPairs) {
-							const score1 = beatlist[evolutionPairs[index][j].parent1].props.beat.score;
-							const score2 = beatlist[evolutionPairs[index][j].parent2].props.beat.score;
-							score = (score1 + score2) / 2;
-						}
-						const strokeWidth = mapRange(score, 1.5, 5, 1, 8);
+					
+						const score1 = beatlist[evolutionPairs[index][j].parent1].score;
+						const score2 = beatlist[evolutionPairs[index][j].parent2].score;
+						const score = [score1, score2];
+
+						console.log(beatlist[evolutionPairs[index][j].parent1].id, score1)
+
+						const strokeWidth = [mapRange(score1, 1, 5, 0.5, 5), mapRange(score2, 1, 5, 0.5, 5)];
+						const lineClass = cx('line', {weak: (score1 + score2) <= 5, strong: (score1 + score2) >= 9});						
+						
 						
 						// Add two lines per domNode
 						for(let lineIndex = 0; lineIndex < 2; lineIndex++) {
 							lines.push(<path
 								id={'line' + index + j + lineIndex}
 								stroke={colors[j]}
-								strokeWidth={strokeWidth}
-								className={s.line}
+								strokeWidth={strokeWidth[lineIndex]}
+								className={lineClass}
 								key={'line' + index + j + lineIndex}
 								fill="transparent"
 							/>);
@@ -123,34 +124,39 @@ class Lines extends React.Component {
 				const el2 = domNodesTimeline[index][parent2];
 				const el3 = domNodesTimeline[index+1][child];
 
-				const coords1 = getCenterCoords(el1);
-				const coords2 = getCenterCoords(el2);
-				const coords3 = getCenterCoords(el3);
+				// Start the bezier curves from the child nodes
+				const parent1Coord = getCenterCoords(el1);
+				const parent2Coord = getCenterCoords(el2);
+				const startCoord = getCenterCoords(el3);
 				
-				console.log("coords: ", coords1, coords2, coords3);
-				const sx1 = coords1.x + 300;
-				const sy1 = coords1.y + 150;
-				const sx2 = coords2.x - 200;
-				const sy2 = coords2.y - 150;
+				// Control points. c = control, S = start, P1,P2 = parent 1, 2.
+				const cSx = startCoord.x + 50;
+				const cSy = startCoord.y - 250;
+				const cS2x = startCoord.x - 50;
+				const cP1x = parent1Coord.x + 50;
+				const cP1y = parent1Coord.y + 250;
+				const cP2x = parent2Coord.x - 50;
+				const cP2y = parent2Coord.y + 250;
+				//const sx1 = 1; const sx2 = 1; const sy1 = 1; const sy2 = 1;
 
 				// TODO: RENDER 3 LINES PER THING
 				
 				// Bezier curve coords
-				//const d = 'M' + coords1.x +' '+coords1.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords2.x +' '+ coords2.y;
-				const d = 'M' + coords1.x +' '+coords1.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords3.x +' '+ coords3.y;
-				const e = 'M' + coords2.x +' '+coords2.y + ' C ' + sx1 +' '+ sy1 + ', ' + sx2 +' '+ sy2 + ', ' + coords3.x +' '+ coords3.y;
+				const d = 'M' + startCoord.x +' '+startCoord.y + ' C ' + cS2x +' '+ cSy + ', ' + cP1x +' '+ cP1y + ', ' + parent1Coord.x +' '+ parent1Coord.y;
+				const e = 'M' + startCoord.x +' '+startCoord.y + ' C ' + cSx +' '+ cSy + ', ' + cP2x +' '+ cP2y + ', ' + parent2Coord.x +' '+ parent2Coord.y;
+				
 				let lineDom1 = document.getElementById('line' + index + i + 0);
 				let lineDom2 = document.getElementById('line' + index + i + 1);
-				if(lineDom1 && lineDom2) {
-					lineDom1.setAttribute('d', d);
-					lineDom2.setAttribute('d', d);
-				}
+				
+				lineDom1.setAttribute('d', d);
+				lineDom2.setAttribute('d', e);
+				
 			}
 		}
 	}
 
   render() {
-		// 40vh per beatlist
+		// The height of the whole svg. 40vh per beatlist. Should cover all beatlists.
 		const height = (this.props.timelineLength*40) + 'vh';
     return (
 			<div className={s.root}>

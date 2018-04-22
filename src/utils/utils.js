@@ -26,9 +26,10 @@ export function calculateLoginTime() {
 // Get center coordinates for a dom element
 export function getCenterCoords(el) {
   const coords = {};
+  const bcr = el.getBoundingClientRect();
   // coords.x = el.offsetLeft + (el.offsetWidth / 2);
   // coords.y = el.offsetTop + (el.offsetHeight / 2);
-  coords.x = el.getBoundingClientRect().x;
-  coords.y = el.getBoundingClientRect().y;
+  coords.x = bcr.x + (bcr.width / 2);
+  coords.y = bcr.y + (bcr.height / 2);
   return coords;
 };
