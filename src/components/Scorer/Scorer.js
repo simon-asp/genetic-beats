@@ -16,7 +16,6 @@ const scoreBeatCheck = (props, i) => {
 function Scorer(props) {
 	const { index, beat, scoreBeat, timelineIndex, noOfGenerations, higherGenerationExists } = props;
 	const stars = [];
-
 	for (let i = 0; i < 5; i++) {
 		const starClass = cx('score', {
 			filled: beat.score >= i + 1,

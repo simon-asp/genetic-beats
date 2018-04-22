@@ -201,7 +201,7 @@ class BeatList extends React.Component {
 		const { addNewSelectedPairs, beatTimeline, domNodes, finishExperiment, hideWelcomeInfo, loginTimeAction, 
 			pressGenerateButton, resetBeats, resetSelectedPairs, showBeatInfoAction, ...others } = props;
 		this.beatList = [];
-		this.props.beats.forEach((beat, index) => {
+		props.beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
 					beat={beat}
