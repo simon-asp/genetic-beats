@@ -7,8 +7,8 @@ import s from './Scorer.css';
 const cx = classNames.bind(s);
 
 const scoreBeatCheck = (props, i) => {
-	const { index, scoreBeat, higherGenerationExists, timelineIndex } = props;
-	if(!higherGenerationExists) {
+	const { index, scoreBeat, higherGenerationExists, timelineIndex, beat } = props;
+	if(!higherGenerationExists && beat.score !== i+1) {
 		scoreBeat(timelineIndex, index, i + 1);
 	}
 }
