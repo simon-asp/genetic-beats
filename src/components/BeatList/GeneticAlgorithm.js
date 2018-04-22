@@ -2,24 +2,39 @@
 
 import * as utils from '../../utils/utils';
 
-/* Selection part of the algorithm. Works with Roulette Wheel Selection
+/* Selection part of the algorithm. Works with Roulette Wheel Selection.
+ * Returns 16 indices that are the picked parents 
+ * Params: beats = Array
  */
 const selection = (beats) => {
 	let totalSum = 0;
 	let partialSum = 0;
+	let pickedIndex = null;
+	let parentIndices = [];
 
 	// Sum all fitnesses
 	beats.forEach((beat) => {
 		totalSum += beat.score;
 	});
 
-	const rand = utils.getRandomIntInclusive(0, totalSum);
 
-	// Compute the sum again, but stop if it's larger than the random number
-	for (let i = 0; i < beats.length; i++) {
-		partialSum += beats[i].score;
-		if (partialSum >= rand) return i;
+	// Pick 2 parents. Make sure we don't pick the same index twice, by checking pickedIndex.
+	// Compute the sum again, but stop if it's larger than the random number.
+	while(parentIndices.length < 2) {
+		// Get a random integer to pick out a random entry in beats
+		let rand = utils.getRandomIntInclusive(0, totalSum);
+		
+		for(let j = 0; j < beats.length; j++) {
+			partialSum += beats[j].score;
+			if (partialSum >= rand && pickedIndex !== j) {
+				pickedIndex = j;
+				parentIndices.push(j);
+				break;
+			}
+		}
+		partialSum = 0;
 	}
+	return parentIndices;
 };
 
 /* Crossover part of the algorithm. Uses a Parameterized Uniform Crossover.
@@ -68,7 +83,6 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index, finishedCallback
  */
 const mutation = (beat, beatInfo) => {
 	const copiedBeat = Object.assign({}, beat);
-	console.log(copiedBeat.length)
 	if (Math.random() <= 0.1) {
 		const instrKeys = Object.keys(beat).filter(key => key !== 'id' && key !== 'score');
 		const randomKey = instrKeys[utils.getRandomIntInclusive(0, instrKeys.length - 1)];
@@ -97,12 +111,10 @@ export const newPopulation = (props, callback) => {
 	const selectedPairs = [];
 
 	for (let i = 0; i < beatInfo.noOfBeats; i++) {
-		const parent1Index = selection(beats);
-		const parent2Index = selection(beats);
-
+		const parentIndices = selection(beats);
 		// When offspring is finished, continue with the rest
-		crossover(beats, beatInfo, parent1Index, parent2Index, (offspring) => {
-			selectedPairs.push({ parent1: parent1Index, parent2: parent2Index, offspringIndex: i });
+		crossover(beats, beatInfo, parentIndices[0], parentIndices[1], (offspring) => {
+			selectedPairs.push({ parent1: parentIndices[0], parent2: parentIndices[1], offspringIndex: i });
 			offspring.id = 'beat' + (timelineIndex + 1) + i;
 			offspring.liked = false;
 			const mutatedOffspring = mutation(offspring, beatInfo);

@@ -21,8 +21,12 @@ class Lines extends React.Component {
   // Render or unrender the lines depending on Redux props
 	componentWillReceiveProps(nextProps) {
 		const { evolutionPairs, domNodesTimeline, timelineLength } = nextProps;
-		// Add the lines to the dom, on the second iteration and more, then render them.
-		if(domNodesTimeline.length > 1 && timelineLength > 1 && evolutionPairs.length > 0) {
+		const scoreOrLikedChanged = this.scoreOrLikedChanged(nextProps);
+		console.log(scoreOrLikedChanged)
+		/* Add the lines to the dom, on the second iteration and more, then render them.
+		 * Only add if the score or liked state of all beats did not change.
+		 */
+		if(domNodesTimeline.length > 1 && timelineLength > 1 && evolutionPairs.length > 0 && !scoreOrLikedChanged) {
 			this.addLines(nextProps).then((props) => {
 				this.renderLines(props);
 			});
@@ -32,9 +36,28 @@ class Lines extends React.Component {
 		if (evolutionPairs.length === 0 && timelineLength === 1) this.unrenderLines(nextProps);
 	}
 
+	// Compares the nextProps to this.props to see if the score or liked changed of the beats
+	scoreOrLikedChanged = (nextProps) => {
+		const { beatTimeline } = nextProps;
+
+		for(let i = 0; i < beatTimeline.length; i++) {
+			for(let j = 0; j < beatTimeline[0].length; j++) {				
+				const oldBeat = this.props.beatTimeline[i][j];
+				const newBeat = nextProps.beatTimeline[i][j];
+				
+				if(oldBeat.score !== newBeat.score || oldBeat.liked !== newBeat.liked) {
+					console.log("changed")
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	/* Add lines to the DOM, for every beatlist after the first generation. Every new generation gets
 	 * two lines, that are connected to the previous generation. */
 	addLines = (props) => {
+		console.log("AddLines")
 		return new Promise(resolve => {
 			
 			// Purple, light blue, dark blue, 
@@ -48,23 +71,22 @@ class Lines extends React.Component {
 				for(let index = 0; index < domNodesTimeline.length-1; index++) {
 					let beatlist = beatTimeline[index];
 					for (let j = 0; j < beatInfo.noOfBeats; j++) {
-						// Todo: fix score
-					
-						const score1 = beatlist[evolutionPairs[index][j].parent1].score;
-						const score2 = beatlist[evolutionPairs[index][j].parent2].score;
-						const score = [score1, score2];
-
-						console.log(beatlist[evolutionPairs[index][j].parent1].id, score1)
-
-						const strokeWidth = [mapRange(score1, 1, 5, 0.5, 5), mapRange(score2, 1, 5, 0.5, 5)];
-						const lineClass = cx('line', {weak: (score1 + score2) <= 5, strong: (score1 + score2) >= 9});						
 						
+						const p1Index = evolutionPairs[index][j].parent1;
+						const p2Index = evolutionPairs[index][j].parent2;
+						const parentIndices = [p1Index, p2Index];
+						const score1 = beatlist[p1Index].score;
+						const score2 = beatlist[p2Index].score;
+
+						const strokeWidth = [mapRange(score1, 1, 5, 1, 5), mapRange(score2, 1, 5, 1, 5)];
+						// Add weak and strong classname to intensify the opacity
+						const lineClass = cx('line', {weak: (score1 + score2) <= 5, strong: (score1 + score2) >= 9});						
 						
 						// Add two lines per domNode
 						for(let lineIndex = 0; lineIndex < 2; lineIndex++) {
 							lines.push(<path
 								id={'line' + index + j + lineIndex}
-								stroke={colors[j]}
+								stroke={colors[parentIndices[lineIndex]]}
 								strokeWidth={strokeWidth[lineIndex]}
 								className={lineClass}
 								key={'line' + index + j + lineIndex}
@@ -113,6 +135,7 @@ class Lines extends React.Component {
 
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
+		console.log("Render lines")
 		const { evolutionPairs, beatInfo, domNodesTimeline, timelineLength } = props;
 		for(let index = 0; index < timelineLength-1; index++) {
 			for (let i = 0; i < beatInfo.noOfBeats; i++) {
@@ -150,7 +173,8 @@ class Lines extends React.Component {
 				
 				lineDom1.setAttribute('d', d);
 				lineDom2.setAttribute('d', e);
-				
+
+				const colors = ['#5C429B', '#81DFEF', '#1D2DBF', '#6D0F3A', '#FFFFFF', '#8FDD76', '#F286B1', '#EDDA54'];
 			}
 		}
 	}
