@@ -2,11 +2,11 @@
 
 .root {
 	width:96px;
-	min-height:100vh;
+	min-height:40vh;
 	position: absolute;
 	top:0;
 	left:0;
-	padding-top:40vh;
+	padding-top:25vh;
 	box-sizing: border-box;
 	font-size: 8px;
 	text-align: center;

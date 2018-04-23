@@ -12,14 +12,14 @@
   padding:0 0 0 80px;
 
   & .buttons {
-    width:100%;
+    width:90%;
     box-sizing: border-box;
     display: flex;
     justify-content:center;
     align-items:center;
     position: absolute;
     flex-wrap: wrap;
-    bottom:0;
+    bottom:48px;
 
     & .flexGrow {
       width:100%;

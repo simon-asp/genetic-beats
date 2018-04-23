@@ -108,7 +108,7 @@ class BeatTimeline extends React.Component {
 				
 				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
 				{ this.populateTimelineArray() }
-				<Timeline noOfGenerations={this.props.beatTimeline.length} />
+				{/* <Timeline noOfGenerations={this.props.beatTimeline.length} /> */}
 				<Lines
 					domNodesTimeline={this.state.domNodesTimeline}
 					beatInfo={this.props.beatInfo}

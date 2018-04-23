@@ -91,21 +91,15 @@ class Box extends React.Component {
     return (
 			<div className={s.root}>
 				<div className={s.box} id={beat.id} ref={(ref) => { this.boxDiv = ref; }}>
-					<div className={infoOverlayClass}>
-							<div className={s.beatTicks}>{ this.populateBeatTicks() }</div>
-					</div>
 					<div className={s.playContainer}>
 						<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
 					</div>
-				</div>
-
-				<div className={itemBoxClass}>
-
-					<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					
-					
 					<div className={s.scorerContainer}><Scorer {...this.props} /></div>
-
 					<div className={s.beatInfoButton} onClick={this.onClickInfo.bind(this)} tabIndex={-10} role="button">i</div>
+				</div>
+				<div className={infoOverlayClass}>
+						<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					
+						<div className={s.beatTicks}>{ this.populateBeatTicks() }</div>
 				</div>
 			</div>
     );
