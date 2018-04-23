@@ -1,0 +1,6 @@
+{
+  "name": "FinishScreen",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./FinishScreen.js"
+}

@@ -1,0 +1,27 @@
+@import '../variables.css';
+
+.root {
+    width:100vw;
+    height:100vh;
+    display:flex;
+    align-items: center;
+    padding-left:80px;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    & > div {
+        display:flex;
+        flex-wrap: wrap;
+        width:100%;
+    }
+    & h1 {
+        font-size:5em;
+        width:100%;
+        text-align:center;
+        margin:0;
+        text-shadow:0 3px 15px rgba(0,0,0,0.3);
+    }
+    & h2 {
+        width:100%;
+        text-align:center;
+    }
+}
