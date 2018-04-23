@@ -6,7 +6,7 @@ import s from './BeatTimeline.css';
 import PropTypes from 'prop-types';
 import { pressGenerateButton, scoreBeat, resetBeats, likeBeatFirebaseAction, showBeatInfoAction, showLineInfoAction, loginTimeAction } from '../../actions/beats';
 import { addNewSelectedPairs, resetSelectedPairs } from '../../actions/evolutionPairs';
-import { hideWelcomeInfo, hideLineTooltip } from '../../actions/beatInfo';
+import { hideWelcomeInfo, hideLineTooltip, finishExperiment } from '../../actions/beatInfo';
 import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
@@ -24,11 +24,12 @@ class BeatTimeline extends React.Component {
 
 	componentWillMount() {
 		this.setState({
-			domNodesTimeline: [],
-			linesTimeline: [],
-			currentUser: auth().currentUser,
-			showInitialGuide: false,
-		});
+      domNodesTimeline: [],
+      linesTimeline: [],
+      currentUser: auth().currentUser,
+      showInitialGuide: false,
+      experimentFinished: this.props.beatInfo.experimentFinished,
+    });
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 		this.finishExperiment = this.finishExperiment.bind(this);
 	}
@@ -42,8 +43,9 @@ class BeatTimeline extends React.Component {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
   }
   componentWillReceiveProps(nextProps) {
-    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
-  }
+    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
+    if(nextProps.beatInfo.experimentFinished) this.setState({experimentFinished:true})
+	}
 
 	/* Shows and hides the welcome info */
   showHideWelcomeInfo = (welcomeInfoVisible) => {
@@ -104,18 +106,25 @@ class BeatTimeline extends React.Component {
     return (
 			<div className={s.root}>
         <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
-        <InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
-				
-				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
-				{ this.populateTimelineArray() }
-				<Timeline noOfGenerations={this.props.beatTimeline.length} />
-				<Lines
-					domNodesTimeline={this.state.domNodesTimeline}
-					beatInfo={this.props.beatInfo}
-					evolutionPairs={this.props.evolutionPairs}
-					beatTimeline={this.props.beatTimeline}
-					timelineLength={this.props.beatTimeline.length}
-				/>
+        
+				{ this.state.experimentFinished ? (
+          <FinishScreen />
+        ) : (
+          <div>
+						<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
+						
+						<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
+						{ this.populateTimelineArray() }
+						<Timeline noOfGenerations={this.props.beatTimeline.length} />
+						<Lines
+							domNodesTimeline={this.state.domNodesTimeline}
+							beatInfo={this.props.beatInfo}
+							evolutionPairs={this.props.evolutionPairs}
+							beatTimeline={this.props.beatTimeline}
+							timelineLength={this.props.beatTimeline.length}
+						/>
+          </div>
+        )}
 			</div>
     );
   }
@@ -141,5 +150,6 @@ const mapDispatch = dispatch => ({
 	showLineInfoAction: () => dispatch(showLineInfoAction()),
 	loginTimeAction: (minutes) => dispatch(loginTimeAction(minutes)),
 	hideLineTooltip: () => dispatch(hideLineTooltip()),
+	finishExperiment: () => dispatch(finishExperiment())
 });
 export default connect(mapState, mapDispatch)(withStyles(s)(BeatTimeline));

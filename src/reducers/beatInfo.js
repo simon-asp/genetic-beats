@@ -20,6 +20,11 @@ export default function beatInfo(state = beatInfoObj, action) {
 			newState.lineTooltipHidden = true;
 			return newState;
 		}
+		case FINISH_EXPERIMENT: {
+            const newState = Object.assign({}, state);
+            newState.experimentFinished = true;
+            return newState;            
+        }
 	default:
 		return state;
 	}
