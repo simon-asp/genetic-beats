@@ -11,7 +11,8 @@ import BeatList from '../BeatList';
 import Timeline from '../Timeline';
 import Menu from '../Menu';
 import WelcomeInfo from '../WelcomeInfo';
-import InitialGuide from '../../components/InitialGuide';
+import InitialGuide from '../InitialGuide';
+import FinishScreen from '../FinishScreen';
 import Lines from '../Lines';
 import { auth } from 'firebase';
 import { calculateLoginTime } from '../../utils';
@@ -19,17 +20,17 @@ const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
 class BeatTimeline extends React.Component {
-  static propTypes = {
-  };
+	static propTypes = {
+	};
 
 	componentWillMount() {
 		this.setState({
-      domNodesTimeline: [],
-      linesTimeline: [],
-      currentUser: auth().currentUser,
-      showInitialGuide: false,
-      experimentFinished: this.props.beatInfo.experimentFinished,
-    });
+	      domNodesTimeline: [],
+	      linesTimeline: [],
+	      currentUser: auth().currentUser,
+	      showInitialGuide: false,
+	      experimentFinished: this.props.beatInfo.experimentFinished,
+	    });
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 		this.finishExperiment = this.finishExperiment.bind(this);
 	}
@@ -39,20 +40,20 @@ class BeatTimeline extends React.Component {
 		this.props.loginTimeAction(calculateLoginTime());
 	}
 	/* Determine if we want to show the welcome info */
-  componentDidMount() {
+	componentDidMount() {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
-  }
-  componentWillReceiveProps(nextProps) {
-    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
-    if(nextProps.beatInfo.experimentFinished) this.setState({experimentFinished:true})
+	}
+	componentWillReceiveProps(nextProps) {
+	    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
+	    if(nextProps.beatInfo.experimentFinished) this.setState({experimentFinished:true})
 	}
 
 	/* Shows and hides the welcome info */
-  showHideWelcomeInfo = (welcomeInfoVisible) => {
-    const welcomeInfoDiv = document.getElementById('welcomeInfo');
-    if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
-    else welcomeInfoDiv.style.visibility = 'hidden';
-  }
+	showHideWelcomeInfo = (welcomeInfoVisible) => {
+	const welcomeInfoDiv = document.getElementById('welcomeInfo');
+	if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
+	else welcomeInfoDiv.style.visibility = 'hidden';
+	}
 
 	/* Store DOM-nodes of the boxes in the beatlist */
 	storeDomNodes(domNode, timelineIndex) {
@@ -74,8 +75,7 @@ class BeatTimeline extends React.Component {
 
 	// Terminate the experiment from the user
 	finishExperiment() {
-		console.log('finished')
-		
+		this.props.finishExperiment();
 		this.props.loginTimeAction(calculateLoginTime());
 	}
 
@@ -104,28 +104,28 @@ class BeatTimeline extends React.Component {
 
   render() {
     return (
-			<div className={s.root}>
+	<div className={s.root}>
         <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
         
-				{ this.state.experimentFinished ? (
+		{ this.state.experimentFinished ? (
           <FinishScreen />
         ) : (
           <div>
-						<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
-						
-						<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
-						{ this.populateTimelineArray() }
-						<Timeline noOfGenerations={this.props.beatTimeline.length} />
-						<Lines
-							domNodesTimeline={this.state.domNodesTimeline}
-							beatInfo={this.props.beatInfo}
-							evolutionPairs={this.props.evolutionPairs}
-							beatTimeline={this.props.beatTimeline}
-							timelineLength={this.props.beatTimeline.length}
-						/>
+			<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
+			
+			<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
+			{ this.populateTimelineArray() }
+			<Timeline noOfGenerations={this.props.beatTimeline.length} />
+			<Lines
+				domNodesTimeline={this.state.domNodesTimeline}
+				beatInfo={this.props.beatInfo}
+				evolutionPairs={this.props.evolutionPairs}
+				beatTimeline={this.props.beatTimeline}
+				timelineLength={this.props.beatTimeline.length}
+			/>
           </div>
         )}
-			</div>
+	</div>
     );
   }
 }
