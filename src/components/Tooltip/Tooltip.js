@@ -21,8 +21,8 @@ function Tooltip(props) {
   return (
     <div className={tooltipClass} style={props.style}>
       <div className={s.text}>{ props.text }</div>
-      <div className={triangleClass} />
       <div className={s.buttons}>{ props.children }</div>
+      <div className={triangleClass} />
     </div>
   );
 }
