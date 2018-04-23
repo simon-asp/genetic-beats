@@ -11,7 +11,6 @@ const WelcomeInfo = (props) => {
     <div className={s.root} id="welcomeInfo">
       <div className={s.container}>
   			<div className={s.top}>
-  				<h1>THIS IS</h1>
   				<div className={s.logo} />
   			</div>
 
