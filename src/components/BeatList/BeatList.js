@@ -139,7 +139,7 @@ class BeatList extends React.Component {
 			this.setState({showTooltip: false});
 
 			// Set a timer for the jumping down arrow
-			if(this.props.timelineIndex === 0) {
+			if(this.props.timelineIndex < 2) {
 				this.setState({showArrow: true});
 				setTimeout(() => this.setState({showArrow: false}), 6000);
 			}
@@ -191,7 +191,7 @@ class BeatList extends React.Component {
 		const { addNewSelectedPairs, beatTimeline, domNodes, finishExperiment, hideWelcomeInfo, loginTimeAction, 
 			pressGenerateButton, resetBeats, resetSelectedPairs, showBeatInfoAction, ...others } = props;
 		this.beatList = [];
-		this.props.beats.forEach((beat, index) => {
+		props.beats.forEach((beat, index) => {
 			this.beatList.push(
 				<Box
 					beat={beat}
@@ -244,7 +244,7 @@ class BeatList extends React.Component {
 
 					<Tooltip text={'New beats have been generated!'}
 						bounce={true}
-						active={this.state.showArrow && this.props.timelineIndex === 0}
+						active={this.state.showArrow && this.props.timelineIndex < 2}
 						type={'blue'}
 						style={{bottom:0}}
 					/>
