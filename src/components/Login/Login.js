@@ -58,7 +58,7 @@ class Login extends React.Component {
       auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         // Add user to database
-        database.ref('/users/').push({
+        database.ref('/alpha/').push({
           userId: email
         })
         .catch(e => {

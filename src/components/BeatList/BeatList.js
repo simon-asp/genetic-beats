@@ -229,7 +229,7 @@ class BeatList extends React.Component {
 						onClick={this.onFinishClick.bind(this)}
 						colored={true} 
 						hidden={this.state.higherGenerationExists}
-						unRender={this.props.timelineIndex < 3} />
+						unRender={this.props.timelineIndex < 1} />
 					
 					<Tooltip text={this.state.tooltipText} 
 						active={this.state.showTooltip}
