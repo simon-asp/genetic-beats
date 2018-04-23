@@ -235,8 +235,8 @@ class BeatList extends React.Component {
 						active={this.state.showTooltip}
 						type={this.state.tooltipType}>
 						{this.state.tooltipButtons ? (
-							<div style={{display:'flex'}}>
-								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} />
+							<div style={{display:'flex', justifyContent:'center'}}>
+								<Button text="YES" onClick={this.onConfirmClick.bind(this, true)} filled={true}/>
 								<Button text="NO" onClick={this.onConfirmClick.bind(this, false)} filled={true} />
 							</div>							
 						) : ('')}
