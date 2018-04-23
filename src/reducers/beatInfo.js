@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { HIDE_WELCOME_INFO, HIDE_LINE_TOOLTIP_INFO } from '../constants';
+import { HIDE_WELCOME_INFO, HIDE_LINE_TOOLTIP_INFO, FINISH_EXPERIMENT } from '../constants';
 
 export const beatInfoObj = {
 	noOfBeats: 8,

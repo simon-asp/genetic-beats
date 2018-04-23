@@ -6,7 +6,7 @@ import { database, getUserUniqueKey, dbVer } from '../database';
 /* Adds a new population, newBeats is an array */
 export function pressGenerateButton(newBeats, timelineIndex) {
   return dispatch => {
-    const userRef = database.ref(dbVer);
+    const userRef = database.ref('/'+dbVer);
     
     // Add the new population to redux
     dispatch(addNewPopulation(newBeats));
@@ -61,7 +61,7 @@ export function likeBeatToggle(timelineIndex, index) {
 export function likeBeatFirebaseAction(timelineIndex, index, beat) {
   return dispatch => {
     dispatch(likeBeatToggle(timelineIndex, index));
-    const userRef = database.ref(dbVer);
+    const userRef = database.ref('/'+dbVer);
     const userUniqueKey = getUserUniqueKey()
     userRef.child(userUniqueKey).child('likedBeats').push({
       ...beat
