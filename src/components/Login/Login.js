@@ -5,7 +5,7 @@ import s from './Login.css';
 import PropTypes from 'prop-types';
 import { auth } from 'firebase';
 const cx = classNames.bind(s);
-import { database, setUserUniqueKey } from '../../database';
+import { database, setUserUniqueKey, dbVer } from '../../database';
 
 class Login extends React.Component {
   componentWillMount() {
@@ -58,7 +58,7 @@ class Login extends React.Component {
       auth().createUserWithEmailAndPassword(email, password)
       .then(() => {
         // Add user to database
-        database.ref('/alpha/').push({
+        database.ref('/'+dbVer+'/').push({
           userId: email
         })
         .catch(e => {

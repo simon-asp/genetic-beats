@@ -1,12 +1,12 @@
 /* eslint-disable import/prefer-default-export */
 
 import { ADD_NEW_POPULATION, ADD_NEW_POPULATION_ERROR, SCORE_BEAT, UNSCORE_BEAT, RESET_BEATS, LIKE_BEAT_TOGGLE } from '../constants';
-import { database, getUserUniqueKey } from '../database';
+import { database, getUserUniqueKey, dbVer } from '../database';
 
 /* Adds a new population, newBeats is an array */
 export function pressGenerateButton(newBeats, timelineIndex) {
   return dispatch => {
-    const userRef = database.ref('alpha');
+    const userRef = database.ref(dbVer);
     
     // Add the new population to redux
     dispatch(addNewPopulation(newBeats));
@@ -61,7 +61,7 @@ export function likeBeatToggle(timelineIndex, index) {
 export function likeBeatFirebaseAction(timelineIndex, index, beat) {
   return dispatch => {
     dispatch(likeBeatToggle(timelineIndex, index));
-    const userRef = database.ref('alpha');
+    const userRef = database.ref(dbVer);
     const userUniqueKey = getUserUniqueKey()
     userRef.child(userUniqueKey).child('likedBeats').push({
       ...beat
@@ -80,7 +80,7 @@ export function loginTimeAction(minutes) {
   return dispatch => {
     const userUniqueKey = getUserUniqueKey()
     
-    const userRef = database.ref('alpha/'+userUniqueKey);    
+    const userRef = database.ref(dbVer+'/'+userUniqueKey);    
     userRef.child('activeTime').update({
       minutes
     });
@@ -93,7 +93,7 @@ export function showBeatInfoAction() {
     let showedCount = 0;
     const userUniqueKey = getUserUniqueKey()
 
-    const userRef = database.ref('alpha/'+userUniqueKey);    
+    const userRef = database.ref(dbVer+'/'+userUniqueKey);    
     userRef.child('beatInfoShowedCount').once('value', snap => {
       if(snap.val()) showedCount = snap.val() + 1;
       else showedCount = 1;
@@ -111,7 +111,7 @@ export function showLineInfoAction() {
     let showedCount = 0;
     const userUniqueKey = getUserUniqueKey()
 
-    const userRef = database.ref('alpha/'+userUniqueKey);    
+    const userRef = database.ref(dbVer+'/'+userUniqueKey);    
     userRef.child('lineInfoShowedCount').once('value', snap => {
       if(snap.val()) showedCount = snap.val() + 1;
       else showedCount = 1;

@@ -10,11 +10,12 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 export const database = firebase.database();
+export const dbVer = 'alpha';
 
 // Get the user unique key from the users child node in firebase. Returns a Promise
 export function setUserUniqueKey() {
   let userUniqueKey = 0;
-  const query = database.ref('/users').orderByChild('userId').equalTo(auth().currentUser.email);
+  const query = database.ref('/'+dbVer).orderByChild('userId').equalTo(auth().currentUser.email);
 
   query.once('value', data => {
     data.forEach(userSnapshot => {
