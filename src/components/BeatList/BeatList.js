@@ -111,7 +111,7 @@ class BeatList extends React.Component {
 		this.setState({ clickedPlay });
 
 		// Stop all beats first, then play.
-		this.stopAllBeats();
+		this.props.stopAllBeatsTimeline();
 		if (clickedPlay[index]) startBeat(sequences[index]);
 	}
 

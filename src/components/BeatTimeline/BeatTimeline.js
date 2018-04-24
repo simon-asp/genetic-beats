@@ -33,6 +33,9 @@ class BeatTimeline extends React.Component {
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 		// Not used yet
 		this.finishExperiment = this.finishExperiment.bind(this);
+		this.stopAllBeatsTimeline = this.stopAllBeatsTimeline.bind(this);
+		
+		this.BeatList = React.createRef();
 	}
 
 	componentWillUnmount() {
@@ -81,6 +84,11 @@ class BeatTimeline extends React.Component {
 		this.props.loginTimeAction(calculateLoginTime());
 	}
 
+	/* Stop all beats in all beatlist refs */
+	stopAllBeatsTimeline() {
+		this.BeatList.current.stopAllBeats();
+	}
+
 	/* Populate the beat timeline array with beatlist components */
 	populateTimelineArray() {
 		const { beatTimeline, evolutionPairs } = this.props;
@@ -97,6 +105,7 @@ class BeatTimeline extends React.Component {
 					key={'generation' + index}
 					evolutionPairs={evolutionPairs[index]}
 					finishExperiment={this.finishExperiment}
+					stopAllBeatsTimeline={this.stopAllBeatsTimeline}
 				/>,
 			);
 		});
