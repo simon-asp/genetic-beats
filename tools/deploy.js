@@ -25,9 +25,9 @@ import run from './run';
 // Heroku
 const remote = {
   name: 'heroku',
-  url: 'https://git.heroku.com/genetic-beats.git',
+  url: 'https://git.heroku.com/genetic-beats-alpha.git',
   branch: 'master',
-  website: 'https://genetic-beats.herokuapp.com',
+  website: 'https://genetic-beats-alpha.herokuapp.com',
 };
 
 // Azure Web Apps
