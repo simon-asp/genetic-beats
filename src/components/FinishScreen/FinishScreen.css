@@ -3,6 +3,7 @@
 .root {
     width:100vw;
     height:100vh;
+    background:#1E1E1E;
     display:flex;
     align-items: center;
     padding-left:80px;

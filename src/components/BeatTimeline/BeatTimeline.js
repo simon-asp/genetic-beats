@@ -105,21 +105,19 @@ class BeatTimeline extends React.Component {
 
 
   render() {
+	let hideClass = cx({'hidden': this.state.experimentFinished});
     return (
-			<div className={s.root}>
-        <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
-				
-				{ this.state.experimentFinished ? (
-					<FinishScreen />
-				) : (
-					<div>
-					<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>	
-					<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
-					{ this.populateTimelineArray() }
-					<Timeline noOfGenerations={this.props.beatTimeline.length} />
-					</div>
-				)}
+		<div className={s.root}>
+        	<WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
+			{ this.state.experimentFinished ? <FinishScreen /> : '' }
+
+			<div className={hideClass}>
+				<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>	
+				<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
+				{ this.populateTimelineArray() }
+				<Timeline noOfGenerations={this.props.beatTimeline.length} />
 			</div>
+		</div>
     );
   }
 }
