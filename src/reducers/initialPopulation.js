@@ -1,4 +1,5 @@
 import { beatInfoObj } from './beatInfo';
+import { experimentBeatTimeline } from './experimentBeatTimeline.js';
 
 // Get a random integer between min and max, inclusive max.
 const calculateProbability = (n) => {
@@ -22,29 +23,29 @@ const getRandomBeatArray = (size, n) => {
  * instruments. Returns a timeline array, which contains a beat array.
  */
 export default function getInitialPopulation() {
+	const fs = require("fs");
+	
 	const beatList = [];
-	const timeline = [];
+	let timeline = [];
 
-	for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
-		const beat = {};
+	// for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
+	// 	const beat = {};
 
-		beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.25);
-		beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
-		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
-		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
+	// 	beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.25);
+	// 	beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
+	// 	beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
+	// 	beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
 
-		// For testing
-		// beat.kick = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0];
-		// beat.closedhat = [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1];
-		// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
-		// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
-		beat.score = 0;
-		beat.id = 'beat0' + i;
-		beat.liked = false;
+	// 	beat.score = 0;
+	// 	beat.id = 'beat0' + i;
+	// 	beat.liked = false;
 
-		beatList.push(beat);
-	}
+	// 	beatList.push(beat);
+	// }
 
-	timeline.push(beatList);
+	// timeline.push(beatList);
+	
+	timeline = experimentBeatTimeline;
+	console.log(timeline)
 	return timeline;
 }
