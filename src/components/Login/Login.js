@@ -93,7 +93,7 @@ class Login extends React.Component {
           <input className={s.password} type="password" placeholder="Password" onChange={(e) => this.onChangeInput(e, 'password')} />
 
           <button className={s.loginButton} onClick={this.logIn.bind(this)}>Log in</button>
-          <button className={s.signupButton} onClick={this.signUp.bind(this)}>Sign up</button>
+          {/* <button className={s.signupButton} onClick={this.signUp.bind(this)}>Sign up</button> */}
         </div>
       </div>
     </div>
