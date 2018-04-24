@@ -31,15 +31,11 @@ class BeatTimeline extends React.Component {
 			experimentFinished: this.props.beatInfo.experimentFinished,
 		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
-		// Not used yet
 		this.finishExperiment = this.finishExperiment.bind(this);
-		this.stopAllBeatsTimeline = this.stopAllBeatsTimeline.bind(this);
-		
-		this.BeatList = React.createRef();
 	}
 
+	// Set the active time the user has been logged in
 	componentWillUnmount() {
-		// Set the active time the user has been logged in
 		this.props.loginTimeAction(calculateLoginTime());
 	}
 	/* Determine if we want to show the welcome info */
@@ -82,11 +78,6 @@ class BeatTimeline extends React.Component {
 		// Finish experiment and add state to redux beatinfo
 		this.props.finishExperiment();
 		this.props.loginTimeAction(calculateLoginTime());
-	}
-
-	/* Stop all beats in all beatlist refs */
-	stopAllBeatsTimeline() {
-		this.BeatList.current.stopAllBeats();
 	}
 
 	/* Populate the beat timeline array with beatlist components */
