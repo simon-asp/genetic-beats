@@ -56,7 +56,7 @@ class BeatTimeline extends React.Component {
 	}
 
 	/* Store DOM-nodes of the boxes in the beatlist */
-	storeDomNodes(domNode, timelineIndex) {
+	storeDomNodes(domNode, timelineIndex, index) {
 		const domNodesTimeline = this.state.domNodesTimeline;
 		if (!domNodesTimeline[timelineIndex]) {
 			const domNodes = [];
@@ -64,7 +64,7 @@ class BeatTimeline extends React.Component {
 			domNodesTimeline.push(domNodes);
 			this.setState({ domNodesTimeline });
 		} else {
-			domNodesTimeline[timelineIndex].push(domNode);
+			domNodesTimeline[timelineIndex][index] = domNode;
 			this.setState({ domNodesTimeline });
 		}
 	}
@@ -89,7 +89,7 @@ class BeatTimeline extends React.Component {
 					{...this.props}
 					beats={beatTimeline[index]}
 					timelineIndex={index}
-					storeDomNodes={(domNode, timelineIndex) => this.storeDomNodes(domNode, timelineIndex)}
+					storeDomNodes={(domNode, timelineIndex, index) => this.storeDomNodes(domNode, timelineIndex, index)}
 					domNodes={this.state.domNodesTimeline[index]}
 					noOfGenerations={beatTimeline.length}
 					key={'generation' + index}

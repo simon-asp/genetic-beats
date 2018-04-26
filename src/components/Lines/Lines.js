@@ -118,21 +118,22 @@ class Lines extends React.Component {
 	renderLines(props) {
 		console.log("Render lines")
 		const { evolutionPairs, beatInfo, domNodesTimeline, timelineLength } = props;
+		// Skip one index, because the first generation does not need lines
 		for(let index = 0; index < timelineLength-1; index++) {
 			for (let i = 0; i < beatInfo.noOfBeats; i++) {
 				const parent1 = evolutionPairs[index][i].parent1;
 				const parent2 = evolutionPairs[index][i].parent2;
-				const child = evolutionPairs[index][i].offspringIndex;
-				
+		
 				const el1 = domNodesTimeline[index][parent1];
 				const el2 = domNodesTimeline[index][parent2];
-				const el3 = domNodesTimeline[index+1][child];
-
+				const el3 = domNodesTimeline[index+1][i];
+				//console.log(domNodesTimeline)
 				// Start the bezier curves from the child nodes
 				const parent1Coord = getCenterCoords(el1);
 				const parent2Coord = getCenterCoords(el2);
 				const startCoord = getCenterCoords(el3);
 				
+				//console.log(startCoord)
 				// Control points. c = control, S = start, P1,P2 = parent 1, 2.
 				const cSx = startCoord.x + 50;
 				const cSy = startCoord.y - 250;
