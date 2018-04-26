@@ -17,6 +17,7 @@ class Lines extends React.Component {
 			linesTimeline: [],
 		});
 
+		// Initial render of lines
 		this.addLines(this.props).then((props) => {
 			this.renderLines(props);
 		});
@@ -25,10 +26,8 @@ class Lines extends React.Component {
 		// Render or unrender the lines depending on Redux props
 	componentWillReceiveProps(nextProps) {
 		const { evolutionPairs, domNodesTimeline, timelineLength } = nextProps;
-		const scoreOrLikedChanged = this.scoreOrLikedChanged(nextProps);
 		/* Add the lines to the dom, on the second iteration and more, then render them.
-			* Only add if the score or liked state of all beats did not change.
-			*/
+		 * Only add if we have a new generation of beats */
 		if(this.isTimelineLengthLarger(nextProps)) {
 			this.addLines(nextProps).then((props) => {
 				this.renderLines(props);
@@ -39,32 +38,14 @@ class Lines extends React.Component {
 		if (evolutionPairs.length === 0 && timelineLength === 1) this.unrenderLines(nextProps);
 	}
 
+	// Check to see if we have a new generation
 	isTimelineLengthLarger(nextProps) {
 		return nextProps.timelineLength > this.props.timelineLength;
-	}
-	// Compares the nextProps to this.props to see if the score or liked changed of the beats
-	scoreOrLikedChanged(nextProps) {
-		const { beatTimeline } = nextProps;
-
-		if(beatTimeline.length > this.props.beatTimeline.length) return false;
-		for(let i = 0; i < beatTimeline.length; i++) {
-			for(let j = 0; j < beatTimeline[0].length; j++) {				
-				const oldBeat = this.props.beatTimeline[i][j];
-				const newBeat = nextProps.beatTimeline[i][j];
-				
-				if(oldBeat.score !== newBeat.score || oldBeat.liked !== newBeat.liked) {
-					console.log("changed")
-					return true;
-				}
-			}
-		}
-		return false;
 	}
 
 	/* Add lines to the DOM, for every beatlist after the first generation. Every new generation gets
 		* two lines, that are connected to the previous generation. */
 	addLines = (props) => {
-		console.log("AddLines: ", props)
 		return new Promise(resolve => {
 			
 			// Purple, light blue, dark blue, 
@@ -128,21 +109,10 @@ class Lines extends React.Component {
 		//d3.selectAll(".class-of-elements").style("filter", "url(#glow)");
 	}
 
-  /* Reset all lines */
-  unrenderLines = (props) => {
-	const { beatInfo, timelineLength } = props;
-	const index = timelineLength-1;
-	for (let i = 0; i < beatInfo.noOfBeats; i++) {
-		const line1 = document.getElementById('line' + index + '' + i + 0);
-		const line2 = document.getElementById('line' + index + '' + i + 1);
-		
-		if(!line1) return;
-		else {
-			line1.setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
-			line2.setAttribute('d', 'M0 0 C 0 0, 0 0, 0 0');
-		}
+	/* Reset all lines */
+	unrenderLines = (props) => {
+		this.setState({linesTimeline: []});
 	}
-  }
 
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props) {
