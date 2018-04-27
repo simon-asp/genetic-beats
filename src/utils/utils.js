@@ -28,9 +28,8 @@ export function getCenterCoords(el) {
   const coords = {};
   const bcr = el.getBoundingClientRect();
   coords.x = bcr.x + (bcr.width / 2);
-  coords.y = bcr.y + (bcr.height / 2);
-  if(coords.y < 0) {
-    coords.y + 200;
-  }
+  coords.y = bcr.y + (bcr.height / 2) + window.scrollY;
+  
+  console.log(bcr, el);
   return coords;
 };

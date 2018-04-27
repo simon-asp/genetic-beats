@@ -120,25 +120,6 @@ class Lines extends React.Component {
 		return lines;
 	}
 
-	// Doesn't work yet. Should add a glow-effect to the lines.
-	addFilter() {
-		const svg = document.getElementById('svg');
-		if (svg) {
-			const defs = svg.append('defs');
-			// // Filter for the outside glow
-			// const filter = defs.append('filter').attr('id', 'glow');
-			// filter.append('feGaussianBlur').attr('stdDeviation', '3.5').attr('result', 'coloredBlur');
-			//
-			// const feMerge = filter.append('feMerge');
-			// feMerge.append('feMergeNode').attr('in', 'coloredBlur');
-			// feMerge.append('feMergeNode').attr('in', 'SourceGraphic');
-		}
-	}
-
-	applyGlow = () => {
-		//d3.selectAll(".class-of-elements").style("filter", "url(#glow)");
-	}
-
 	/* Reset all lines */
 	unrenderLines = (props) => {
 		this.setState({linesTimeline: []});
@@ -153,7 +134,7 @@ class Lines extends React.Component {
 	}
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props, index) {
-		console.log("Render lines")
+		console.log("Render lines", index)
 		const { evolutionPairs, beatInfo, domNodesTimeline, timelineLength } = props;
 		
 		for (let i = 0; i < beatInfo.noOfBeats; i++) {
@@ -179,7 +160,7 @@ class Lines extends React.Component {
 	getCoords(props, index, beatIndex) {
 		const { evolutionPairs, domNodesTimeline } = props;
 		let coords = {};
-		console.log(evolutionPairs[index])
+
 		const parent1 = evolutionPairs[index][beatIndex].parent1;
 		const parent2 = evolutionPairs[index][beatIndex].parent2;
 
@@ -190,6 +171,7 @@ class Lines extends React.Component {
 		coords.parent1Coord = getCenterCoords(el1);
 		coords.parent2Coord = getCenterCoords(el2);
 		coords.startCoord = getCenterCoords(el3);
+		
 		return coords;
 	}
 	// Add bezier values for curvature to the coords

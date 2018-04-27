@@ -25,12 +25,12 @@ class BeatTimeline extends React.Component {
 
 	componentWillMount() {
 		this.setState({
-	      domNodesTimeline: [],
-	      linesTimeline: [],
-	      currentUser: auth().currentUser,
-	      showInitialGuide: false,
-	      experimentFinished: this.props.beatInfo.experimentFinished,
-	    });
+			domNodesTimeline: [],
+			linesTimeline: [],
+			currentUser: auth().currentUser,
+			showInitialGuide: false,
+			experimentFinished: this.props.beatInfo.experimentFinished,
+		});
 		this.storeDomNodes = this.storeDomNodes.bind(this);
 		this.finishExperiment = this.finishExperiment.bind(this);
 	}
@@ -44,15 +44,15 @@ class BeatTimeline extends React.Component {
 		this.showHideWelcomeInfo(this.props.beatInfo.welcomeInfoVisible);
 	}
 	componentWillReceiveProps(nextProps) {
-	    this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
-	    if(nextProps.beatInfo.experimentFinished) this.setState({experimentFinished:true})
+		this.showHideWelcomeInfo(nextProps.beatInfo.welcomeInfoVisible);
+		if (nextProps.beatInfo.experimentFinished) this.setState({ experimentFinished: true })
 	}
 
 	/* Shows and hides the welcome info */
 	showHideWelcomeInfo = (welcomeInfoVisible) => {
-	const welcomeInfoDiv = document.getElementById('welcomeInfo');
-	if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
-	else welcomeInfoDiv.style.visibility = 'hidden';
+		const welcomeInfoDiv = document.getElementById('welcomeInfo');
+		if (welcomeInfoVisible) welcomeInfoDiv.style.visibility = 'visible';
+		else welcomeInfoDiv.style.visibility = 'hidden';
 	}
 
 	/* Store DOM-nodes of the boxes in the beatlist */
@@ -102,38 +102,38 @@ class BeatTimeline extends React.Component {
 	}
 
 
-  render() {
-    return (
-	<div className={s.root}>
-        <WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
-        
-		{ this.state.experimentFinished ? (
-          <FinishScreen />
-        ) : (
-          <div>
-			<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline}/>
-			
-			<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser}/>
-			{ this.populateTimelineArray() }
-			<Timeline noOfGenerations={this.props.beatTimeline.length} />
-			<Lines
-				domNodesTimeline={this.state.domNodesTimeline}
-				beatInfo={this.props.beatInfo}
-				evolutionPairs={this.props.evolutionPairs}
-				beatTimeline={this.props.beatTimeline}
-				timelineLength={this.props.beatTimeline.length}
-			/>
-          </div>
-        )}
-	</div>
-    );
-  }
+	render() {
+		return (
+			<div className={s.root}>
+				<WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
+
+				{this.state.experimentFinished ? (
+					<FinishScreen />
+				) : (
+						<div>
+							<InitialGuide active={this.state.showInitialGuide} domNodesTimeline={this.state.domNodesTimeline} />
+
+							<Menu resetSelectedPairs={this.props.resetSelectedPairs} resetBeats={this.props.resetBeats} currentUser={this.state.currentUser} />
+							{this.populateTimelineArray()}
+							<Timeline noOfGenerations={this.props.beatTimeline.length} />
+							<Lines
+								domNodesTimeline={this.state.domNodesTimeline}
+								beatInfo={this.props.beatInfo}
+								evolutionPairs={this.props.evolutionPairs}
+								beatTimeline={this.props.beatTimeline}
+								timelineLength={this.props.beatTimeline.length}
+							/>
+						</div>
+					)}
+			</div>
+		);
+	}
 }
 
 BeatTimeline.propTypes = {};
 
 const mapState = state => ({
-  beatTimeline: state.beatTimeline,
+	beatTimeline: state.beatTimeline,
 	beatInfo: state.beatInfo,
 	evolutionPairs: state.evolutionPairs,
 });
@@ -141,7 +141,7 @@ const mapState = state => ({
 const mapDispatch = dispatch => ({
 	scoreBeat: (timelineIndex, index, score) => dispatch(scoreBeat(timelineIndex, index, score)),
 	pressGenerateButton: (newBeats, timelineIndex) => dispatch(pressGenerateButton(newBeats, timelineIndex)),
-	resetBeats: () => {dispatch(resetBeats())},
+	resetBeats: () => { dispatch(resetBeats()) },
 	addNewSelectedPairs: (selectedPairs, timelineIndex) => dispatch(addNewSelectedPairs(selectedPairs, timelineIndex)),
 	resetSelectedPairs: () => dispatch(resetSelectedPairs()),
 	hideWelcomeInfo: () => dispatch(hideWelcomeInfo()),
