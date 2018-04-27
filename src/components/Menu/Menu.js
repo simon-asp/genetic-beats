@@ -54,14 +54,14 @@ class Menu extends React.Component {
 				<div className={menuIconClass} role="button" tabIndex="-1" onClick={() => this.menuOnClick()} />
 				<div className={menuContainerClass}>
 					<div className={s.userName}>Logged in as: <span>{this.props.currentUser.email}</span></div>
-					{/* <div
+					<div
 						className={s.resetButton}
 						onClick={() => { this.resetButtonOnClick(); }}
 						role="button"
 						tabIndex="-2"
 					>
 						RESET BEATS
-					</div> */}
+					</div>
 					<div
 						className={s.resetButton}
 						onClick={() => this.logout()}
