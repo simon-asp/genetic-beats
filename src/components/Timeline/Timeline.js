@@ -35,9 +35,8 @@ const renderTimeline = (props) => {
 /* Timeline function, a vertical timeline showing how many generations has been
  * generated. */
 const Timeline = (props) => {
-	const height = ((props.noOfGenerations-1)*40) + 'vh';
   return (
-    <div className={s.root} style={{ height: height }}>
+    <div className={s.root}>
 		GENERATION
 		{ renderTimeline(props) }
     </div>

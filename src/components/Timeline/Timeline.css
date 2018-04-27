@@ -6,7 +6,7 @@
 	position: absolute;
 	top:0;
 	left:0;
-	padding-top:25vh;
+	padding-top:24vh;
 	box-sizing: border-box;
 	font-size: 8px;
 	text-align: center;
@@ -40,7 +40,7 @@
 
 	& .verticalLine {
 		width:1px;
-		height:calc(100vh - 28px);
+		height:calc(40vh - 28px);
 		background:var(--light-overlay);
 	}
 }

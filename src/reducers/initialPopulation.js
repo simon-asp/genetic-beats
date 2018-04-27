@@ -38,7 +38,7 @@ export default function getInitialPopulation() {
 		// beat.closedhat = [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1];
 		// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
 		// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
-		beat.score = Math.floor(Math.random() * 5) + 1  ;
+		beat.score = Math.floor(Math.random() * 5) + 1;
 		beat.id = 'beat0' + i;
 		beat.liked = false;
 
