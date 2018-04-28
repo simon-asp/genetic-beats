@@ -73,8 +73,10 @@ const crossover = (beats, beatInfo, parent1Index, parent2Index, finishedCallback
 
 		// Put together a child object
 		offspring[`${instrumentNames[i]}`] = instrNew;
-		// offspring.score = 0;
-		offspring.score = Math.floor(Math.random() * 5) + 1;
+		offspring.score = 0;
+
+		// Uncomment for random score, testing purposes.
+		//offspring.score = Math.floor(Math.random() * 5) + 1;
 	}
 	finishedCallback(offspring);
 };

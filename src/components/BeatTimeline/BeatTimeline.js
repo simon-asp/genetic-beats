@@ -115,7 +115,6 @@ class BeatTimeline extends React.Component {
 		return (
 			<div className={s.root}>
 				<WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
-				<button onClick={() => this.clicker()} style={{zIndex:100, position:'absolute'}}>Click me</button>
 
 				{this.state.experimentFinished ? (
 					<FinishScreen />
