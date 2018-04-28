@@ -10,7 +10,8 @@ function FinishScreen() {
     <div className={s.root}>
       <div>
         <h1>Thank you! 🎉</h1>
-        <h2>Your participation has helped us with our research 💜</h2>
+        <h2>Please go to the questionnaire and fill it in 💜</h2>
+        <a target="_blank" href="https://goo.gl/forms/VF5zzHJE5TMyLHt22">https://goo.gl/forms/VF5zzHJE5TMyLHt22</a>
       </div>
     </div>
   );
