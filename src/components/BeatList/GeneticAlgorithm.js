@@ -11,7 +11,7 @@ const selection = (beats) => {
 	let partialSum = 0;
 	let pickedIndex = null;
 	let parentIndices = [];
-
+	
 	// Sum all fitnesses
 	beats.forEach((beat) => {
 		totalSum += beat.score;

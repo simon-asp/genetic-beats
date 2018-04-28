@@ -30,6 +30,5 @@ export function getCenterCoords(el) {
   coords.x = bcr.x + (bcr.width / 2);
   coords.y = bcr.y + (bcr.height / 2) + window.scrollY;
   
-  console.log(bcr, el);
   return coords;
 };

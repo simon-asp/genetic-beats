@@ -166,7 +166,8 @@ class BeatList extends React.Component {
 		this.setState({showTooltip:false});
 	}
 
-	/* Click on all box refs and display their info
+	/* Click on all box refs and display their info.
+	 * NOT USED IN THIS VERSION
 	*/
 	onBeatInfoClick = () => {
 		let allInfoActiveState = this.state.allInfoActive;
@@ -182,7 +183,7 @@ class BeatList extends React.Component {
 				this[`box${i}`].showInfo();
 			}
 			// Update database with BeatInfoShowedCount
-			this.props.showBeatInfoAction();
+			
 		}
 	}
 
@@ -199,7 +200,7 @@ class BeatList extends React.Component {
 	populateBeatArray(props, higherGenerationExists, currentlyPlaying) {
 		/* Remove all the props we don't want. The ones we want is in ...others */
 		const { addNewSelectedPairs, beatTimeline, domNodes, finishExperiment, hideWelcomeInfo, loginTimeAction, 
-			pressGenerateButton, resetBeats, resetSelectedPairs, showBeatInfoAction, ...others } = props;
+			pressGenerateButton, resetBeats, resetSelectedPairs, ...others } = props;
 		this.beatList = [];
 		props.beats.forEach((beat, index) => {
 			this.beatList.push(

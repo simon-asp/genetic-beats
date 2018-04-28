@@ -120,13 +120,13 @@
   }
   & .heart {
     mask:url(./heart.svg) no-repeat;
-    background: white;
-    width:20px;
-    height:20px;
+    background: var(--light-color);
+    width:14px;
+    height:14px;
     cursor: pointer;
     position: absolute;
     top:12px;
-    right:12px;
+    left:9px;
   }
   & .heart:hover {
     background: var(--red);     

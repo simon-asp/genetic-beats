@@ -78,7 +78,6 @@ class Lines extends React.Component {
 			lines = this.createLines(props, index);	
 			
 			linesTimeline.push(lines);
-			console.log("addlines one", lines)
 			// Set the lines to state, and resolve the promise
 			this.setState({linesTimeline}, () => {
 				resolve(props);
@@ -128,13 +127,11 @@ class Lines extends React.Component {
 	// Render all the lines upon mounting
 	renderAllLines(props) {
 		for(let index = 0; index < props.timelineLength-1; index++) {
-			console.log(index)
 			this.renderLines(props, index);
 		}
 	}
 	/* Calculate the x, y-coordinates for the lines and draw them out */
 	renderLines(props, index) {
-		console.log("Render lines", index)
 		const { evolutionPairs, beatInfo, domNodesTimeline, timelineLength } = props;
 		
 		for (let i = 0; i < beatInfo.noOfBeats; i++) {

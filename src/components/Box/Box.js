@@ -41,6 +41,7 @@ class Box extends React.Component {
 	/* Toggle if the info should be visible or not */
 	onClickInfo() {
 		const infoVisible = this.state.infoVisible;
+		if(!infoVisible) this.props.showBeatInfoAction();		
 		this.setState({ infoVisible: !infoVisible });
 	}
 
@@ -91,14 +92,16 @@ class Box extends React.Component {
     return (
 			<div className={s.root}>
 				<div className={s.box} id={beat.id} ref={(ref) => { this.boxDiv = ref; }}>
+					
 					<div className={s.playContainer}>
 						<div className={s.playButton} onClick={() => onPlayClick(index)} role="button" tabIndex={index} />
 					</div>
+					
 					<div className={s.scorerContainer}><Scorer {...this.props} /></div>
 					<div className={s.beatInfoButton} onClick={this.onClickInfo.bind(this)} tabIndex={-10} role="button">i</div>
+					<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					
 				</div>
 				<div className={infoOverlayClass}>
-						<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					
 						<div className={s.beatTicks}>{ this.populateBeatTicks() }</div>
 				</div>
 			</div>
