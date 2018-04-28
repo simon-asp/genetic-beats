@@ -85,7 +85,7 @@ class Login extends React.Component {
         <div className={s.container}>
           <div className={s.textContainer}>
             <h2>Welcome to Genetic Beats</h2>
-            <p>Please log in or sign up</p>
+            <p>Please log in with the given username and password</p>
           </div>
           <div className={s.loginContainer}>
             <div className={errorClass}>{this.state.errorMessage}</div>
@@ -93,7 +93,7 @@ class Login extends React.Component {
             <input className={s.password} type="password" placeholder="Password" onChange={(e) => this.onChangeInput(e, 'password')} />
 
             <button className={s.loginButton} onClick={this.logIn.bind(this)}>Log in</button>
-            <button className={s.signupButton} onClick={this.signUp.bind(this)}>Sign up</button>
+            {/* <button className={s.signupButton} onClick={this.signUp.bind(this)}>Sign up</button> */}
           </div>
         </div>
       </div>
