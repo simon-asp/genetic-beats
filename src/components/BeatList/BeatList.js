@@ -60,6 +60,11 @@ class BeatList extends React.Component {
 		const Tone = require('tone');
 		this.populateBeatArray(this.props);
 		this.setState({ Tone }, () => this.populateSequenceArray(this.props.beats));
+    this.props.beatListRef(this);		
+	}
+	/* Unreference */
+	componentWillUnmount() {
+		this.props.beatListRef(undefined);
 	}
 	/* Populate the beat array and the sequence array on new props from redux
 	 * Don't update the sequence array when the score is changed. */
@@ -112,7 +117,7 @@ class BeatList extends React.Component {
 
 		this.setState({ clickedPlay, currentlyPlaying });
 		// Stop all beats first, then play.
-		this.stopAllBeats();
+		this.props.stopAllBeatsEverywhere();
 		if (clickedPlay[index]) {
 			startBeat(sequences[index]);
 			// Find out if we stopped the beat, then null it
@@ -125,7 +130,7 @@ class BeatList extends React.Component {
 	}
 
 	// Stop all beats in this BeatList
-	stopAllBeats() {
+	stopAllBeats = () => {
 		const { sequences } = this.state;
 		
 		// Remove all color shadows
@@ -183,7 +188,7 @@ class BeatList extends React.Component {
 				this[`box${i}`].showInfo();
 			}
 			// Update database with BeatInfoShowedCount
-			
+			this.props.showBeatInfoAction();
 		}
 	}
 

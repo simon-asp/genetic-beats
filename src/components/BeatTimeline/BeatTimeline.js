@@ -20,7 +20,7 @@ const cx = classNames.bind(s);
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
 class BeatTimeline extends React.Component {
-	static propTypes = {
+    static propTypes = {
 	};
 
 	componentWillMount() {
@@ -79,6 +79,12 @@ class BeatTimeline extends React.Component {
 		this.props.loginTimeAction(calculateLoginTime());
 	}
 
+	// Stop all the beats in all beatlists
+	stopAllBeatsEverywhere() {
+		for(let i = 0; i < this.props.beatTimeline.length; i++) {
+			this[`beatListRef${i}`].stopAllBeats();
+		}
+	}
 	/* Populate the beat timeline array with beatlist components */
 	populateTimelineArray() {
 		const { beatTimeline, evolutionPairs } = this.props;
@@ -95,17 +101,21 @@ class BeatTimeline extends React.Component {
 					key={'generation' + index}
 					evolutionPairs={evolutionPairs[index]}
 					finishExperiment={this.finishExperiment}
+					beatListRef={ref => { this[`beatListRef${index}`] = ref; }}
+					stopAllBeatsEverywhere={this.stopAllBeatsEverywhere.bind(this)}
 				/>,
 			);
 		});
 		return beatTimelineArray;
 	}
+	
 
 
 	render() {
 		return (
 			<div className={s.root}>
 				<WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
+				<button onClick={() => this.clicker()} style={{zIndex:100, position:'absolute'}}>Click me</button>
 
 				{this.state.experimentFinished ? (
 					<FinishScreen />
