@@ -12,23 +12,23 @@ export function pressGenerateButton(newBeats, timelineIndex) {
     dispatch(addNewPopulation(newBeats));
 
     // Get user unique key
-    const userUniqueKey = getUserUniqueKey()
+    // const userUniqueKey = getUserUniqueKey()
 
     // Update database
-    Promise.all([
-      userRef.child(userUniqueKey).child('beats').push({
-        timelineIndex: timelineIndex+1,
-        ...newBeats
-      }),
-      userRef.child(userUniqueKey).update({
-        // + 2 since it is the next one, + 1 for human readable form
-        noOfGenerations: timelineIndex + 2
-      })
-    ])
-    .catch((error) => {
-      console.log(error)
-      dispatch(addNewPopulationError());
-    });
+    // Promise.all([
+    //   userRef.child(userUniqueKey).child('beats').push({
+    //     timelineIndex: timelineIndex+1,
+    //     ...newBeats
+    //   }),
+    //   userRef.child(userUniqueKey).update({
+    //     // + 2 since it is the next one, + 1 for human readable form
+    //     noOfGenerations: timelineIndex + 2
+    //   })
+    // ])
+    // .catch((error) => {
+    //   console.log(error)
+    //   dispatch(addNewPopulationError());
+    // });
   }
 }
 export function addNewPopulationError() {

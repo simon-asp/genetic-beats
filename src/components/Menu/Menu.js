@@ -33,9 +33,9 @@ class Menu extends React.Component {
 		this.setState({ clickedReset: false });
 	}
 
-	logout() {
-		auth().signOut();
-	} 
+	// logout() {
+	// 	auth().signOut();
+	// } 
 
   render() {
 		const menuContainerClass = cx('menuContainer', { active: this.state.clickedMenu });
@@ -53,23 +53,23 @@ class Menu extends React.Component {
 			<div className={s.root}>
 				<div className={menuIconClass} role="button" tabIndex="-1" onClick={() => this.menuOnClick()} />
 				<div className={menuContainerClass}>
-					<div className={s.userName}>Logged in as: <span>{this.props.currentUser.email}</span></div>
-					{/* <div
+					{/* <div className={s.userName}>Logged in as: <span>{this.props.currentUser.email}</span></div> */}
+					<div
 						className={s.resetButton}
 						onClick={() => { this.resetButtonOnClick(); }}
 						role="button"
 						tabIndex="-2"
 					>
 						RESET BEATS
-					</div> */}
-					<div
+					</div>
+					{/* <div
 						className={s.resetButton}
 						onClick={() => this.logout()}
 						role="button"
 						tabIndex="-3"
 					>
 						LOGOUT
-					</div>
+					</div> */}
 
 					<div className={confirmationClass}>
 					<div className={s.triangle} />
@@ -93,9 +93,9 @@ class Menu extends React.Component {
 					</div>
 
 					<div className={s.description}>
-						{/*Created by <b>Simon Asp</b><br />
+						Created by <b>Simon Asp</b><br />
 						+ Hanyang University, Seoul 2017 ~<br /><br />
-						simon.vilhelm.asp [at] gmail.com*/}
+						simon.vilhelm.asp [at] gmail.com
 					</div>
 				</div>
 			</div>

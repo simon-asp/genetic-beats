@@ -21,35 +21,35 @@ class Home extends React.Component {
 
   componentWillMount() {
     this.setState({
-      loggedIn: false,
+      // loggedIn: false,
       loading: true,
     });
   }
   
   componentDidMount() {
-    auth().onAuthStateChanged(firebaseUser => {
-      if(firebaseUser) {
-        this.setState({loggedIn:true, loading:false})
-      }
-      else {
-        this.setState({loggedIn:false, loading:false})
-      }
-    });
+    // auth().onAuthStateChanged(firebaseUser => {
+    //   if(firebaseUser) {
+    //     this.setState({loggedIn:true, loading:false})
+    //   }
+    //   else {
+    //     this.setState({loggedIn:false, loading:false})
+    //   }
+    // });
   }
 
   render() {
     // Show the initial tooltip guide first time
     return (
       <div className={s.root}>
-        {this.state.loading ? (
+        {/* {this.state.loading ? (
           <LoadingSpinner />
-        ) : (
-          this.state.loggedIn ? (
-            <BeatTimeline />
-          ) : (
+        ) : ( 
+          // this.state.loggedIn ? ( */}
+          <BeatTimeline />
+          {/* ) : (
             <Login />
-          )
-        )}
+         ) 
+        )}*/}
       </div>
     );
   }

@@ -25,26 +25,26 @@ const getRandomBeatArray = (size, n) => {
 export default function getInitialPopulation() {
 	const beatList = [];
 	let timeline = [];
-	// for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
-	// 	const beat = {};
+	for (let i = 0; i < beatInfoObj.noOfBeats; i++) {
+		const beat = {};
 
-	// 	beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.25);
-	// 	beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
-	// 	beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
-	// 	beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
+		beat.kick = getRandomBeatArray(beatInfoObj.noOfTicks, 0.25);
+		beat.closedhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.4);
+		beat.openhat = getRandomBeatArray(beatInfoObj.noOfTicks, 0.2);
+		beat.clap = getRandomBeatArray(beatInfoObj.noOfTicks, 0.125);
 
-	// 	// For testing
-	// 	// beat.kick = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0];
-	// 	// beat.closedhat = [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1];
-	// 	// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
-	// 	// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
-	// 	beat.score = Math.floor(Math.random() * 5) + 1;
-	// 	beat.id = 'beat0' + i;
-	// 	beat.liked = false;
+		// For testing
+		// beat.kick = [0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0];
+		// beat.closedhat = [1, 0, 1, 0, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 0, 1];
+		// beat.openhat = [0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0];
+		// beat.clap = [0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0];
+		beat.score = 0;//Math.floor(Math.random() * 5) + 1;
+		beat.id = 'beat0' + i;
+		beat.liked = false;
 
-	// 	beatList.push(beat);
-	// }
-	// timeline.push(beatList);
-	timeline = experimentBeatTimeline;
+		beatList.push(beat);
+	}
+	timeline.push(beatList);
+	// timeline = experimentBeatTimeline;
 	return timeline;
 }

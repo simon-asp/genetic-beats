@@ -3,7 +3,7 @@ import getInitialPopulation from './initialPopulation';
 
 const initialPopulation = getInitialPopulation();
 
-export default function beatTimeline(state = initialPopulation, action) {
+export default function beatTimeline(state = getInitialPopulation(), action) {
 	switch (action.type) {
 	case ADD_NEW_POPULATION:
 		return [

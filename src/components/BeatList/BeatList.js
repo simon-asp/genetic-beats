@@ -188,7 +188,7 @@ class BeatList extends React.Component {
 				this[`box${i}`].showInfo();
 			}
 			// Update database with BeatInfoShowedCount
-			this.props.showBeatInfoAction();
+			// this.props.showBeatInfoAction();
 		}
 	}
 
@@ -234,11 +234,11 @@ class BeatList extends React.Component {
 						filled={false} 
 						hidden={this.state.higherGenerationExists} />
 					
-					<Button text="I AM SATISFIED" 
+					{/* <Button text="I AM SATISFIED" 
 						onClick={this.onFinishClick.bind(this)}
 						colored={true} 
 						hidden={this.state.higherGenerationExists}
-						unRender={this.props.beatTimeline.length === 1} />
+						unRender={this.props.beatTimeline.length === 1} /> */}
 					
 					<Tooltip text={this.state.tooltipText} 
 						active={this.state.showTooltip}

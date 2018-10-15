@@ -99,7 +99,7 @@ class Box extends React.Component {
 					
 					<div className={s.scorerContainer}><Scorer {...this.props} /></div>
 					<div className={s.beatInfoButton} onClick={this.onClickInfo.bind(this)} tabIndex={-10} role="button">i</div>
-					<div className={heartClass} onClick={() => this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					
+					{/* <div className={heartClass} onClick={() => () this.props.likeBeatFirebaseAction(timelineIndex, index, beat)}/>					 */}
 				</div>
 				<div className={infoOverlayClass}>
 						<div className={s.beatTicks}>{ this.populateBeatTicks() }</div>

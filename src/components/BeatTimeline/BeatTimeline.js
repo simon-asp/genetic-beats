@@ -17,10 +17,12 @@ import Lines from '../Lines';
 import { auth } from 'firebase';
 import { calculateLoginTime } from '../../utils';
 const cx = classNames.bind(s);
+import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
+
 /* Populate the beatlist with Box components. Used when updating from redux. */
 
 class BeatTimeline extends React.Component {
-    static propTypes = {
+	static propTypes = {
 	};
 
 	componentWillMount() {
@@ -37,7 +39,7 @@ class BeatTimeline extends React.Component {
 
 	componentWillUnmount() {
 		// Set the active time the user has been logged in
-		this.props.loginTimeAction(calculateLoginTime());
+		// this.props.loginTimeAction(calculateLoginTime());
 	}
 	/* Determine if we want to show the welcome info */
 	componentDidMount() {
@@ -75,13 +77,13 @@ class BeatTimeline extends React.Component {
 
 	// Terminate the experiment from the user
 	finishExperiment() {
-		this.props.finishExperiment();
-		this.props.loginTimeAction(calculateLoginTime());
+		// this.props.finishExperiment();
+		// this.props.loginTimeAction(calculateLoginTime());
 	}
 
 	// Stop all the beats in all beatlists
 	stopAllBeatsEverywhere() {
-		for(let i = 0; i < this.props.beatTimeline.length; i++) {
+		for (let i = 0; i < this.props.beatTimeline.length; i++) {
 			this[`beatListRef${i}`].stopAllBeats();
 		}
 	}
@@ -108,11 +110,11 @@ class BeatTimeline extends React.Component {
 		});
 		return beatTimelineArray;
 	}
-	
+
 
 
 	render() {
-		return (
+		const content = (
 			<div className={s.root}>
 				<WelcomeInfo hideWelcomeInfo={this.props.hideWelcomeInfo} />
 
@@ -136,6 +138,12 @@ class BeatTimeline extends React.Component {
 					)}
 			</div>
 		);
+
+		if (canUseDOM) {
+			return content;
+		} else {
+			return ''
+		}
 	}
 }
 
