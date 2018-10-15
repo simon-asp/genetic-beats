@@ -142,7 +142,7 @@ class BeatTimeline extends React.Component {
 		if (canUseDOM) {
 			return content;
 		} else {
-			return ''
+			return <div />
 		}
 	}
 }
