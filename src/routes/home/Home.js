@@ -13,7 +13,7 @@ import withStyles from 'isomorphic-style-loader/lib/withStyles';
 import BeatTimeline from '../../components/BeatTimeline';
 import Login from '../../components/Login';
 import LoadingSpinner from '../../components/LoadingSpinner';
-import { auth } from 'firebase';
+// import { auth } from 'firebase';
 
 import s from './Home.css';
 

@@ -6,7 +6,7 @@ import { database, getUserUniqueKey, dbVer } from '../database';
 /* Adds a new population, newBeats is an array */
 export function pressGenerateButton(newBeats, timelineIndex) {
   return dispatch => {
-    const userRef = database.ref(dbVer);
+    // const userRef = database.ref(dbVer);
     
     // Add the new population to redux
     dispatch(addNewPopulation(newBeats));

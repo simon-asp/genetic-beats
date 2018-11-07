@@ -14,7 +14,7 @@ import WelcomeInfo from '../WelcomeInfo';
 import InitialGuide from '../InitialGuide';
 import FinishScreen from '../FinishScreen';
 import Lines from '../Lines';
-import { auth } from 'firebase';
+// import { auth } from 'firebase';
 import { calculateLoginTime } from '../../utils';
 const cx = classNames.bind(s);
 import { canUseDOM } from 'fbjs/lib/ExecutionEnvironment';
@@ -29,7 +29,7 @@ class BeatTimeline extends React.Component {
 		this.setState({
 			domNodesTimeline: [],
 			linesTimeline: [],
-			currentUser: auth().currentUser,
+			// currentUser: auth().currentUser,
 			showInitialGuide: false,
 			experimentFinished: this.props.beatInfo.experimentFinished,
 		});
