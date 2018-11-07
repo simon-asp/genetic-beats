@@ -2,6 +2,11 @@
   "name": "genetic-beats",
   "version": "0.0.0",
   "private": true,
+  "engines": {
+    "node": "10.x",
+    "npm": "6.4.1",
+    "yarn": "1.3.2"
+  },
   "browserslist": [">1%", "last 4 versions", "Firefox ESR", "not ie < 9"],
   "dependencies": {
     "babel-polyfill": "^6.23.0",
