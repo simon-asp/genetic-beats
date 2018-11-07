@@ -29,6 +29,7 @@ const WelcomeInfo = (props) => {
               <h2>3. REPEAT STEP 1 AND 2, UNTIL YOU FIND SOMETHING YOU LIKE</h2>
             </div>
           </div>
+          <p style={{fontSize: "10px", width: "400px"}}>Oh, we're saving the beats in your browser so you can continue where you left off. By continuing you agree to the usage of cookies.</p>
         </div>
 
   			<div className={s.bottom}>
