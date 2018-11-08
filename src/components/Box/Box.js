@@ -41,7 +41,7 @@ class Box extends React.Component {
 	/* Toggle if the info should be visible or not */
 	onClickInfo() {
 		const infoVisible = this.state.infoVisible;
-		if(!infoVisible) this.props.showBeatInfoAction();		
+		// if(!infoVisible) this.props.showBeatInfoAction();		
 		this.setState({ infoVisible: !infoVisible });
 	}
 
