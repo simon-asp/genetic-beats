@@ -1,7 +1,7 @@
 // import firebase, { auth } from 'firebase';
 
 // const firebaseConfig = {
-//   apiKey: "AIzaSyDV-Q5Ox99g1rsj0CcnHO8rvn_hhmq2Tls",
+//   apiKey: "-",
 //   authDomain: "genetic-beats.firebaseapp.com",
 //   databaseURL: "https://genetic-beats.firebaseio.com",
 //   projectId: "genetic-beats",
