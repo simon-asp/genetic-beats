@@ -58,7 +58,10 @@ export function stopBeat(loop) {
 }
 
 // Start the beat
-export function startBeat(loop) {
+export function startBeat(loop, Tone) {
+	if (Tone.context.state !== 'running') {
+		Tone.context.resume();
+	}
 	loop.start();
 }
 

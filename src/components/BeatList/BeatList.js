@@ -119,7 +119,7 @@ class BeatList extends React.Component {
 		// Stop all beats first, then play.
 		this.props.stopAllBeatsEverywhere();
 		if (clickedPlay[index]) {
-			startBeat(sequences[index]);
+			startBeat(sequences[index], Tone);
 			// Find out if we stopped the beat, then null it
 			if(index === this.state.currentlyPlaying) currentlyPlaying = undefined;
 			else currentlyPlaying = index;
